@@ -25,6 +25,7 @@ require (
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.40.1
 	github.com/rs/zerolog v1.31.0
+	github.com/spf13/cobra v1.8.0
 	github.com/spf13/pflag v1.0.5
 	go.uber.org/zap v1.26.0
 	golang.org/x/net v0.19.0
@@ -46,6 +47,7 @@ require (
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
