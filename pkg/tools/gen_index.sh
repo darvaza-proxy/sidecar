@@ -7,7 +7,11 @@ set -eu
 MODULES=$(find * -name go.mod -exec dirname '{}' \;)
 GROUPS="pkg cmd"
 BASE="$PWD"
-MODULE=$($GO list)
+
+mod() {
+	local d="${1:-.}"
+	grep ^module "$d/go.mod" | cut -d' ' -f2
+}
 
 namedir() {
 	local d="$1" g= n=
@@ -28,14 +32,9 @@ namedir() {
 	echo "$d" | tr '/' '-'
 }
 
-mod() {
-	cd "$1"
-	$GO list
-}
-
 mod_replace() {
 	local d="$1"
-	grep "=>" "$d/go.mod" | sed -n -e "s;^.*\($MODULE.*\)[ \t]\+=>.*;\1;p"
+	grep "=>" "$d/go.mod" | sed -n -e "s;^.*\($ROOT_MODULE.*\)[ \t]\+=>.*;\1;p"
 }
 
 gen_index() {
@@ -48,6 +47,7 @@ gen_index() {
 	done
 }
 
+ROOT_MODULE=$(mod)
 INDEX=$(gen_index $MODULES)
 
 echo "$INDEX" | while IFS=: read name dir mod; do
