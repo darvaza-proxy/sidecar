@@ -3,6 +3,7 @@ module darvaza.org/sidecar
 go 1.19
 
 require (
+	darvaza.org/core v0.9.4
 	darvaza.org/darvaza/shared/config v0.2.1
 	darvaza.org/slog v0.5.2
 	darvaza.org/slog/handlers/discard v0.4.4
@@ -14,7 +15,6 @@ require (
 )
 
 require (
-	darvaza.org/core v0.9.4 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
 	github.com/chavacava/garif v0.0.0-20230227094218-b8c73b2037b8 // indirect
 	github.com/fatih/color v1.15.0 // indirect
