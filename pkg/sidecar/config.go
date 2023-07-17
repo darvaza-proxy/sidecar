@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"darvaza.org/darvaza/shared/config"
+	"darvaza.org/darvaza/shared/storage"
 	"darvaza.org/slog"
 	"darvaza.org/slog/handlers/discard"
 )
@@ -14,11 +15,13 @@ import (
 type Config struct {
 	Logger  slog.Logger     `toml:"-"`
 	Context context.Context `toml:"-"`
+	Store   storage.Store   `toml:"-"`
 
 	Name string `toml:"name" valid:"host,require"`
 
 	Supervision SupervisionConfig `toml:"run"`
 	Addresses   BindConfig        `toml:",omitempty"`
+	TLS         TLSConfig         `toml:"tls"`
 	HTTP        HTTPConfig        `toml:"http"`
 }
 
@@ -35,9 +38,19 @@ type BindConfig struct {
 	Addresses  []string `toml:"addresses" valid:"ip"`
 }
 
+// TLSConfig contains information for setting up TLS clients and server
+type TLSConfig struct {
+	Key   string `toml:"key"    default:"key.pem"`
+	Cert  string `toml:"cert"   default:"cert.pem"`
+	Roots string `toml:"caroot" default:"caroot.pem"`
+}
+
 // HTTPConfig contains information for setting up the HTTP server
 type HTTPConfig struct {
 	Port              uint16        `toml:"port"                default:"8443" valid:"port"`
+	PortInsecure      uint16        `toml:"insecure_port"       default:"8080" valid:"port"`
+	EnableInsecure    bool          `toml:"enable_insecure"`
+	MutualTLSOnly     bool          `toml:"mtls_only"`
 	ReadTimeout       time.Duration `toml:"read_timeout"        default:"1s"`
 	ReadHeaderTimeout time.Duration `toml:"read_header_timeout" default:"2s"`
 	WriteTimeout      time.Duration `toml:"write_timeout"       default:"1s"`

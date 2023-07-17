@@ -16,8 +16,9 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 			Interfaces: srv.cfg.Addresses.Interfaces,
 			Addresses:  srv.cfg.Addresses.Addresses,
 
-			PortInsecure:  srv.cfg.HTTP.Port,
-			AllowInsecure: true,
+			Port:          srv.cfg.HTTP.Port,
+			PortInsecure:  srv.cfg.HTTP.PortInsecure,
+			AllowInsecure: srv.cfg.HTTP.EnableInsecure,
 		},
 
 		// HTTP
@@ -25,6 +26,11 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 		ReadHeaderTimeout: srv.cfg.HTTP.ReadHeaderTimeout,
 		WriteTimeout:      srv.cfg.HTTP.WriteTimeout,
 		IdleTimeout:       srv.cfg.HTTP.IdleTimeout,
+
+		// TLS
+		GetCertificate: srv.getGetCertificateForServer(),
+		GetRootCAs:     srv.getRootCAsForServer(),
+		GetClientCAs:   srv.getClientCAsForServer(),
 	}
 
 	return hsc
