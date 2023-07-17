@@ -4,6 +4,8 @@ darvaza.org/darvaza/shared/config v0.2.1 h1:857mKi4IC+caH3GvC9iH6Mb3fCfhfrf9A86j
 darvaza.org/darvaza/shared/config v0.2.1/go.mod h1:3s6abeCy47ajk57I7rIVBQo+tJ3NMoUbndosvMVqiEg=
 darvaza.org/slog v0.5.2 h1:8TG1WyHjOyh2vW6t3pjzZVaWzpko5MIIpeI7LWqHFvs=
 darvaza.org/slog v0.5.2/go.mod h1:HAkEpxTA/mkiLNUXJo5qsCh8EVCtA3evje8GAaCDWHI=
+darvaza.org/slog/handlers/discard v0.4.4 h1:1w6vFmRHBhjcUNyealFxYYAe+wKVrHxMFXfG3U+e4JA=
+darvaza.org/slog/handlers/discard v0.4.4/go.mod h1:gFhFl8N4ePqean75xlXB0rtgQNDX29UBCXtapviD8iM=
 darvaza.org/slog/handlers/filter v0.4.4 h1:b2e2T9fQzMdJ0ia+f6b7kw9/T9GFwhFCKob/2tqhGGU=
 darvaza.org/slog/handlers/filter v0.4.4/go.mod h1:cQlJWuolB6guLug09sX/8Zrzct++M6SPCGvXR37E7Cc=
 darvaza.org/slog/handlers/zerolog v0.4.4 h1:OR1ASvH1fBCq3t85t4OU6oJPPuqMB1tsDoSpsh6HVJU=

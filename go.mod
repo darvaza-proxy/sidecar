@@ -5,6 +5,7 @@ go 1.19
 require (
 	darvaza.org/darvaza/shared/config v0.2.1
 	darvaza.org/slog v0.5.2
+	darvaza.org/slog/handlers/discard v0.4.4
 	darvaza.org/slog/handlers/filter v0.4.4
 	darvaza.org/slog/handlers/zerolog v0.4.4
 	github.com/BurntSushi/toml v1.3.2
