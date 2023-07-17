@@ -5,19 +5,20 @@ go 1.19
 require (
 	darvaza.org/core v0.9.4
 	darvaza.org/darvaza/agent v0.2.3
+	darvaza.org/darvaza/shared v0.5.3
 	darvaza.org/darvaza/shared/config v0.2.1
 	darvaza.org/slog v0.5.2
 	darvaza.org/slog/handlers/discard v0.4.4
 	darvaza.org/slog/handlers/filter v0.4.4
 	darvaza.org/slog/handlers/zerolog v0.4.4
 	github.com/BurntSushi/toml v1.3.2
+	github.com/cloudflare/tableflip v1.2.3
 	github.com/mgechev/revive v1.3.2
 	github.com/rs/zerolog v1.29.1
 )
 
 require (
 	darvaza.org/darvaza/acme v0.1.2 // indirect
-	darvaza.org/darvaza/shared v0.5.3 // indirect
 	darvaza.org/darvaza/shared/web v0.3.7 // indirect
 	darvaza.org/middleware v0.2.3 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
