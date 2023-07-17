@@ -2,6 +2,7 @@ package sidecar
 
 import (
 	"context"
+	"net/http"
 	"os"
 	"sync/atomic"
 	"time"
@@ -86,6 +87,28 @@ func (srv *Server) Wait() error {
 		// actual error
 		return err
 	}
+}
+
+// Spawn starts the initial workers
+func (srv *Server) Spawn(h http.Handler, healthy time.Duration) error {
+	var ok bool
+
+	defer func() {
+		if !ok {
+			srv.Cancel()
+		}
+	}()
+
+	if err := srv.spawnHTTPServer(h); err != nil {
+		return err
+	}
+
+	if healthy > 0 {
+		time.Sleep(healthy)
+	}
+
+	ok = true
+	return srv.Err()
 }
 
 // Go runs a worker on the Server's Context

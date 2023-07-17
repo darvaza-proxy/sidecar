@@ -6,6 +6,7 @@ import (
 	"sync/atomic"
 
 	"darvaza.org/core"
+	"darvaza.org/darvaza/agent/httpserver"
 )
 
 // Server is the HTTP Server of the sidecar
@@ -16,6 +17,8 @@ type Server struct {
 	cancelled atomic.Bool
 	err       atomic.Value
 	wg        core.WaitGroup
+
+	hs *httpserver.Server
 }
 
 // New creates a new HTTP [Server] using the given [Config]
@@ -54,6 +57,13 @@ func (cfg *Config) newServer() (*Server, error) {
 	}
 
 	srv.wg.OnError(srv.onWorkerError)
+
+	hsc := srv.newHTTPServerConfig()
+	hs, err := hsc.New()
+	if err != nil {
+		return nil, err
+	}
+	srv.hs = hs
 
 	return srv, nil
 }

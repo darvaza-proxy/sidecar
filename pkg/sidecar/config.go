@@ -19,6 +19,7 @@ type Config struct {
 
 	Supervision SupervisionConfig `toml:"run"`
 	Addresses   BindConfig        `toml:",omitempty"`
+	HTTP        HTTPConfig        `toml:"http"`
 }
 
 // SupervisionConfig represents how graceful upgrades will operate
@@ -32,6 +33,15 @@ type SupervisionConfig struct {
 type BindConfig struct {
 	Interfaces []string `toml:"interfaces"`
 	Addresses  []string `toml:"addresses" valid:"ip"`
+}
+
+// HTTPConfig contains information for setting up the HTTP server
+type HTTPConfig struct {
+	Port              uint16        `toml:"port"                default:"8443" valid:"port"`
+	ReadTimeout       time.Duration `toml:"read_timeout"        default:"1s"`
+	ReadHeaderTimeout time.Duration `toml:"read_header_timeout" default:"2s"`
+	WriteTimeout      time.Duration `toml:"write_timeout"       default:"1s"`
+	IdleTimeout       time.Duration `toml:"idle_timeout"        default:"30s"`
 }
 
 // SetDefaults fills the gaps in the Config
