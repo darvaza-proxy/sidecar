@@ -21,8 +21,10 @@ func (c Config) New() slog.Logger {
 	return filter.New(log, c.Level)
 }
 
-// New creates a new slog.Logger with zerolog on the
-// provided io.Writer.
+// New creates a new [slog.Logger] wrapper for a
+// [zerolog.Logger] using the given [io.Writer] and
+// restricted to entries above the given [slog.LogLevel]
+// threshold.
 func New(w io.Writer, level slog.LogLevel) slog.Logger {
 	var c Config
 
