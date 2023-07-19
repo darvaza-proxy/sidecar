@@ -1,0 +1,28 @@
+name: Darvaza build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.19', '1.20' ]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set up Go ${{ matrix.go }}
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Make build
+        run: make fmt build
+      - name: Test
+        run: make test
