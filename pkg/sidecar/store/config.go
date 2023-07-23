@@ -12,6 +12,7 @@ type Config struct {
 	Key   string `default:"key.pem"`
 	Cert  string `default:"cert.pem"`
 	Roots string `default:"caroot.pem"`
+	ACME  string `validate:"omitempty,url"`
 }
 
 // New creates a simple [storage.Store] from the config
