@@ -3,9 +3,9 @@ module darvaza.org/sidecar
 go 1.19
 
 require (
-	darvaza.org/core v0.9.4
+	darvaza.org/core v0.9.5
 	darvaza.org/darvaza/agent v0.2.3
-	darvaza.org/darvaza/shared v0.5.3
+	darvaza.org/darvaza/shared v0.5.7
 	darvaza.org/darvaza/shared/config v0.2.1
 	darvaza.org/slog v0.5.2
 	darvaza.org/slog/handlers/discard v0.4.4

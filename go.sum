@@ -1,11 +1,11 @@
-darvaza.org/core v0.9.4 h1:HYKmYiWehDtqATF0vBv2i/DvdpNP7YJPu3pOW7h0CWI=
-darvaza.org/core v0.9.4/go.mod h1:O3tHBMlw+xB47uGh5CUx7dXAujBAMmD8BCRFPZmIw54=
+darvaza.org/core v0.9.5 h1:sS5pZFwicaxJIQixEiqkMr9GknVHYL+EbKDMkR/4jDM=
+darvaza.org/core v0.9.5/go.mod h1:O3tHBMlw+xB47uGh5CUx7dXAujBAMmD8BCRFPZmIw54=
 darvaza.org/darvaza/acme v0.1.2 h1:Q+HNzQxFGXjctxydJVWNV0nwaDzs0a7V+0peremadZY=
 darvaza.org/darvaza/acme v0.1.2/go.mod h1:7JHv0MV5U6Q2dKjJz1IK7n0NyHHVGBplgmCR2tJL3Uw=
 darvaza.org/darvaza/agent v0.2.3 h1:2/QFNdaQaDUn16n8m8XCROM1KRTgRBIBuaCPpP6px88=
 darvaza.org/darvaza/agent v0.2.3/go.mod h1:nwOf0y3A//ureRZeKa0pe70e+3qPSLX6M0iUYXN5iP4=
-darvaza.org/darvaza/shared v0.5.3 h1:oZm6pMwkxsKr44MwuW08zeFe69fS+gMNGdEHhGI6qCc=
-darvaza.org/darvaza/shared v0.5.3/go.mod h1:FAvmqdsfTKoqr6UMM93xT14KsKl1RpAWalkB64mPn+s=
+darvaza.org/darvaza/shared v0.5.7 h1:BJKB8VBcaTsBcsRgY0HEnhju5iOeGcyvLdtfYPpJqvw=
+darvaza.org/darvaza/shared v0.5.7/go.mod h1:I6N74g5pTOsZX45Z1qxDE6hYFOoT9ErzuSOd3Ay0NZM=
 darvaza.org/darvaza/shared/config v0.2.1 h1:857mKi4IC+caH3GvC9iH6Mb3fCfhfrf9A86jbDuqqWU=
 darvaza.org/darvaza/shared/config v0.2.1/go.mod h1:3s6abeCy47ajk57I7rIVBQo+tJ3NMoUbndosvMVqiEg=
 darvaza.org/darvaza/shared/web v0.3.7 h1:kVc7hhAsQKyZUHfUooYWF9i499VVddSXAx63zFmPYp8=
