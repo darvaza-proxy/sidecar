@@ -1,3 +1,5 @@
+//go:build linux
+
 package sidecar
 
 import (
@@ -49,7 +51,7 @@ func (srv *Server) ListenAndServe(app http.Handler) error {
 	}
 	<-upg.Exit()
 
-	// Shutdown on upg.Stop()
+	// Wait for connections to drain.
 	return srv.Shutdown(srv.cfg.Supervision.GracefulTimeout)
 }
 
