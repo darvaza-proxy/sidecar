@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	darvaza.org/core v0.9.7
-	darvaza.org/darvaza/agent v0.2.5
+	darvaza.org/darvaza/agent v0.2.6
 	darvaza.org/darvaza/shared v0.5.8
 	darvaza.org/darvaza/shared/config v0.2.3
 	darvaza.org/slog v0.5.3
@@ -44,7 +44,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-19 v0.3.2 // indirect
-	github.com/quic-go/qtls-go1-20 v0.3.3 // indirect
+	github.com/quic-go/qtls-go1-20 v0.2.3 // indirect
 	github.com/quic-go/quic-go v0.36.2 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
