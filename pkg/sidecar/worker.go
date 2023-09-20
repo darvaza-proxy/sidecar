@@ -67,11 +67,13 @@ func (srv *Server) Cancelled() bool {
 func (srv *Server) Err() error {
 	if err, ok := srv.err.Load().(error); ok {
 		return err
-	} else if srv.Cancelled() {
-		return os.ErrClosed
-	} else {
-		return nil
 	}
+
+	if srv.Cancelled() {
+		return os.ErrClosed
+	}
+
+	return nil
 }
 
 // Wait blocks until all workers have exited
