@@ -1,6 +1,6 @@
 module darvaza.org/sidecar
 
-go 1.19
+go 1.20
 
 require (
 	darvaza.org/core v0.9.9
