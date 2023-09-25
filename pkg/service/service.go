@@ -32,6 +32,15 @@ type Service struct {
 	finalizers   []func()
 }
 
+// Must creates a new service and panics if there is a problem
+func Must(cfg *Config) *Service {
+	s, err := New(cfg)
+	if err != nil {
+		panic(err)
+	}
+	return s
+}
+
 // New creates a new service
 func New(cfg *Config) (*Service, error) {
 	if cfg == nil {
