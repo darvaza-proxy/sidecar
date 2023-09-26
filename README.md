@@ -1,4 +1,9 @@
 # Darvaza Sidecars
 
-[![Go Reference](https://pkg.go.dev/badge/darvaza.org/sidecar.svg)](https://pkg.go.dev/darvaza.org/sidecar)
-[![Codebeat Score](https://codebeat.co/badges/a759561c-1f69-4d8d-8e86-9a8733264653)](https://codebeat.co/projects/github-com-darvaza-proxy-sidecar-main)
+[![Go Reference][godoc-badge]][godoc]
+[![Go Report Card][goreport-badge]][goreport]
+
+[godoc]: https://pkg.go.dev/darvaza.org/sidecar
+[godoc-badge]: https://pkg.go.dev/badge/darvaza.org/sidecar.svg
+[goreport]: https://goreportcard.com/report/darvaza.org/sidecar
+[goreport-badge]: https://goreportcard.com/badge/darvaza.org/sidecar
