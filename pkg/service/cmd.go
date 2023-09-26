@@ -6,6 +6,7 @@ import (
 
 	"github.com/kardianos/service"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
 // CmdName returns the arg[0] of this execution
@@ -48,6 +49,16 @@ func (s *Service) Command() *cobra.Command {
 // AddCommand adds an extra interactive command to the tool
 func (s *Service) AddCommand(cmd *cobra.Command) {
 	s.cmd.AddCommand(cmd)
+}
+
+// PersistentFlags returns the flags also passed to sub-commands
+func (s *Service) PersistentFlags() *pflag.FlagSet {
+	return s.cmd.PersistentFlags()
+}
+
+// LocalFlags returns the flags only used for the root command
+func (s *Service) LocalFlags() *pflag.FlagSet {
+	return s.cmd.LocalFlags()
 }
 
 // OnInitialize sets functions to be executed right after
