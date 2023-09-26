@@ -104,6 +104,9 @@ func (s *Service) init(ss service.Service, cfg *Config) error {
 			Short:   cfg.Short,
 			Version: cfg.Version,
 
+			Args:      cfg.ValidateArgs,
+			ValidArgs: cfg.ValidArgs,
+
 			RunE: func(cmd *cobra.Command, args []string) error {
 				if err := s.prepare(ctx, cmd, args); err != nil {
 					return err

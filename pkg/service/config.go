@@ -27,6 +27,9 @@ type Config struct {
 
 	Prepare func(context.Context, *cobra.Command, []string) error
 	Run     func(context.Context, *cobra.Command, []string) error
+
+	ValidArgs    []string
+	ValidateArgs cobra.PositionalArgs
 }
 
 // SetDefaults fills gaps in the config
@@ -68,6 +71,17 @@ func (cfg *Config) setDefaultEntrypoints() {
 	case cfg.Prepare == nil:
 		// no preparation needed
 		cfg.Prepare = noOperationCommand
+	}
+
+	switch {
+	case cfg.ValidateArgs != nil:
+		// custom
+	case len(cfg.ValidArgs) == 0:
+		// no args
+		cfg.ValidateArgs = cobra.NoArgs
+	default:
+		// only specified args
+		cfg.ValidateArgs = cobra.OnlyValidArgs
 	}
 }
 
