@@ -21,11 +21,3 @@ func (srv *Server) error(err error) slog.Logger {
 func (srv *Server) warn() slog.Logger {
 	return srv.cfg.Logger.Warn()
 }
-
-func (srv *Server) info() slog.Logger {
-	return srv.cfg.Logger.Info()
-}
-
-func (srv *Server) debug() slog.Logger {
-	return srv.cfg.Logger.Debug()
-}

@@ -78,7 +78,7 @@ func (srv *Server) Err() error {
 
 // Wait blocks until all workers have exited
 func (srv *Server) Wait() error {
-	srv.wg.Wait()
+	_ = srv.wg.Wait()
 
 	err := srv.Err()
 	switch err {

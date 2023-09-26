@@ -1,4 +1,4 @@
-name: Darvaza build
+name: Build
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - '*'
 jobs:
   build:
-    name: Build
+    name: make
     runs-on: ubuntu-latest
     strategy:
       matrix:
