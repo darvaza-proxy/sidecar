@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"darvaza.org/core"
 	"github.com/spf13/cobra"
 )
 
@@ -86,7 +87,7 @@ func (cfg *Config) setDefaultEntrypoints() {
 }
 
 func notImplementedCommand(_ context.Context, _ *cobra.Command, _ []string) error {
-	return ErrNotImplemented
+	return core.ErrNotImplemented
 }
 
 func noOperationCommand(_ context.Context, _ *cobra.Command, _ []string) error {
