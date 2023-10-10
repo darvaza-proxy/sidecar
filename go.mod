@@ -2,6 +2,11 @@ module darvaza.org/sidecar
 
 go 1.20
 
+replace (
+	darvaza.org/slog => ../slog
+	darvaza.org/slog/handlers/zap => ../slog/handlers/zap
+)
+
 require (
 	darvaza.org/core v0.11.1
 	darvaza.org/darvaza/agent v0.2.10
@@ -61,7 +66,6 @@ require (
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
-	go.uber.org/goleak v1.3.0 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
