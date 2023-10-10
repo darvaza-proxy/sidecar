@@ -2,6 +2,11 @@ module darvaza.org/sidecar
 
 go 1.20
 
+replace (
+	darvaza.org/slog => ../slog
+	darvaza.org/slog/handlers/zap => ../slog/handlers/zap
+)
+
 require (
 	darvaza.org/core v0.11.2
 	darvaza.org/darvaza/shared v0.5.11
