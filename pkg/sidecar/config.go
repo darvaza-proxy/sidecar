@@ -21,7 +21,6 @@ type Config struct {
 
 	Supervision SupervisionConfig `toml:"run"`
 	Addresses   BindConfig        `toml:",omitempty"`
-	TLS         TLSConfig         `toml:"tls"`
 	HTTP        HTTPConfig        `toml:"http"`
 }
 
@@ -36,13 +35,6 @@ type SupervisionConfig struct {
 type BindConfig struct {
 	Interfaces []string `toml:"interfaces"`
 	Addresses  []string `toml:"addresses" valid:"ip"`
-}
-
-// TLSConfig contains information for setting up TLS clients and server
-type TLSConfig struct {
-	Key   string `toml:"key"    default:"key.pem"`
-	Cert  string `toml:"cert"   default:"cert.pem"`
-	Roots string `toml:"caroot" default:"caroot.pem"`
 }
 
 // HTTPConfig contains information for setting up the HTTP server

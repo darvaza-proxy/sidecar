@@ -4,18 +4,13 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 
+	"darvaza.org/core"
 	"darvaza.org/darvaza/shared/storage"
-	"darvaza.org/darvaza/shared/storage/simple"
 )
 
-func newTLSStore(cfg *Config) (storage.Store, error) {
-	sc := &simple.Config{
-		Logger: cfg.Logger,
-	}
-
-	return sc.New(cfg.TLS.Key,
-		cfg.TLS.Cert,
-		cfg.TLS.Roots)
+func newFallbackTLSStore() (storage.Store, error) {
+	// TODO: self-signed
+	return nil, core.ErrNotImplemented
 }
 
 func (srv *Server) getGetCertificateForServer() func(*tls.ClientHelloInfo) (*tls.Certificate,
