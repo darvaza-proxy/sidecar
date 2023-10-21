@@ -69,6 +69,18 @@ func NewEncoder(name string) (Encoder, bool) {
 	return enc, enc != nil
 }
 
+// Encoders returns all the formats we know to encode
+func Encoders() []string {
+	var out []string
+	for name, r := range registry {
+		if r.NewEncoder != nil {
+			out = append(out, name)
+		}
+	}
+
+	return out
+}
+
 type registryEntry struct {
 	NewDecoder func() Decoder
 	NewEncoder func() Encoder
