@@ -9,9 +9,9 @@ import (
 
 // Config contains information for setting up TLS clients and server
 type Config struct {
-	Key   string `toml:"key"    default:"key.pem"`
-	Cert  string `toml:"cert"   default:"cert.pem"`
-	Roots string `toml:"caroot" default:"caroot.pem"`
+	Key   string `default:"key.pem"`
+	Cert  string `default:"cert.pem"`
+	Roots string `default:"caroot.pem"`
 }
 
 // New creates a simple [storage.Store] from the config
