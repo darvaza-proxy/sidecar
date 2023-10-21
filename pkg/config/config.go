@@ -18,8 +18,8 @@ func LoadFile(filename string, v any) error {
 
 	dec, ok := NewDecoderByFilename(filename)
 	if !ok {
-		// fallback to TOML for now
-		dec, ok = NewDecoder("toml")
+		// fallback to autodetect
+		dec, ok = NewDecoder("auto")
 	}
 
 	if !ok {
