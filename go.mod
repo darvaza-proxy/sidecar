@@ -17,6 +17,7 @@ require (
 	github.com/mgechev/revive v1.3.4
 	github.com/rs/zerolog v1.31.0
 	go.uber.org/zap v1.26.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
