@@ -5,6 +5,8 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+
+	"darvaza.org/core"
 )
 
 var (
@@ -53,20 +55,28 @@ func NewDecoder(name string) (Decoder, bool) {
 }
 
 // NewEncoder returns a encoder for the specified format
-func NewEncoder(name string) (Encoder, bool) {
+func NewEncoder(name string) (Encoder, error) {
 	var enc Encoder
+	var key string
 
 	if alias, ok := registryAlias[name]; ok {
-		name = alias
+		key = alias
+	} else {
+		key = name
 	}
 
-	if r, ok := registry[name]; ok {
+	if r, ok := registry[key]; ok {
 		if f := r.NewEncoder; f != nil {
 			enc = f()
 		}
 	}
 
-	return enc, enc != nil
+	if enc == nil {
+		err := core.Wrap(ErrUnknownFormat, name)
+		return nil, err
+	}
+
+	return enc, nil
 }
 
 // Encoders returns all the formats we know to encode
