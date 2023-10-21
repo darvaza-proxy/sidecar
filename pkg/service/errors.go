@@ -2,15 +2,9 @@ package service
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 
 	"github.com/spf13/pflag"
-)
-
-var (
-	// ErrNotImplemented indicates something isn't implemented yet
-	ErrNotImplemented = errors.New("not implemented")
 )
 
 const (
