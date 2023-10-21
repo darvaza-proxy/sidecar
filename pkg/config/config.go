@@ -2,48 +2,36 @@
 package config
 
 import (
-	"bytes"
-	"io"
-
-	"github.com/BurntSushi/toml"
-
 	"darvaza.org/darvaza/shared/config"
 	"darvaza.org/darvaza/shared/config/expand"
 )
 
-var (
-	// Indent is the string used for indenting TOML files when encoding them
-	Indent = `  `
-)
-
-// LoadFile loads a TOML file by name, expanding environment variables,
+// LoadFile loads a config file by name, expanding environment variables,
 // filling gaps and validating its content.
+// LoadFile uses the file extension to determine the format.
 func LoadFile(filename string, v any) error {
 	data, err := expand.FromFile(filename, nil)
 	if err != nil {
+		// failed to read
 		return err
 	}
 
-	_, err = toml.Decode(data, v)
-	if err != nil {
-		return err
+	dec, ok := NewDecoderByFilename(filename)
+	if !ok {
+		// fallback to autodetect
+		dec, ok = NewDecoder("auto")
 	}
 
-	return config.Prepare(v)
-}
-
-// WriteTo writes out the object encoded as TOML.
-func WriteTo(v any, w io.Writer) (int64, error) {
-	var buf bytes.Buffer
-
-	// encode
-	enc := toml.NewEncoder(&buf)
-	enc.Indent = Indent
-	if err := enc.Encode(v); err != nil {
-		return 0, err
+	if !ok {
+		return ErrUnknownFormat
 	}
 
-	return buf.WriteTo(w)
+	err = dec.Decode(data, v)
+	if err == nil {
+		err = config.Prepare(v)
+	}
+
+	return err
 }
 
 // Prepare fills any gap in the object and validates its content.
