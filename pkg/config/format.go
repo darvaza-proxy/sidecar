@@ -5,6 +5,8 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+
+	"darvaza.org/core"
 )
 
 var (
@@ -25,7 +27,7 @@ type Encoder interface {
 
 // NewDecoderByFilename uses the file extension
 // to determine the decoder.
-func NewDecoderByFilename(filename string) (Decoder, bool) {
+func NewDecoderByFilename(filename string) (Decoder, error) {
 	ext := filepath.Ext(filename)
 	if ext != "" {
 		ext = ext[1:]
@@ -36,37 +38,53 @@ func NewDecoderByFilename(filename string) (Decoder, bool) {
 
 // NewDecoder returns the decoder associated with
 // a name or extension.
-func NewDecoder(name string) (Decoder, bool) {
+func NewDecoder(name string) (Decoder, error) {
 	var dec Decoder
+	var key string
 
 	if alias, ok := registryAlias[name]; ok {
-		name = alias
+		key = alias
+	} else {
+		key = name
 	}
 
-	if r, ok := registry[name]; ok {
+	if r, ok := registry[key]; ok {
 		if f := r.NewDecoder; f != nil {
 			dec = f()
 		}
 	}
 
-	return dec, dec != nil
+	if dec == nil {
+		err := core.Wrap(ErrUnknownFormat, name)
+		return nil, err
+	}
+
+	return dec, nil
 }
 
 // NewEncoder returns a encoder for the specified format
-func NewEncoder(name string) (Encoder, bool) {
+func NewEncoder(name string) (Encoder, error) {
 	var enc Encoder
+	var key string
 
 	if alias, ok := registryAlias[name]; ok {
-		name = alias
+		key = alias
+	} else {
+		key = name
 	}
 
-	if r, ok := registry[name]; ok {
+	if r, ok := registry[key]; ok {
 		if f := r.NewEncoder; f != nil {
 			enc = f()
 		}
 	}
 
-	return enc, enc != nil
+	if enc == nil {
+		err := core.Wrap(ErrUnknownFormat, name)
+		return nil, err
+	}
+
+	return enc, nil
 }
 
 // Encoders returns all the formats we know to encode

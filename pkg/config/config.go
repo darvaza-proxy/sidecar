@@ -16,13 +16,13 @@ func LoadFile(filename string, v any) error {
 		return err
 	}
 
-	dec, ok := NewDecoderByFilename(filename)
-	if !ok {
+	dec, _ := NewDecoderByFilename(filename)
+	if dec == nil {
 		// fallback to autodetect
-		dec, ok = NewDecoder("auto")
+		dec, _ = NewDecoder("auto")
 	}
 
-	if !ok {
+	if dec == nil {
 		return ErrUnknownFormat
 	}
 
