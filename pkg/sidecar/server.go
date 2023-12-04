@@ -43,7 +43,7 @@ func New(cfg *Config) (*Server, error) {
 	// TLS
 	s := cfg.Store
 	if s == nil {
-		s, err = newTLSStore(cfg)
+		s, err = newFallbackTLSStore()
 		if err != nil {
 			return nil, err
 		}

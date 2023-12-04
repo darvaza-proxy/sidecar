@@ -13,48 +13,40 @@ import (
 
 // Config represents the generic server configuration for Darvaza sidecars
 type Config struct {
-	Logger  slog.Logger     `toml:"-"`
-	Context context.Context `toml:"-"`
-	Store   storage.Store   `toml:"-"`
+	Logger  slog.Logger     `json:"-" yaml:"-" toml:"-"`
+	Context context.Context `json:"-" yaml:"-" toml:"-"`
+	Store   storage.Store   `json:"-" yaml:"-" toml:"-"`
 
 	Name string `toml:"name" valid:"host,require"`
 
-	Supervision SupervisionConfig `toml:"run"`
-	Addresses   BindConfig        `toml:",omitempty"`
-	TLS         TLSConfig         `toml:"tls"`
-	HTTP        HTTPConfig        `toml:"http"`
+	Supervision SupervisionConfig
+	Addresses   BindConfig `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	HTTP        HTTPConfig
 }
 
 // SupervisionConfig represents how graceful upgrades will operate
 type SupervisionConfig struct {
-	PIDFile         string        `toml:"pid_file"         default:"/tmp/tableflip.pid"`
-	GracefulTimeout time.Duration `toml:"graceful_timeout" default:"5s"`
-	HealthWait      time.Duration `toml:"health_wait"      default:"1s"`
+	PIDFile         string        `yaml:"pid_file"         default:"/tmp/tableflip.pid"`
+	GracefulTimeout time.Duration `yaml:"graceful_timeout" default:"5s"`
+	HealthWait      time.Duration `yaml:"health_wait"      default:"1s"`
 }
 
 // BindConfig refers to the IP addresses used by a GoShop Server
 type BindConfig struct {
-	Interfaces []string `toml:"interfaces"`
-	Addresses  []string `toml:"addresses" valid:"ip"`
-}
-
-// TLSConfig contains information for setting up TLS clients and server
-type TLSConfig struct {
-	Key   string `toml:"key"    default:"key.pem"`
-	Cert  string `toml:"cert"   default:"cert.pem"`
-	Roots string `toml:"caroot" default:"caroot.pem"`
+	Interfaces []string `json:",omitempty"`
+	Addresses  []string `json:",omitempty" valid:"ip"`
 }
 
 // HTTPConfig contains information for setting up the HTTP server
 type HTTPConfig struct {
-	Port              uint16        `toml:"port"                default:"8443" valid:"port"`
-	PortInsecure      uint16        `toml:"insecure_port"       default:"8080" valid:"port"`
-	EnableInsecure    bool          `toml:"enable_insecure"`
-	MutualTLSOnly     bool          `toml:"mtls_only"`
-	ReadTimeout       time.Duration `toml:"read_timeout"        default:"1s"`
-	ReadHeaderTimeout time.Duration `toml:"read_header_timeout" default:"2s"`
-	WriteTimeout      time.Duration `toml:"write_timeout"       default:"1s"`
-	IdleTimeout       time.Duration `toml:"idle_timeout"        default:"30s"`
+	Port              uint16        `yaml:"port"                default:"8443" valid:"port"`
+	PortInsecure      uint16        `yaml:"insecure_port"       default:"8080" valid:"port"`
+	EnableInsecure    bool          `yaml:"enable_insecure"`
+	MutualTLSOnly     bool          `yaml:"mtls_only"`
+	ReadTimeout       time.Duration `yaml:"read_timeout"        default:"1s"`
+	ReadHeaderTimeout time.Duration `yaml:"read_header_timeout" default:"2s"`
+	WriteTimeout      time.Duration `yaml:"write_timeout"       default:"1s"`
+	IdleTimeout       time.Duration `yaml:"idle_timeout"        default:"30s"`
 }
 
 // SetDefaults fills the gaps in the Config
