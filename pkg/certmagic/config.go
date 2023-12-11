@@ -5,6 +5,33 @@ type Config struct {
 	Key    string `default:"key.pem"`
 	Cert   string `default:"cert.pem"`
 	CARoot string `default:"caroot.pem"`
+
+	DefaultIssuer  string `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	FallbackDomain string `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+
+	Accounts []AccountConfig `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+}
+
+// AccountConfig ...
+type AccountConfig struct {
+	Name   string
+	EMail  string
+	Issuer string
+
+	Providers []ProviderConfig
+}
+
+// ProviderConfig ...
+type ProviderConfig struct {
+	Name  string
+	Token string
+
+	Domains map[string]*DomainConfig
+}
+
+// DomainConfig ...
+type DomainConfig struct {
+	Name string
 }
 
 // New creates a new [storage.Store] using the [Config] values
