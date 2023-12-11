@@ -7,7 +7,8 @@ import (
 // Store implements a [storage.Store] using
 // Caddy's certmagic
 type Store struct {
-	cmc certmagic.Config
+	cmc    certmagic.Config
+	issuer certmagic.ACMEIssuer
 }
 
 // init is run before the options
