@@ -1,6 +1,7 @@
 package sidecar
 
 import (
+	"context"
 	"net/http"
 
 	"darvaza.org/darvaza/agent/httpserver"
@@ -25,7 +26,7 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 
 	hsc := &httpserver.Config{
 		Logger:  srv.cfg.Logger,
-		Context: srv.ctx,
+		Context: srv.cfg.Context,
 
 		// Addresses
 		Bind: httpserver.BindingConfig{
@@ -51,16 +52,11 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 	return hsc
 }
 
-func (srv *Server) spawnHTTPServer(h http.Handler) error {
-	srv.wg.Go(func() error {
+func (srv *Server) spawnHTTPServer(h http.Handler) {
+	srv.eg.Go(func(_ context.Context) error {
 		return srv.hs.Serve(h)
-	})
-
-	srv.wg.Go(func() error {
-		<-srv.ctx.Done()
+	}, func() error {
 		srv.hs.Cancel()
 		return srv.hs.Wait()
 	})
-
-	return nil
 }

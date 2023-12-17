@@ -2,9 +2,6 @@
 package sidecar
 
 import (
-	"context"
-	"sync/atomic"
-
 	"darvaza.org/core"
 	"darvaza.org/darvaza/agent/httpserver"
 	"darvaza.org/darvaza/shared/storage"
@@ -12,12 +9,8 @@ import (
 
 // Server is the HTTP Server of the sidecar
 type Server struct {
-	cfg       Config
-	ctx       context.Context
-	cancel    context.CancelFunc
-	cancelled atomic.Bool
-	err       atomic.Value
-	wg        core.WaitGroup
+	cfg Config
+	eg  core.ErrGroup
 
 	tls storage.Store
 	hs  *httpserver.Server
@@ -66,16 +59,15 @@ func (cfg *Config) NewWithStore(s storage.Store) (*Server, error) {
 }
 
 func (cfg *Config) newServer(s storage.Store) (*Server, error) {
-	ctx, cancel := context.WithCancel(cfg.Context)
-
 	srv := &Server{
-		cfg:    *cfg,
-		ctx:    ctx,
-		cancel: cancel,
-		tls:    s,
+		cfg: *cfg,
+		eg: core.ErrGroup{
+			Parent: cfg.Context,
+		},
+		tls: s,
 	}
 
-	srv.wg.OnError(srv.onWorkerError)
+	srv.eg.OnError(srv.onWorkerError)
 
 	if err := srv.init(); err != nil {
 		return nil, err
