@@ -4,7 +4,6 @@ go 1.20
 
 require (
 	darvaza.org/core v0.11.2
-	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/darvaza/shared/config v0.2.7
 	darvaza.org/resolver v0.7.18
@@ -32,7 +31,6 @@ require (
 )
 
 require (
-	darvaza.org/darvaza/acme v0.1.7 // indirect
 	darvaza.org/darvaza/shared/web v0.3.11 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect

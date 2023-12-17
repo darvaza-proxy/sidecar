@@ -75,7 +75,9 @@ func (srv *Server) Wait() error {
 
 // Spawn starts the initial workers
 func (srv *Server) Spawn(h http.Handler, healthy time.Duration) error {
-	srv.spawnHTTPServer(h)
+	if err := srv.hs.Spawn(h, 0); err != nil {
+		return err
+	}
 
 	if healthy > 0 {
 		select {

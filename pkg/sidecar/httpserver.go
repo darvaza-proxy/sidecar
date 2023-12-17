@@ -1,15 +1,12 @@
 package sidecar
 
 import (
-	"context"
-	"net/http"
-
-	"darvaza.org/darvaza/agent/httpserver"
+	"darvaza.org/sidecar/pkg/sidecar/httpserver"
 )
 
 func (srv *Server) initHTTPServer() error {
 	hsc := srv.newHTTPServerConfig()
-	hs, err := hsc.New()
+	hs, err := hsc.New(&srv.eg)
 	if err != nil {
 		return err
 	}
@@ -18,19 +15,18 @@ func (srv *Server) initHTTPServer() error {
 }
 
 func (srv *Server) newHTTPServerConfig() *httpserver.Config {
-	da := &srv.cfg.Addresses
-	addrs := make([]string, 0, len(da.Addresses))
-	for _, addr := range da.Addresses {
-		addrs = append(addrs, addr.String())
-	}
+	mTLS := srv.cfg.HTTP.MutualTLSOnly
 
 	hsc := &httpserver.Config{
 		Logger:  srv.cfg.Logger,
 		Context: srv.cfg.Context,
 
+		// TLS
+		TLSConfig: srv.newTLSServerConfig(mTLS),
+
 		// Addresses
 		Bind: httpserver.BindingConfig{
-			Addresses: addrs,
+			Addrs: srv.cfg.Addresses.Addresses,
 
 			Port:          srv.cfg.HTTP.Port,
 			PortInsecure:  srv.cfg.HTTP.PortInsecure,
@@ -43,20 +39,8 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 		WriteTimeout:      srv.cfg.HTTP.WriteTimeout,
 		IdleTimeout:       srv.cfg.HTTP.IdleTimeout,
 
-		// TLS
-		GetCertificate: srv.getGetCertificateForServer(),
-		GetRootCAs:     srv.getRootCAsForServer(),
-		GetClientCAs:   srv.getClientCAsForServer(),
+		GracefulTimeout: srv.cfg.Supervision.GracefulTimeout,
 	}
 
 	return hsc
-}
-
-func (srv *Server) spawnHTTPServer(h http.Handler) {
-	srv.eg.Go(func(_ context.Context) error {
-		return srv.hs.Serve(h)
-	}, func() error {
-		srv.hs.Cancel()
-		return srv.hs.Wait()
-	})
 }

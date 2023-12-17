@@ -13,18 +13,21 @@ func newFallbackTLSStore() (storage.Store, error) {
 	return nil, core.ErrNotImplemented
 }
 
-func (srv *Server) getGetCertificateForServer() func(*tls.ClientHelloInfo) (*tls.Certificate,
-	error) {
-	return srv.tls.GetCertificate
-}
+// revive:disable:flag-parameter
+func (srv *Server) newTLSServerConfig(mTLS bool) *tls.Config {
+	// revive:enable:flag-parameter
+	var rootCAs, clientCAs *x509.CertPool
 
-func (*Server) getRootCAsForServer() func() *x509.CertPool {
-	return nil
-}
-
-func (srv *Server) getClientCAsForServer() func() *x509.CertPool {
-	if srv.cfg.HTTP.MutualTLSOnly {
-		return srv.tls.GetCAPool
+	rootCAs = srv.tls.GetCAPool()
+	if mTLS {
+		clientCAs = rootCAs
 	}
-	return nil
+
+	return &tls.Config{
+		ServerName: srv.cfg.Name,
+
+		GetCertificate: srv.tls.GetCertificate,
+		ClientCAs:      clientCAs,
+		RootCAs:        rootCAs,
+	}
 }

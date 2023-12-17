@@ -3,8 +3,8 @@ package sidecar
 
 import (
 	"darvaza.org/core"
-	"darvaza.org/darvaza/agent/httpserver"
 	"darvaza.org/darvaza/shared/storage"
+	"darvaza.org/sidecar/pkg/sidecar/httpserver"
 )
 
 // Server is the HTTP Server of the sidecar
