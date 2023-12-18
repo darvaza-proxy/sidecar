@@ -3,10 +3,11 @@ module darvaza.org/sidecar
 go 1.20
 
 require (
-	darvaza.org/core v0.10.1
+	darvaza.org/core v0.11.0
 	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/darvaza/shared/config v0.2.5
+	darvaza.org/resolver v0.7.14
 	darvaza.org/slog v0.5.4
 	darvaza.org/slog/handlers/discard v0.4.6
 	darvaza.org/slog/handlers/filter v0.4.6
@@ -15,6 +16,7 @@ require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/mgechev/revive v1.3.4
+	github.com/miekg/dns v1.1.57
 	github.com/rs/zerolog v1.31.0
 	go.uber.org/zap v1.26.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -33,7 +35,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
-	github.com/google/pprof v0.0.0-20231205033806-a5a03c77bf08 // indirect
+	github.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -46,14 +48,14 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.4.1 // indirect
-	github.com/quic-go/quic-go v0.40.0 // indirect
+	github.com/quic-go/quic-go v0.40.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
 	go.uber.org/mock v0.3.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.16.0 // indirect
-	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
+	golang.org/x/crypto v0.17.0 // indirect
+	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848 // indirect
 	golang.org/x/mod v0.14.0 // indirect
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
