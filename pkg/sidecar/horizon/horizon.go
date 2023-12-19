@@ -100,6 +100,11 @@ type Horizon struct {
 	e resolver.Exchanger
 }
 
+// Name returns the name of the [Horizon]
+func (z *Horizon) Name() string {
+	return z.n
+}
+
 func (z *Horizon) String() string {
 	return fmt.Sprintf("%s:%q", "Horizon", z.n)
 }
