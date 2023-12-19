@@ -13,6 +13,7 @@ import (
 
 var (
 	_ dns.Handler        = (*Horizons)(nil)
+	_ resolver.Exchanger = (*Horizons)(nil)
 	_ resolver.Exchanger = (*Horizon)(nil)
 )
 
@@ -51,6 +52,20 @@ func (s Horizons) newDNSLookupContext(m Match) (context.Context, context.CancelF
 		return context.WithTimeout(ctx, s.ExchangeTimeout)
 	}
 	return ctx, func() {}
+}
+
+// Exchange implements the [resolver.Exchanger] interface but requires a [Match]
+// in the context
+func (s Horizons) Exchange(ctx context.Context, req *dns.Msg) (*dns.Msg, error) {
+	if s.ContextKey != nil {
+		m, ok := s.ContextKey.Get(ctx)
+		if ok && m.IsValid() {
+			if z := s.Get(m.Horizon); z != nil {
+				return z.Exchange(ctx, req)
+			}
+		}
+	}
+	return ForbiddenExchange(ctx, req)
 }
 
 // MatchDNSRequest find the Horizon corresponding to an [http.Request] and
