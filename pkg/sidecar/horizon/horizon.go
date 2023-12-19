@@ -80,6 +80,17 @@ func (s Horizons) Match(addr netip.Addr) (*Horizon, netip.Prefix, bool) {
 	return nil, netip.Prefix{}, false
 }
 
+// Get finds a Horizon by name.
+func (s Horizons) Get(name string) *Horizon {
+	if s.n != nil {
+		if z, ok := s.n[name]; ok {
+			return z
+		}
+	}
+
+	return nil
+}
+
 // Horizon is one horizon
 type Horizon struct {
 	n string
