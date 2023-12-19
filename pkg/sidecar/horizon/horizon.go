@@ -25,6 +25,7 @@ type Match struct {
 // priority.
 type Horizons struct {
 	s []*Horizon
+	n map[string]*Horizon
 
 	ExchangeContext context.Context
 	ExchangeTimeout time.Duration
@@ -32,14 +33,30 @@ type Horizons struct {
 	ContextKey *core.ContextKey[Match]
 }
 
-// AppendNew creates a [Horizon] based on a [Config] and endpoints
-func (s *Horizons) AppendNew(hc Config, h http.Handler, e resolver.Exchanger) {
-	s.s = append(s.s, hc.New(h, e))
+// AppendNew creates a [Horizon] based on a [Config] and endpoints.
+// [Config.Name] must be unique.
+func (s *Horizons) AppendNew(hc Config, h http.Handler, e resolver.Exchanger) error {
+	z := hc.New(h, e)
+	return s.Append(z)
 }
 
-// Append attaches an existing [Horizon]
-func (s *Horizons) Append(z *Horizon) {
+// Append attaches an existing [Horizon]. Name must be unique.
+func (s *Horizons) Append(z *Horizon) error {
+	if z == nil {
+		return core.ErrInvalid
+	}
+
+	if s.n == nil {
+		s.n = make(map[string]*Horizon)
+	}
+
+	if _, ok := s.n[z.n]; ok {
+		return core.Wrap(core.ErrExists, z.String())
+	}
+
 	s.s = append(s.s, z)
+	s.n[z.n] = z
+	return nil
 }
 
 // Match finds the CIDR and Horizon corresponding to the given address

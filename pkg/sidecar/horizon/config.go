@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/netip"
 
+	"darvaza.org/core"
 	"darvaza.org/resolver"
 )
 
@@ -46,10 +47,25 @@ func (hc *Config) New(h http.Handler, e resolver.Exchanger) *Horizon {
 type Configs []Config
 
 // New assembles a new [Horizons] using the [Configs] list and the given entrypoints
-func (hcc Configs) New(h http.Handler, e resolver.Exchanger) *Horizons {
+func (hcc Configs) New(h http.Handler, e resolver.Exchanger) (*Horizons, error) {
 	s := new(Horizons)
 	for _, hc := range hcc {
-		s.AppendNew(hc, h, e)
+		err := s.AppendNew(hc, h, e)
+		if err != nil {
+			return nil, err
+		}
 	}
+
+	return s, nil
+}
+
+// Must assembles a new [Horizons] using the [Configs] list but panics
+// if there is an error.
+func (hcc Configs) Must(h http.Handler, e resolver.Exchanger) *Horizons {
+	s, err := hcc.New(h, e)
+	if err != nil {
+		core.PanicWrap(err, "horizon.Configs")
+	}
+
 	return s
 }
