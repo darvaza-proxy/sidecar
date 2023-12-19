@@ -21,6 +21,14 @@ type Match struct {
 	CIDR       netip.Prefix
 }
 
+// IsValid checks if the [Match] contains consistent information
+func (m Match) IsValid() bool {
+	if m.RemoteAddr.IsValid() {
+		return m.CIDR.Contains(m.RemoteAddr)
+	}
+	return false
+}
+
 // Horizons is a list of all known horizons sorted by
 // priority.
 type Horizons struct {
