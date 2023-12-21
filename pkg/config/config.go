@@ -2,6 +2,8 @@
 package config
 
 import (
+	"os"
+
 	"darvaza.org/darvaza/shared/config"
 	"darvaza.org/darvaza/shared/config/expand"
 )
@@ -27,11 +29,29 @@ func LoadFile(filename string, v any) error {
 	}
 
 	err = dec.Decode(data, v)
-	if err == nil {
-		err = config.Prepare(v)
+	if err != nil {
+		// failed to decode
+		err = &os.PathError{
+			Path: filename,
+			Op:   "decode",
+			Err:  err,
+		}
+		return err
 	}
 
-	return err
+	err = config.Prepare(v)
+	if err != nil {
+		// failed to validate
+		err = &os.PathError{
+			Path: filename,
+			Op:   "validate",
+			Err:  err,
+		}
+		return err
+	}
+
+	// success
+	return nil
 }
 
 // Prepare fills any gap in the object and validates its content.
