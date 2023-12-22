@@ -69,6 +69,16 @@ func loadFileDecoded[T any](filename string, v *T, options []func(*T) error) err
 	return nil
 }
 
+// New creates a new config, applying the initialization functions,
+// filling gaps and validating its content.
+func New[T any](options ...func(*T) error) (*T, error) {
+	v := new(T)
+	if err := loadFileDecoded("", v, options); err != nil {
+		return nil, err
+	}
+	return v, nil
+}
+
 // Prepare fills any gap in the object and validates its content.
 func Prepare(v any) error {
 	return config.Prepare(v)
