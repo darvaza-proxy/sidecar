@@ -67,6 +67,11 @@ func (s *Horizons) Append(z *Horizon) error {
 	return nil
 }
 
+// Len returns the number of defined horizons
+func (s *Horizons) Len() int {
+	return len(s.s)
+}
+
 // Match finds the CIDR and Horizon corresponding to the given address
 func (s Horizons) Match(addr netip.Addr) (*Horizon, netip.Prefix, bool) {
 	for i := range s.s {
