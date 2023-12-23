@@ -5,6 +5,7 @@
         "kardianos",
         "Lookuper",
         "miekg",
+        "pflag",
         "Rcode"
     ]
 }

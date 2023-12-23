@@ -18,6 +18,7 @@ require (
 	github.com/mgechev/revive v1.3.4
 	github.com/miekg/dns v1.1.57
 	github.com/rs/zerolog v1.31.0
+	github.com/spf13/pflag v1.0.5
 	go.uber.org/zap v1.26.0
 	gopkg.in/yaml.v3 v3.0.1
 )
@@ -30,6 +31,7 @@ require (
 	github.com/chavacava/garif v0.1.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
+	github.com/frankban/quicktest v1.14.6 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -50,6 +52,7 @@ require (
 	github.com/quic-go/qtls-go1-20 v0.4.1 // indirect
 	github.com/quic-go/quic-go v0.40.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
 	go.uber.org/mock v0.3.0 // indirect
