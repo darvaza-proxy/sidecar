@@ -13,10 +13,15 @@ require (
 	darvaza.org/slog/handlers/filter v0.4.6
 	darvaza.org/slog/handlers/zap v0.3.7
 	darvaza.org/slog/handlers/zerolog v0.4.6
+)
+
+require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/cloudflare/tableflip v1.2.3
+	github.com/dlclark/regexp2 v1.10.0
 	github.com/mgechev/revive v1.3.4
 	github.com/miekg/dns v1.1.57
+	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/rs/zerolog v1.31.0
 	github.com/spf13/pflag v1.0.5
 	go.uber.org/zap v1.26.0
@@ -37,6 +42,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
@@ -55,7 +61,7 @@ require (
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
-	go.uber.org/mock v0.3.0 // indirect
+	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
 	golang.org/x/exp v0.0.0-20231219180239-dc181d75b848 // indirect
