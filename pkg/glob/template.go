@@ -40,6 +40,30 @@ func (p Template) Equal(q *Template) bool {
 	return true
 }
 
+// Replace fills gaps in the template with elements of the given
+// slice
+func (p Template) Replace(data []string) (string, error) {
+	out := make([]string, len(p.parts))
+
+	for i, part := range p.parts {
+		var s string
+
+		if idx := part.index; idx > 0 {
+			if idx >= len(data) {
+				err := fmt.Errorf("invalid reference to capture %v", idx)
+				return "", err
+			}
+			s = data[idx-1]
+		} else {
+			s = part.literal
+		}
+
+		out[i] = s
+	}
+
+	return strings.Join(out, ""), nil
+}
+
 func (p *Template) reduce() {
 	parts := make([]templatePart, 0, len(p.parts))
 
