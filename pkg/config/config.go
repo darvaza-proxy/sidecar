@@ -11,7 +11,9 @@ import (
 // LoadFile loads a config file by name, expanding environment variables,
 // filling gaps and validating its content.
 // LoadFile uses the file extension to determine the format.
-func LoadFile(filename string, v any) error {
+func LoadFile[T any](filename string, v *T,
+	options ...func(*T) error) error {
+	//
 	data, err := expand.FromFile(filename, nil)
 	if err != nil {
 		// failed to read
@@ -28,8 +30,7 @@ func LoadFile(filename string, v any) error {
 		return ErrUnknownFormat
 	}
 
-	err = dec.Decode(data, v)
-	if err != nil {
+	if err := dec.Decode(data, v); err != nil {
 		// failed to decode
 		err = &os.PathError{
 			Path: filename,
@@ -39,8 +40,22 @@ func LoadFile(filename string, v any) error {
 		return err
 	}
 
-	err = config.Prepare(v)
-	if err != nil {
+	return loadFileDecoded[T](filename, v, options)
+}
+
+func loadFileDecoded[T any](filename string, v *T, options []func(*T) error) error {
+	for _, opt := range options {
+		if err := opt(v); err != nil {
+			err = &os.PathError{
+				Path: filename,
+				Op:   "init",
+				Err:  err,
+			}
+			return err
+		}
+	}
+
+	if err := config.Prepare(v); err != nil {
 		// failed to validate
 		err = &os.PathError{
 			Path: filename,
@@ -52,6 +67,16 @@ func LoadFile(filename string, v any) error {
 
 	// success
 	return nil
+}
+
+// New creates a new config, applying the initialization functions,
+// filling gaps and validating its content.
+func New[T any](options ...func(*T) error) (*T, error) {
+	v := new(T)
+	if err := loadFileDecoded("", v, options); err != nil {
+		return nil, err
+	}
+	return v, nil
 }
 
 // Prepare fills any gap in the object and validates its content.
