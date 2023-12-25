@@ -7,6 +7,7 @@ require (
 	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/darvaza/shared/config v0.2.5
+	darvaza.org/resolver v0.7.14
 	darvaza.org/slog v0.5.4
 	darvaza.org/slog/handlers/discard v0.4.6
 	darvaza.org/slog/handlers/filter v0.4.6
@@ -15,6 +16,7 @@ require (
 	github.com/BurntSushi/toml v1.3.2
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/mgechev/revive v1.3.4
+	github.com/miekg/dns v1.1.57
 	github.com/rs/zerolog v1.31.0
 	go.uber.org/zap v1.26.0
 	gopkg.in/yaml.v3 v3.0.1
