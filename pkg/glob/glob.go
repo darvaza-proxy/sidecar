@@ -4,6 +4,7 @@ package glob
 
 import (
 	"time"
+	"unicode/utf8"
 
 	"github.com/dlclark/regexp2"
 	"github.com/pachyderm/ohmyglob/compiler"
@@ -156,4 +157,25 @@ func MustCompile(pattern string, separators ...rune) *Glob {
 		core.PanicWrap(err, "glob.Compile")
 	}
 	return g
+}
+
+// HasGlobRunes scans a string for runes that indicate
+// it's a glob pattern.
+func HasGlobRunes(s string) bool {
+	for _, r := range s {
+		if IsGlobRune(r) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// IsGlobRune checks if a rune is a special glyph on
+// the Glob syntax
+func IsGlobRune(r rune) bool {
+	if utf8.RuneLen(r) == 1 {
+		return syntax.Special(byte(r))
+	}
+	return false
 }
