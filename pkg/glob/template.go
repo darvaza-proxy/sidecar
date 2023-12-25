@@ -235,3 +235,21 @@ func compileTemplateDollar(out *Template, str string) (literal, rest string, ok 
 
 	return "", rest, true
 }
+
+// HasTemplateRunes scans a string for runes that indicate
+// it's a template.
+func HasTemplateRunes(s string) bool {
+	for _, r := range s {
+		if IsTemplateRune(r) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// IsTemplateRune checks if a rune is a special glyph on
+// the Template syntax
+func IsTemplateRune(r rune) bool {
+	return (r == '$')
+}
