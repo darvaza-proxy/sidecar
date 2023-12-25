@@ -57,6 +57,38 @@ func (g *Glob) Capture(fixture string) ([]string, bool) {
 	return captures, true
 }
 
+// ReplaceCompiled performs the necessary match&capture on a given fixture,
+// and applies the captured strings to a pre-compiled template.
+func (g *Glob) ReplaceCompiled(fixture string, template *Template) (string, bool, error) {
+	if template == nil {
+		err := core.Wrap(core.ErrInvalid, "compiled template not provided")
+		return "", false, err
+	}
+
+	m, ok := g.Capture(fixture)
+	if !ok {
+		return "", false, nil
+	}
+
+	s, err := template.Replace(m)
+	if err != nil {
+		return "", false, err
+	}
+
+	return s, true, nil
+}
+
+// Replace performs the necessary match&capture on a given fixture,
+// and applies the captured strings to a template.
+func (g *Glob) Replace(fixture, template string) (string, bool, error) {
+	p, err := CompileTemplate(template)
+	if err != nil {
+		return "", false, err
+	}
+
+	return g.ReplaceCompiled(fixture, p)
+}
+
 // Compile creates a [Glob] for the given pattern and separators.
 //
 // The pattern syntax is:
