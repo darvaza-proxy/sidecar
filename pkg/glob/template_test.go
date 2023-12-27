@@ -22,7 +22,7 @@ func tI(i int) templatePart {
 	}
 }
 
-func TestProduce(t *testing.T) {
+func TestTemplate(t *testing.T) {
 	cases := []struct {
 		t string
 		p *Template
