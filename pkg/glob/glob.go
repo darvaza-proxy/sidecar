@@ -52,7 +52,9 @@ func (g *Glob) Capture(fixture string) ([]string, bool) {
 	captures := make([]string, len(groups))
 
 	for _, gp := range groups {
-		captures = append(captures, gp.Capture.String())
+		if gp.Name != "0" {
+			captures = append(captures, gp.Capture.String())
+		}
 	}
 
 	return captures, true
