@@ -6,7 +6,7 @@ require (
 	darvaza.org/core v0.11.0
 	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
-	darvaza.org/darvaza/shared/config v0.2.5
+	darvaza.org/darvaza/shared/config v0.2.7
 	darvaza.org/resolver v0.7.14
 	darvaza.org/slog v0.5.4
 	darvaza.org/slog/handlers/discard v0.4.6

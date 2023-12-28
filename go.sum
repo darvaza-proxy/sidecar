@@ -6,8 +6,8 @@ darvaza.org/darvaza/agent v0.2.10 h1:8V3QGYOHz+a8HM3Bwy2jhtrU9+i5lHOFMxQU1O6uCzM
 darvaza.org/darvaza/agent v0.2.10/go.mod h1:pqTMX08eNzzo99LBhPVk7ufIRPkQr84VBb01oI0TWPc=
 darvaza.org/darvaza/shared v0.5.11 h1:3wspbNcRYYwNg5hrYfZGd7YTVr15Vg8N1Wd7FfANa9o=
 darvaza.org/darvaza/shared v0.5.11/go.mod h1:YJr/fQCtudIXGrhcDWrPwUVb7SjPfib3UqejdyBra5s=
-darvaza.org/darvaza/shared/config v0.2.5 h1:A4XYgKMkGgYuvxPDfPuoWSNHUXVSUGlBs2Lm8J3jhPE=
-darvaza.org/darvaza/shared/config v0.2.5/go.mod h1:yYxZLw5Be6pnfAn79IcVfUhqKpMzCxKYbqmUMjAebsU=
+darvaza.org/darvaza/shared/config v0.2.7 h1:f6hPakQCvGzDdGcT+nz4/V1XFH4myq2QxQ8Fxg1npWg=
+darvaza.org/darvaza/shared/config v0.2.7/go.mod h1:bVvD5vC4DsqFI3F8GPvAaVy2uudk137JLBp3j5RTbS0=
 darvaza.org/darvaza/shared/web v0.3.11 h1:TshGAKWt9OTjWQq6oYjFF/KKN8hZ1eS5ApZJycMM7g4=
 darvaza.org/darvaza/shared/web v0.3.11/go.mod h1:W56Im4j2kDfQfRDAQzxXhkitpt57pT7ZKlxZL+tokuM=
 darvaza.org/middleware v0.2.6 h1:CE9l236k/9FQsqMv1nhpUKgVJP1LLbixqzCvWuv1X2I=
