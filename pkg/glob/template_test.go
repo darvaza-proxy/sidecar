@@ -68,3 +68,68 @@ func TestTemplate(t *testing.T) {
 		}
 	}
 }
+
+type testReplaceCase struct {
+	t  string
+	r  string
+	d  []string
+	ok bool
+}
+
+func tR(template string, result string, data ...string) testReplaceCase {
+	return testReplaceCase{
+		t:  template,
+		r:  result,
+		d:  data,
+		ok: true,
+	}
+}
+
+func tRE(template string, data ...string) testReplaceCase {
+	return testReplaceCase{
+		t:  template,
+		d:  data,
+		ok: false,
+	}
+}
+
+func TestReplace(t *testing.T) {
+	var cases = []testReplaceCase{
+		tR("foobar", "foobar"),
+		tR("$1Foe", "oneFoe", "one"),
+		tR("${1}Foe", "oneFoe", "one"),
+		tR("${1}Foe", "Foe", "", "two"),
+		tRE("${2}Foe", "one"),
+		tR("Hello, ${2}", "Hello, world", "one", "world"),
+	}
+
+	for _, tc := range cases {
+		p, err := CompileTemplate(tc.t)
+		switch {
+		case err != nil:
+			t.Errorf("ERROR: %q: failed to compile: %v", tc.t, err)
+		default:
+			testReplaceResult(t, p, tc)
+		}
+	}
+}
+
+func testReplaceResult(t *testing.T, p *Template, tc testReplaceCase) {
+	r, err := p.Replace(tc.d)
+	switch {
+	case !tc.ok && err == nil:
+		t.Errorf("ERROR: %q+%q: failed to fail: %q",
+			tc.t, tc.d, r)
+	case !tc.ok && err != nil:
+		t.Logf("%q+%q: failed successfully: %v",
+			tc.t, tc.d, err)
+	case tc.ok && err != nil:
+		t.Errorf("ERROR: %q+%q: failed to replace: %v",
+			tc.t, tc.d, err)
+	case r != tc.r:
+		t.Errorf("ERROR: %q+%q: produced the wrong result: %q != %q",
+			tc.t, tc.d, r, tc.r)
+	default:
+		t.Logf("%q+%q => %q", tc.t, tc.d, r)
+	}
+}
