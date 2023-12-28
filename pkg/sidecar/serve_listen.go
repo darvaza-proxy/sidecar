@@ -9,7 +9,7 @@ func (srv *Server) initAddresses() error {
 	// convert interfaces to addresses
 	da := &srv.cfg.Addresses
 	if len(da.Interfaces) > 0 {
-		s, err := core.GetStringIPAddresses(da.Interfaces...)
+		s, err := core.GetIPAddresses(da.Interfaces...)
 		switch {
 		case len(s) > 0:
 			da.Addresses = append(da.Addresses, s...)

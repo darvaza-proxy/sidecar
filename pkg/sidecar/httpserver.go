@@ -17,13 +17,19 @@ func (srv *Server) initHTTPServer() error {
 }
 
 func (srv *Server) newHTTPServerConfig() *httpserver.Config {
+	da := &srv.cfg.Addresses
+	addrs := make([]string, 0, len(da.Addresses))
+	for _, addr := range da.Addresses {
+		addrs = append(addrs, addr.String())
+	}
+
 	hsc := &httpserver.Config{
 		Logger:  srv.cfg.Logger,
 		Context: srv.ctx,
 
 		// Addresses
 		Bind: httpserver.BindingConfig{
-			Addresses: srv.cfg.Addresses.Addresses,
+			Addresses: addrs,
 
 			Port:          srv.cfg.HTTP.Port,
 			PortInsecure:  srv.cfg.HTTP.PortInsecure,
