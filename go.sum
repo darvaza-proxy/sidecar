@@ -12,8 +12,8 @@ darvaza.org/darvaza/shared/web v0.3.11 h1:TshGAKWt9OTjWQq6oYjFF/KKN8hZ1eS5ApZJyc
 darvaza.org/darvaza/shared/web v0.3.11/go.mod h1:W56Im4j2kDfQfRDAQzxXhkitpt57pT7ZKlxZL+tokuM=
 darvaza.org/middleware v0.2.6 h1:CE9l236k/9FQsqMv1nhpUKgVJP1LLbixqzCvWuv1X2I=
 darvaza.org/middleware v0.2.6/go.mod h1:Dou0RzAi1beOlH9hXouGhQ2jKVWSfEzmGzZNEFMIWUE=
-darvaza.org/resolver v0.7.14 h1:Wu6MpOQQ+yRjwc7fEiDteKTgZsNYR8Py5xgsbDNrdF0=
-darvaza.org/resolver v0.7.14/go.mod h1:HAdx+M6ck1ZRV5/aSlpHNPhddlrnwRxZKo7qv6MhBrU=
+darvaza.org/resolver v0.7.16 h1:Ily0ANxJrgyZmNRgQ6Y41SR5a+x5wyCjRyXYP23KYz4=
+darvaza.org/resolver v0.7.16/go.mod h1:DflsthRDOhDJbg76uzBn35k0/ozFpJzRnrNZ0Qjj9xI=
 darvaza.org/slog v0.5.4 h1:xzlWVzYh4tuZLnj4A9tOHXfn/SAEIkApXPvK3YDiW9g=
 darvaza.org/slog v0.5.4/go.mod h1:QFtY3QoQ7xxww85umlEKPcMCNzqNrHYqnj53KehsmBU=
 darvaza.org/slog/handlers/discard v0.4.6 h1:TatHJn34y6eKQzNRHSo6lGZnJg4SLOGaWstlvwwOyrE=
@@ -63,8 +63,8 @@ github.com/godbus/dbus/v5 v5.0.4/go.mod h1:xhWf0FNVPg57R7Z0UbKHbJfkEywrmjJnf7w5x
 github.com/golang/protobuf v1.5.3 h1:KhyjKVUg7Usr/dYsdSqoFveMYd5ko72D+zANwlG1mmg=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/google/go-cmp v0.6.0 h1:ofyhxvXcZhMsU5ulbFiLKl/XBFqE1GSq7atu8tAmTRI=
-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e h1:bwOy7hAFd0C91URzMIEBfr6BAz29yk7Qj0cy6S7DJlU=
-github.com/google/pprof v0.0.0-20231212022811-ec68065c825e/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
+github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42 h1:dHLYa5D8/Ta0aLR2XcPsrkpAgGeFs6thhMcQK0oQ0n8=
+github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42/go.mod h1:czg5+yv1E0ZGTi6S6vVK1mke0fV+FaUhNGcd6VRS9Ik=
 github.com/klauspost/cpuid/v2 v2.0.12/go.mod h1:g2LTdtYhdyuGPqyWyv7qRAmj1WBqxuObKfj5c0PQa7c=
 github.com/klauspost/cpuid/v2 v2.2.6 h1:ndNyv040zDGIDh8thGkXYjnFtiN02M1PVVF+JE/48xc=
 github.com/klauspost/cpuid/v2 v2.2.6/go.mod h1:Lcz8mBdAVJIBVzewtcLocK12l3Y+JytZYpaMropDUws=
