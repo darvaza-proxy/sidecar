@@ -40,5 +40,16 @@ func (srv *Server) ListenWithUpgrader(upg bind.Upgrader) error {
 // ListenWithListener listens to all needed ports using a net.ListenerConfig
 // context
 func (srv *Server) ListenWithListener(lc bind.TCPUDPListener) error {
-	return srv.hs.ListenWithListener(lc)
+	err := srv.hs.ListenWithListener(lc)
+	if err != nil {
+		return err
+	}
+
+	err = srv.ds.ListenWithListener(lc)
+	if err != nil {
+		_ = srv.hs.Close()
+		return err
+	}
+
+	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/miekg/dns"
 )
 
 // onWorkerError is called by srv.eg on errors
@@ -64,7 +66,7 @@ func (srv *Server) Wait() error {
 	err := srv.eg.Wait()
 
 	switch err {
-	case nil, os.ErrClosed:
+	case nil, context.Canceled, os.ErrClosed:
 		// no error
 		return nil
 	default:
@@ -75,7 +77,8 @@ func (srv *Server) Wait() error {
 
 // Spawn starts the initial workers
 func (srv *Server) Spawn(h http.Handler, healthy time.Duration) error {
-	if err := srv.hs.Spawn(h, 0); err != nil {
+	if err := srv.doSpawn(h); err != nil {
+		// failed prematurely
 		return err
 	}
 
@@ -85,6 +88,30 @@ func (srv *Server) Spawn(h http.Handler, healthy time.Duration) error {
 			// done waiting
 		case <-srv.eg.Cancelled():
 			// failed while waiting, let them flush out.
+			return srv.eg.Wait()
+		}
+	}
+
+	return nil
+}
+
+func (srv *Server) doSpawn(h http.Handler) error {
+	if err := srv.hs.Spawn(h, 0); err != nil {
+		return err
+	}
+
+	if srv.ds != nil {
+		// DNS
+		dh, ok := h.(dns.Handler)
+		if !ok {
+			// pointless but required by the static analyzer
+			dh = nil
+		}
+
+		if err := srv.ds.Spawn(dh, 0); err != nil {
+			// failed prematurely
+			srv.eg.Cancel(err)
+
 			return srv.eg.Wait()
 		}
 	}

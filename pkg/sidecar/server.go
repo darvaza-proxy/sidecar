@@ -4,6 +4,7 @@ package sidecar
 import (
 	"darvaza.org/core"
 	"darvaza.org/darvaza/shared/storage"
+	"darvaza.org/sidecar/pkg/sidecar/dnsserver"
 	"darvaza.org/sidecar/pkg/sidecar/httpserver"
 )
 
@@ -14,6 +15,7 @@ type Server struct {
 
 	tls storage.Store
 	hs  *httpserver.Server
+	ds  *dnsserver.Server
 }
 
 // New creates a new HTTP [Server] using the given [Config]
@@ -80,6 +82,7 @@ func (srv *Server) init() error {
 	for _, fn := range []func() error{
 		srv.initAddresses,
 		srv.initHTTPServer,
+		srv.initDNSServer,
 	} {
 		if err := fn(); err != nil {
 			return err
