@@ -86,6 +86,7 @@ func (cfg *Config) newServer(s storage.Store) (*Server, error) {
 
 func (srv *Server) init() error {
 	for _, fn := range []func() error{
+		srv.initAddresses,
 		srv.initHTTPServer,
 	} {
 		if err := fn(); err != nil {
