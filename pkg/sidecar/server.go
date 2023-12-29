@@ -77,12 +77,21 @@ func (cfg *Config) newServer(s storage.Store) (*Server, error) {
 
 	srv.wg.OnError(srv.onWorkerError)
 
-	hsc := srv.newHTTPServerConfig()
-	hs, err := hsc.New()
-	if err != nil {
+	if err := srv.init(); err != nil {
 		return nil, err
 	}
-	srv.hs = hs
 
 	return srv, nil
+}
+
+func (srv *Server) init() error {
+	for _, fn := range []func() error{
+		srv.initHTTPServer,
+	} {
+		if err := fn(); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
