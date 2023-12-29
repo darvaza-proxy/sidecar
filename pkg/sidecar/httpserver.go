@@ -6,6 +6,16 @@ import (
 	"darvaza.org/darvaza/agent/httpserver"
 )
 
+func (srv *Server) initHTTPServer() error {
+	hsc := srv.newHTTPServerConfig()
+	hs, err := hsc.New()
+	if err != nil {
+		return err
+	}
+	srv.hs = hs
+	return nil
+}
+
 func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 	hsc := &httpserver.Config{
 		Logger:  srv.cfg.Logger,
