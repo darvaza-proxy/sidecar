@@ -49,7 +49,7 @@ func (p Template) Replace(data []string) (string, error) {
 		var s string
 
 		if idx := part.index; idx > 0 {
-			if idx >= len(data) {
+			if idx > len(data) {
 				err := fmt.Errorf("invalid reference to capture %v", idx)
 				return "", err
 			}
