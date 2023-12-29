@@ -23,8 +23,7 @@ func (srv *Server) newHTTPServerConfig() *httpserver.Config {
 
 		// Addresses
 		Bind: httpserver.BindingConfig{
-			Interfaces: srv.cfg.Addresses.Interfaces,
-			Addresses:  srv.cfg.Addresses.Addresses,
+			Addresses: srv.cfg.Addresses.Addresses,
 
 			Port:          srv.cfg.HTTP.Port,
 			PortInsecure:  srv.cfg.HTTP.PortInsecure,
