@@ -6,14 +6,16 @@ import (
 
 // Listen listens to all needed ports
 func (srv *Server) Listen() error {
-	lc := bind.NewListenConfig(srv.ctx, 0)
+	keepalive := srv.cfg.Addresses.KeepAlive
+	lc := bind.NewListenConfig(srv.ctx, keepalive)
 	return srv.ListenWithListener(lc)
 }
 
 // ListenWithUpgrader listens to all needed ports using a ListenUpgrader
 // like tableflip
 func (srv *Server) ListenWithUpgrader(upg bind.Upgrader) error {
-	lc := bind.NewListenConfig(srv.ctx, 0)
+	keepalive := srv.cfg.Addresses.KeepAlive
+	lc := bind.NewListenConfig(srv.ctx, keepalive)
 	return srv.ListenWithListener(lc.WithUpgrader(upg))
 }
 
