@@ -33,8 +33,10 @@ type SupervisionConfig struct {
 
 // BindConfig refers to the IP addresses used by a GoShop Server
 type BindConfig struct {
-	Interfaces []string `json:",omitempty"`
-	Addresses  []string `json:",omitempty" valid:"ip"`
+	Interfaces []string `yaml:",omitempty" toml:",omitempty" json:",omitempty"`
+	Addresses  []string `yaml:",omitempty" toml:",omitempty" json:",omitempty" valid:"ip"`
+
+	KeepAlive time.Duration `yaml:"keep_alive,omitempty" toml:",omitempty" json:",omitempty" default:"10s"`
 }
 
 // HTTPConfig contains information for setting up the HTTP server
