@@ -8,6 +8,8 @@
         "miekg",
         "ohmyglob",
         "pflag",
-        "Rcode"
+        "Rcode",
+        "tableflip",
+        "Upgrader"
     ]
 }

@@ -59,7 +59,7 @@ func (cfg *Config) SetDefaults() error {
 		cfg.Context = context.Background()
 	}
 
-	return config.SetDefaults(cfg)
+	return config.Set(cfg)
 }
 
 // Validate tells if the configuration is worth a try
