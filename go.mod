@@ -7,7 +7,7 @@ require (
 	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/darvaza/shared/config v0.2.7
-	darvaza.org/resolver v0.7.14
+	darvaza.org/resolver v0.7.16
 	darvaza.org/slog v0.5.4
 	darvaza.org/slog/handlers/discard v0.4.6
 	darvaza.org/slog/handlers/filter v0.4.6
@@ -45,7 +45,7 @@ require (
 	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
-	github.com/google/pprof v0.0.0-20231212022811-ec68065c825e // indirect
+	github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
