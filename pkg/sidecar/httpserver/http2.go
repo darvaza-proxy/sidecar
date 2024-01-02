@@ -39,6 +39,14 @@ func (srv *Server) NewH2Server(h http.Handler, addr net.Addr) (*http.Server, err
 
 // NewH2Handler returns the [http.Handler] to use on the H2 server.
 func (srv *Server) NewH2Handler(h http.Handler) http.Handler {
+	if h == nil {
+		// no handler implies 404.
+		h = http.NotFoundHandler()
+	}
+
+	// ACME-HTTP-01 handler or 404 for /.well-known/acme-challenge
+	h = AcmeHTTP01Middleware(h, srv.cfg.AcmeHTTP01)
+
 	// Advertise Quic
 	h = srv.QuicHeadersMiddleware(h)
 

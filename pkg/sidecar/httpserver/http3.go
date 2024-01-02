@@ -56,7 +56,21 @@ func (*Server) NewH3Server(h http.Handler, addr net.Addr) *http3.Server {
 	}
 }
 
+// NewH3Handler returns the [http.Handler] to use on the H3 server.
+func (srv *Server) NewH3Handler(h http.Handler) http.Handler {
+	if h == nil {
+		h = http.NotFoundHandler()
+	}
+
+	// ACME-HTTP-01 handler or 404 for /.well-known/acme-challenge
+	h = AcmeHTTP01Middleware(h, srv.cfg.AcmeHTTP01)
+
+	return h
+}
+
 func (srv *Server) spawnH3(h http.Handler, listeners []*quic.EarlyListener, graceful time.Duration) error {
+	h = srv.NewH3Handler(h)
+
 	for _, lsn := range listeners {
 		h3s := srv.NewH3Server(h, lsn.Addr())
 
