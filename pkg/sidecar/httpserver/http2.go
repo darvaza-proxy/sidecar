@@ -12,7 +12,7 @@ import (
 )
 
 // NewHTTPServer creates a new [http.Server].
-func (srv *Server) NewHTTPServer(addr net.Addr) *http.Server {
+func (srv *Server) NewHTTPServer(proto string, addr net.Addr) *http.Server {
 	return &http.Server{
 		Addr: addr.String(),
 
@@ -20,12 +20,14 @@ func (srv *Server) NewHTTPServer(addr net.Addr) *http.Server {
 		ReadHeaderTimeout: srv.cfg.ReadHeaderTimeout,
 		WriteTimeout:      srv.cfg.WriteTimeout,
 		IdleTimeout:       srv.cfg.IdleTimeout,
+
+		ErrorLog: srv.NewHTTPServerErrorLogger(proto, addr),
 	}
 }
 
 // NewH2Server creates a new HTTP/2 capable [http.Server].
 func (srv *Server) NewH2Server(h http.Handler, addr net.Addr) (*http.Server, error) {
-	h1s := srv.NewHTTPServer(addr)
+	h1s := srv.NewHTTPServer("h2", addr)
 	h1s.TLSConfig = srv.NewTLSConfig()
 	h1s.Handler = h
 

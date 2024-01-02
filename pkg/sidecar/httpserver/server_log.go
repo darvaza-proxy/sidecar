@@ -2,6 +2,8 @@ package httpserver
 
 import (
 	"fmt"
+	"log"
+	"net"
 	"net/netip"
 	"net/url"
 
@@ -81,4 +83,19 @@ func (srv *Server) logShuttingDown(proto string, ap netip.AddrPort) {
 			"Proto":     proto,
 		}).Print("Shutting down")
 	}
+}
+
+// NewHTTPServerErrorLogger produces a standard [log.Logger] use the [Server]'s
+// [slog.Logger] to be used by [http.Server] to log errors.
+func (srv *Server) NewHTTPServerErrorLogger(proto string, addr net.Addr) *log.Logger {
+	logWriterFn := func(l slog.Logger, s string) error {
+		l.Error().WithFields(slog.Fields{
+			"LocalAddr": addr.String(),
+			"Proto":     proto,
+		}).Print(s)
+		return nil
+	}
+
+	logWriter := slog.NewLogWriter(srv.cfg.Logger, logWriterFn)
+	return log.New(logWriter, "", 0)
 }
