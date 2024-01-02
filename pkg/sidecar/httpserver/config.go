@@ -3,6 +3,7 @@ package httpserver
 import (
 	"context"
 	"crypto/tls"
+	"net/http"
 	"net/netip"
 	"time"
 
@@ -20,6 +21,15 @@ type Config struct {
 
 	Bind      BindingConfig
 	TLSConfig *tls.Config
+
+	// AcmeHTTP01 is an optional [http.Handler] that will
+	// receive requests for /.well-known/acme-challenge
+	// with a valid token.
+	//
+	// If no handler is specified, the server will
+	// automatically emit a 404 error for requests
+	// against this well-known path.
+	AcmeHTTP01 http.Handler
 
 	ReadTimeout       time.Duration
 	ReadHeaderTimeout time.Duration
