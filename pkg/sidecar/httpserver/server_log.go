@@ -34,8 +34,8 @@ func (srv *Server) logListening(proto string, ap netip.AddrPort) {
 		}
 	}
 
-	if log, ok := srv.info().WithEnabled(); ok {
-		log.WithFields(slog.Fields{
+	if l, ok := srv.info().WithEnabled(); ok {
+		l.WithFields(slog.Fields{
 			"LocalAddr": ap.String(),
 			"Proto":     proto,
 		}).Printf("Listening %s", genListening(proto, ap))
@@ -75,8 +75,8 @@ func genListening(proto string, ap netip.AddrPort) string {
 }
 
 func (srv *Server) logShuttingDown(proto string, ap netip.AddrPort) {
-	if log, ok := srv.debug().WithEnabled(); ok {
-		log.WithFields(slog.Fields{
+	if l, ok := srv.debug().WithEnabled(); ok {
+		l.WithFields(slog.Fields{
 			"LocalAddr": ap.String(),
 			"Proto":     proto,
 		}).Print("Shutting down")
