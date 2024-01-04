@@ -3,6 +3,7 @@ package horizon
 import (
 	"context"
 	"net/netip"
+	"time"
 
 	"github.com/miekg/dns"
 
@@ -38,8 +39,15 @@ func (s Horizons) ServeDNS(rw dns.ResponseWriter, req *dns.Msg) {
 
 func (s Horizons) newDNSLookupContext(m Match) (context.Context, context.CancelFunc) {
 	var ctx context.Context
+	var timeout time.Duration
+
 	// parent
-	ctx = s.ExchangeContext
+	if s.ExchangeContextFunc != nil {
+		ctx = s.ExchangeContextFunc(m.RemoteAddr)
+	} else {
+		ctx = s.ExchangeContext
+	}
+
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -48,8 +56,14 @@ func (s Horizons) newDNSLookupContext(m Match) (context.Context, context.CancelF
 	ctx = s.ContextKey.WithValue(ctx, m)
 
 	// timeout
-	if s.ExchangeTimeout > 0 {
-		return context.WithTimeout(ctx, s.ExchangeTimeout)
+	if s.ExchangeTimeoutFunc != nil {
+		timeout = s.ExchangeTimeoutFunc(m.RemoteAddr)
+	} else {
+		timeout = s.ExchangeTimeout
+	}
+
+	if timeout > 0 {
+		return context.WithTimeout(ctx, timeout)
 	}
 	return ctx, func() {}
 }
