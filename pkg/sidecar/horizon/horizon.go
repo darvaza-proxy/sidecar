@@ -35,8 +35,10 @@ type Horizons struct {
 	s []*Horizon
 	n map[string]*Horizon
 
-	ExchangeContext context.Context
-	ExchangeTimeout time.Duration
+	ExchangeContextFunc func(netip.Addr) context.Context
+	ExchangeContext     context.Context
+	ExchangeTimeoutFunc func(netip.Addr) time.Duration
+	ExchangeTimeout     time.Duration
 
 	ContextKey *core.ContextKey[Match]
 }
