@@ -25,16 +25,20 @@ func (hc *Config) New(h http.Handler, e resolver.Exchanger) *Horizon {
 	}
 
 	if h == nil {
-		z.h = http.HandlerFunc(ForbiddenHTTP)
-	} else if fn := hc.Middleware; fn != nil {
+		h = http.HandlerFunc(ForbiddenHTTP)
+	}
+
+	if fn := hc.Middleware; fn != nil {
 		z.h = fn(h)
 	} else {
 		z.h = h
 	}
 
 	if e == nil {
-		z.e = resolver.ExchangerFunc(ForbiddenExchange)
-	} else if fn := hc.ExchangeMiddleware; fn != nil {
+		e = resolver.ExchangerFunc(ForbiddenExchange)
+	}
+
+	if fn := hc.ExchangeMiddleware; fn != nil {
 		z.e = fn(e)
 	} else {
 		z.e = e
