@@ -69,3 +69,8 @@ func (hcc Configs) Must(h http.Handler, e resolver.Exchanger) *Horizons {
 
 	return s
 }
+
+// NewContextKey creates a [core.ContextKey] compatible with Horizons.
+func NewContextKey(label string) *core.ContextKey[Match] {
+	return core.NewContextKey[Match](label)
+}
