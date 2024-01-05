@@ -19,7 +19,7 @@ func (srv *Server) HasInsecure() bool {
 
 // NewH2CServer creates a new H2C capable [http.Server].
 func (srv *Server) NewH2CServer(h http.Handler, addr net.Addr) *http.Server {
-	h1s := srv.NewHTTPServer(addr)
+	h1s := srv.NewHTTPServer("h2c", addr)
 	h2s := &http2.Server{
 		IdleTimeout: srv.cfg.IdleTimeout,
 	}
