@@ -30,10 +30,17 @@ func (srv *Server) NewH2CServer(h http.Handler, addr net.Addr) *http.Server {
 
 // NewH2CHandler returns the [http.Handler] to use on the H2C server.
 func (srv *Server) NewH2CHandler(h http.Handler) http.Handler {
-	if !srv.cfg.Bind.AllowInsecure {
+	switch {
+	case !srv.cfg.Bind.AllowInsecure:
 		// only ACME-HTTP-01 and https redirect
 		h = srv.NewHTTPSRedirectHandler()
+	case h == nil:
+		// no handler implies 404.
+		h = http.NotFoundHandler()
 	}
+
+	// ACME-HTTP-01 handler or 404 for /.well-known/acme-challenge
+	h = AcmeHTTP01Middleware(h, srv.cfg.AcmeHTTP01)
 
 	// Advertise Quic
 	h = srv.QuicHeadersMiddleware(h)
@@ -43,8 +50,6 @@ func (srv *Server) NewH2CHandler(h http.Handler) http.Handler {
 
 // NewHTTPSRedirectHandler creates a new handler that redirects everything to
 // https.
-//
-// TODO: add ACME-HTTP-01 support
 func (srv *Server) NewHTTPSRedirectHandler() http.Handler {
 	port := srv.cfg.Bind.Port
 	h := middleware.NewHTTPSRedirectHandler(int(port))
