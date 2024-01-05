@@ -3,16 +3,16 @@ module darvaza.org/sidecar
 go 1.20
 
 require (
-	darvaza.org/core v0.11.1
+	darvaza.org/core v0.11.2
 	darvaza.org/darvaza/agent v0.2.10
 	darvaza.org/darvaza/shared v0.5.11
 	darvaza.org/darvaza/shared/config v0.2.7
-	darvaza.org/resolver v0.7.16
-	darvaza.org/slog v0.5.4
-	darvaza.org/slog/handlers/discard v0.4.6
-	darvaza.org/slog/handlers/filter v0.4.6
-	darvaza.org/slog/handlers/zap v0.3.7
-	darvaza.org/slog/handlers/zerolog v0.4.6
+	darvaza.org/resolver v0.7.17
+	darvaza.org/slog v0.5.5
+	darvaza.org/slog/handlers/discard v0.4.7
+	darvaza.org/slog/handlers/filter v0.4.7
+	darvaza.org/slog/handlers/zap v0.3.8
+	darvaza.org/slog/handlers/zerolog v0.4.7
 )
 
 require (
@@ -61,16 +61,16 @@ require (
 	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
-	go.uber.org/goleak v1.3.0 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.17.0 // indirect
-	golang.org/x/exp v0.0.0-20231226003508-02704c960a9b // indirect
+	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc // indirect
 	golang.org/x/mod v0.14.0 // indirect
-	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.15.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
+	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.16.1 // indirect
+	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	mvdan.cc/sh/v3 v3.7.0 // indirect
 )
