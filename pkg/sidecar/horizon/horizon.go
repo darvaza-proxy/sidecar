@@ -11,6 +11,7 @@ import (
 
 	"darvaza.org/core"
 	"darvaza.org/resolver"
+	"github.com/miekg/dns"
 )
 
 // Match specifies how the Remote made it through,
@@ -35,8 +36,10 @@ type Horizons struct {
 	s []*Horizon
 	n map[string]*Horizon
 
-	ExchangeContext context.Context
-	ExchangeTimeout time.Duration
+	ExchangeContextFunc func(netip.Addr, *dns.Msg) context.Context
+	ExchangeContext     context.Context
+	ExchangeTimeoutFunc func(netip.Addr, *dns.Msg) time.Duration
+	ExchangeTimeout     time.Duration
 
 	ContextKey *core.ContextKey[Match]
 }

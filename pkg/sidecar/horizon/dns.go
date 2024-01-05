@@ -3,6 +3,7 @@ package horizon
 import (
 	"context"
 	"net/netip"
+	"time"
 
 	"github.com/miekg/dns"
 
@@ -25,7 +26,7 @@ func (s Horizons) ServeDNS(rw dns.ResponseWriter, req *dns.Msg) {
 		return
 	}
 
-	ctx, cancel := s.newDNSLookupContext(m)
+	ctx, cancel := s.newDNSLookupContext(m, req)
 	defer cancel()
 
 	rsp, err := z.Exchange(ctx, req)
@@ -36,10 +37,17 @@ func (s Horizons) ServeDNS(rw dns.ResponseWriter, req *dns.Msg) {
 	_ = rw.WriteMsg(rsp)
 }
 
-func (s Horizons) newDNSLookupContext(m Match) (context.Context, context.CancelFunc) {
+func (s Horizons) newDNSLookupContext(m Match, req *dns.Msg) (context.Context, context.CancelFunc) {
 	var ctx context.Context
+	var timeout time.Duration
+
 	// parent
-	ctx = s.ExchangeContext
+	if s.ExchangeContextFunc != nil {
+		ctx = s.ExchangeContextFunc(m.RemoteAddr, req)
+	} else {
+		ctx = s.ExchangeContext
+	}
+
 	if ctx == nil {
 		ctx = context.Background()
 	}
@@ -48,8 +56,14 @@ func (s Horizons) newDNSLookupContext(m Match) (context.Context, context.CancelF
 	ctx = s.ContextKey.WithValue(ctx, m)
 
 	// timeout
-	if s.ExchangeTimeout > 0 {
-		return context.WithTimeout(ctx, s.ExchangeTimeout)
+	if s.ExchangeTimeoutFunc != nil {
+		timeout = s.ExchangeTimeoutFunc(m.RemoteAddr, req)
+	} else {
+		timeout = s.ExchangeTimeout
+	}
+
+	if timeout > 0 {
+		return context.WithTimeout(ctx, timeout)
 	}
 	return ctx, func() {}
 }
