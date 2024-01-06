@@ -12,8 +12,8 @@ darvaza.org/darvaza/shared/web v0.3.11 h1:TshGAKWt9OTjWQq6oYjFF/KKN8hZ1eS5ApZJyc
 darvaza.org/darvaza/shared/web v0.3.11/go.mod h1:W56Im4j2kDfQfRDAQzxXhkitpt57pT7ZKlxZL+tokuM=
 darvaza.org/middleware v0.2.6 h1:CE9l236k/9FQsqMv1nhpUKgVJP1LLbixqzCvWuv1X2I=
 darvaza.org/middleware v0.2.6/go.mod h1:Dou0RzAi1beOlH9hXouGhQ2jKVWSfEzmGzZNEFMIWUE=
-darvaza.org/resolver v0.7.17 h1:opGrl0I72Vb/JMAX1xdmZQ0gb5MdlNrRrvPmXV5aOzU=
-darvaza.org/resolver v0.7.17/go.mod h1:ebLdfSWJwcCGy3iS5rAmsWFEXr3lkMWxX8K26zsOI/w=
+darvaza.org/resolver v0.7.18 h1:sgMED2QwRxl+fEa+ndr+nxDu3VXhpQLptJG1aUXLJGY=
+darvaza.org/resolver v0.7.18/go.mod h1:ebLdfSWJwcCGy3iS5rAmsWFEXr3lkMWxX8K26zsOI/w=
 darvaza.org/slog v0.5.5 h1:xtLjH7pevibCWTYWw8GMz3nVgTgNZmxFdp/68QASS5E=
 darvaza.org/slog v0.5.5/go.mod h1:UdkRzezoyrnTZYYCjMqoX2dNlFtt+lsImyIRDVkcxcs=
 darvaza.org/slog/handlers/discard v0.4.7 h1:COKjAIjj0vKGHz1aqk/oy/umXaWj2wgEpU7/6brSeeU=
