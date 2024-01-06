@@ -6,15 +6,30 @@ import (
 	"darvaza.org/darvaza/agent/httpserver"
 )
 
+func (srv *Server) initHTTPServer() error {
+	hsc := srv.newHTTPServerConfig()
+	hs, err := hsc.New()
+	if err != nil {
+		return err
+	}
+	srv.hs = hs
+	return nil
+}
+
 func (srv *Server) newHTTPServerConfig() *httpserver.Config {
+	da := &srv.cfg.Addresses
+	addrs := make([]string, 0, len(da.Addresses))
+	for _, addr := range da.Addresses {
+		addrs = append(addrs, addr.String())
+	}
+
 	hsc := &httpserver.Config{
 		Logger:  srv.cfg.Logger,
 		Context: srv.ctx,
 
 		// Addresses
 		Bind: httpserver.BindingConfig{
-			Interfaces: srv.cfg.Addresses.Interfaces,
-			Addresses:  srv.cfg.Addresses.Addresses,
+			Addresses: addrs,
 
 			Port:          srv.cfg.HTTP.Port,
 			PortInsecure:  srv.cfg.HTTP.PortInsecure,

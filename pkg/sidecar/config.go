@@ -3,6 +3,7 @@ package sidecar
 import (
 	"context"
 	"fmt"
+	"net/netip"
 	"time"
 
 	"darvaza.org/darvaza/shared/config"
@@ -33,8 +34,10 @@ type SupervisionConfig struct {
 
 // BindConfig refers to the IP addresses used by a GoShop Server
 type BindConfig struct {
-	Interfaces []string `json:",omitempty"`
-	Addresses  []string `json:",omitempty" valid:"ip"`
+	Interfaces []string     `yaml:",omitempty" toml:",omitempty" json:",omitempty"`
+	Addresses  []netip.Addr `yaml:",omitempty" toml:",omitempty" json:",omitempty"`
+
+	KeepAlive time.Duration `yaml:"keep_alive,omitempty" toml:",omitempty" json:",omitempty" default:"10s"`
 }
 
 // HTTPConfig contains information for setting up the HTTP server
