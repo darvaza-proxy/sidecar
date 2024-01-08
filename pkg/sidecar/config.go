@@ -23,6 +23,7 @@ type Config struct {
 	Supervision SupervisionConfig
 	Addresses   BindConfig `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
 	HTTP        HTTPConfig
+	DNS         DNSConfig
 }
 
 // SupervisionConfig represents how graceful upgrades will operate
@@ -50,6 +51,17 @@ type HTTPConfig struct {
 	ReadHeaderTimeout time.Duration `yaml:"read_header_timeout" default:"2s"`
 	WriteTimeout      time.Duration `yaml:"write_timeout"       default:"1s"`
 	IdleTimeout       time.Duration `yaml:"idle_timeout"        default:"30s"`
+}
+
+// DNSConfig contains information for setting up the DNS server
+type DNSConfig struct {
+	Enabled       bool          `yaml:"enabled"`
+	Port          uint16        `yaml:"port"                default:"8053" valid:"port"`
+	TLSPort       uint16        `yaml:"tls_port"            default:"8853" valid:"port"`
+	MutualTLSOnly bool          `yaml:"mtls_only"`
+	MaxTCPQueries int           `yaml:"max_tcp_queries"`
+	ReadTimeout   time.Duration `yaml:"read_timeout"        default:"1s"`
+	IdleTimeout   time.Duration `yaml:"idle_timeout"        default:"10s"`
 }
 
 // SetDefaults fills the gaps in the Config

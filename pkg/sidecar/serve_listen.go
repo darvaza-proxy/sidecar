@@ -25,7 +25,7 @@ func (srv *Server) initAddresses() error {
 // Listen listens to all needed ports
 func (srv *Server) Listen() error {
 	keepalive := srv.cfg.Addresses.KeepAlive
-	lc := bind.NewListenConfig(srv.ctx, keepalive)
+	lc := bind.NewListenConfig(srv.eg.Context(), keepalive)
 	return srv.ListenWithListener(lc)
 }
 
@@ -33,12 +33,23 @@ func (srv *Server) Listen() error {
 // like tableflip
 func (srv *Server) ListenWithUpgrader(upg bind.Upgrader) error {
 	keepalive := srv.cfg.Addresses.KeepAlive
-	lc := bind.NewListenConfig(srv.ctx, keepalive)
+	lc := bind.NewListenConfig(srv.eg.Context(), keepalive)
 	return srv.ListenWithListener(lc.WithUpgrader(upg))
 }
 
 // ListenWithListener listens to all needed ports using a net.ListenerConfig
 // context
 func (srv *Server) ListenWithListener(lc bind.TCPUDPListener) error {
-	return srv.hs.ListenWithListener(lc)
+	err := srv.hs.ListenWithListener(lc)
+	if err != nil {
+		return err
+	}
+
+	err = srv.ds.ListenWithListener(lc)
+	if err != nil {
+		_ = srv.hs.Close()
+		return err
+	}
+
+	return nil
 }

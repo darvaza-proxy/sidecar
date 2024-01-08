@@ -2,37 +2,32 @@ package sidecar
 
 import (
 	"context"
+	"errors"
 	"net/http"
 	"os"
-	"sync/atomic"
 	"time"
+
+	"github.com/miekg/dns"
 )
 
-// onWorkerError is called by srv.wg on errors
-func (srv *Server) onWorkerError(err error) error {
-	// TODO: decide when is an error worth calling
-	// srv.Fail(err)
+// onWorkerError is called by srv.eg on errors
+func (srv *Server) onWorkerError(err error) {
 	srv.error(err).Print("onWorkerError")
-
-	return nil
 }
 
 // Shutdown initiates a shutdown of all workers with optional
 // fatal timeout while waiting for the workers to finish.
 func (srv *Server) Shutdown(timeout time.Duration) error {
-	var ok atomic.Bool
-
-	// once srv.Wait() finishes, we are done
-	defer ok.Store(true)
-
-	srv.tryCancel(nil)
+	srv.eg.Cancel(context.Canceled)
 
 	if timeout > 0 {
-		time.AfterFunc(timeout, func() {
-			if !ok.Load() {
-				srv.fatal(nil).Print("graceful shutdown timed out")
-			}
-		})
+		select {
+		case <-time.After(timeout):
+			// timed out
+			return errors.New("graceful shutdown timed out")
+		case <-srv.eg.Done():
+			// finished
+		}
 	}
 
 	return srv.Wait()
@@ -40,36 +35,26 @@ func (srv *Server) Shutdown(timeout time.Duration) error {
 
 // Cancel initiates a shutdown of all workers
 func (srv *Server) Cancel() {
-	srv.tryCancel(nil)
+	srv.eg.Cancel(nil)
 }
 
 // Fail initiates a shutdown with a reason
-func (srv *Server) Fail(err error) {
-	srv.tryCancel(err)
+func (srv *Server) Fail(cause error) {
+	srv.eg.Cancel(cause)
 }
 
-func (srv *Server) tryCancel(err error) {
-	// once
-	if srv.cancelled.CompareAndSwap(false, true) {
-		if err != nil {
-			srv.err.Store(err)
-		}
-		srv.cancel()
-	}
-}
-
-// Cancelled tells if the server has been cancelled
-func (srv *Server) Cancelled() bool {
-	return srv.cancelled.Load()
+// IsCancelled tells if the server has been cancelled
+func (srv *Server) IsCancelled() bool {
+	return srv.eg.IsCancelled()
 }
 
 // Err returns the reasons of the shutdown, if any
 func (srv *Server) Err() error {
-	if err, ok := srv.err.Load().(error); ok {
+	if err := srv.eg.Err(); err != nil {
 		return err
 	}
 
-	if srv.Cancelled() {
+	if srv.IsCancelled() {
 		return os.ErrClosed
 	}
 
@@ -78,11 +63,10 @@ func (srv *Server) Err() error {
 
 // Wait blocks until all workers have exited
 func (srv *Server) Wait() error {
-	_ = srv.wg.Wait()
+	err := srv.eg.Wait()
 
-	err := srv.Err()
 	switch err {
-	case nil, os.ErrClosed:
+	case nil, context.Canceled, os.ErrClosed:
 		// no error
 		return nil
 	default:
@@ -93,29 +77,54 @@ func (srv *Server) Wait() error {
 
 // Spawn starts the initial workers
 func (srv *Server) Spawn(h http.Handler, healthy time.Duration) error {
-	var ok bool
-
-	defer func() {
-		if !ok {
-			srv.Cancel()
-		}
-	}()
-
-	if err := srv.spawnHTTPServer(h); err != nil {
+	if err := srv.doSpawn(h); err != nil {
+		// failed prematurely
 		return err
 	}
 
 	if healthy > 0 {
-		time.Sleep(healthy)
+		select {
+		case <-time.After(healthy):
+			// done waiting
+		case <-srv.eg.Cancelled():
+			// failed while waiting, let them flush out.
+			return srv.eg.Wait()
+		}
 	}
 
-	ok = true
-	return srv.Err()
+	return nil
+}
+
+func (srv *Server) doSpawn(h http.Handler) error {
+	if err := srv.hs.Spawn(h, 0); err != nil {
+		return err
+	}
+
+	if srv.ds != nil {
+		// DNS
+		dh, ok := h.(dns.Handler)
+		if !ok {
+			// pointless but required by the static analyzer
+			dh = nil
+		}
+
+		if err := srv.ds.Spawn(dh, 0); err != nil {
+			// failed prematurely
+			srv.eg.Cancel(err)
+
+			return srv.eg.Wait()
+		}
+	}
+
+	return nil
 }
 
 // Go runs a worker on the Server's Context
-func (srv *Server) Go(fn func(ctx context.Context) error) {
-	srv.wg.Go(func() error {
-		return fn(srv.ctx)
-	})
+func (srv *Server) Go(run func(ctx context.Context) error) {
+	srv.eg.Go(run, nil)
+}
+
+// GoWithShutdown runs a worker on the Server's Context, and a shutdown sentinel.
+func (srv *Server) GoWithShutdown(run func(context.Context) error, shutdown func() error) {
+	srv.eg.Go(run, shutdown)
 }
