@@ -3,23 +3,23 @@ module darvaza.org/sidecar
 go 1.20
 
 require (
-	darvaza.org/core v0.11.2
-	darvaza.org/darvaza/shared v0.5.11
-	darvaza.org/darvaza/shared/config v0.2.7
-	darvaza.org/resolver v0.7.18
-	darvaza.org/slog v0.5.5
-	darvaza.org/slog/handlers/discard v0.4.8
-	darvaza.org/slog/handlers/filter v0.4.7
-	darvaza.org/slog/handlers/zap v0.3.8
-	darvaza.org/slog/handlers/zerolog v0.4.7
+	darvaza.org/core v0.11.4
+	darvaza.org/darvaza/shared v0.5.12
+	darvaza.org/darvaza/shared/config v0.2.8
+	darvaza.org/resolver v0.8.0
+	darvaza.org/slog v0.5.6
+	darvaza.org/slog/handlers/discard v0.4.9
+	darvaza.org/slog/handlers/filter v0.4.8
+	darvaza.org/slog/handlers/zap v0.3.9
+	darvaza.org/slog/handlers/zerolog v0.4.8
 )
 
 require (
-	darvaza.org/middleware v0.2.6
+	darvaza.org/middleware v0.2.7
 	github.com/BurntSushi/toml v1.3.2
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/dlclark/regexp2 v1.10.0
-	github.com/mgechev/revive v1.3.4
+	github.com/mgechev/revive v1.3.6
 	github.com/miekg/dns v1.1.57
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.40.1
@@ -31,12 +31,12 @@ require (
 )
 
 require (
-	darvaza.org/darvaza/shared/web v0.3.11 // indirect
+	darvaza.org/cache/x/simplelru v0.1.7 // indirect
+	darvaza.org/darvaza/shared/web v0.3.12 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
 	github.com/chavacava/garif v0.1.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
-	github.com/frankban/quicktest v1.14.6 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -57,7 +57,7 @@ require (
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.4.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/spf13/afero v1.11.0 // indirect
 	github.com/zeebo/blake3 v0.2.3 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
