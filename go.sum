@@ -1,5 +1,5 @@
-darvaza.org/cache/x/simplelru v0.1.7 h1:0C9W7qCMIaevgQJEBR1RtZvv8jymwCDamEeX1RbfQWA=
-darvaza.org/cache/x/simplelru v0.1.7/go.mod h1:GecXHwThqYUhygfbKOkxFeJ+74+TJUTPNEWjqg9ok+I=
+darvaza.org/cache/x/simplelru v0.1.8 h1:rvFucut4wKYbsYc994yR3P0M08NqlsvZxr5G4QK82tw=
+darvaza.org/cache/x/simplelru v0.1.8/go.mod h1:Mv1isOJTcXYK+aK0AvUe+/3KpRTXDsYga6rdTS/upNs=
 darvaza.org/core v0.12.0 h1:LLtYh9RZJSd0sgPTDocofCc4H5jbutSUQgPbKt+8gcI=
 darvaza.org/core v0.12.0/go.mod h1:47Ydh67KnzjLNu1mzX3r2zpphbxQqEaihMsUq5GflQ4=
 darvaza.org/darvaza/shared v0.5.12 h1:iVJshhh4tpJ6r75+Xd/agjLMS6i+UOy+Ds614sDmgRk=
@@ -10,8 +10,8 @@ darvaza.org/darvaza/shared/web v0.3.12 h1:rVeJF/Pu3dIWgXbNrV75mveQMCqdQqTdimv2bd
 darvaza.org/darvaza/shared/web v0.3.12/go.mod h1:AQ4236puRzMIcKFy5+wdkVzgKkTrIkmpcSTOdqyit+8=
 darvaza.org/middleware v0.2.7 h1:5oCIOOcVJVCEL1KG9RoCrrPiM8kCOYs85Vh+Lmp775g=
 darvaza.org/middleware v0.2.7/go.mod h1:2fCl8i5m3y1MZx4K8FGAuci9xHckyKa3lE5IQoSCNWA=
-darvaza.org/resolver v0.8.0 h1:Do1JL/kTSBK/8DE1zPoyjXn/us1txXWkP19SWqfs4jw=
-darvaza.org/resolver v0.8.0/go.mod h1:/uymln80HajK7vnPL8c3aaqZ+LyVXS1VxF9JgR5ueYk=
+darvaza.org/resolver v0.8.2 h1:fRy0ceWZfLfh1vYYUXsBNc+tir9o8KbuyZDjEta02Ok=
+darvaza.org/resolver v0.8.2/go.mod h1:TdrymyLzg23zZ+hlx4moBMuECAIxh7dpmwsJthLzA5s=
 darvaza.org/slog v0.5.7 h1:JWC0OqvzR435AidIRDp4T9kdWTURWkUjzP4R78Koq1Q=
 darvaza.org/slog v0.5.7/go.mod h1:12L03t+KYhsZ9IbfF+8if5w9Y91af2par+bSzeBVqIQ=
 darvaza.org/slog/handlers/discard v0.4.11 h1:wr34OnDoRaMV1eGgW7yUaupQxjkTnuHrJmYRPj64RHM=
