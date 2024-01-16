@@ -8,7 +8,7 @@ import (
 
 // New creates a new slog.Logger from the Config.
 func (c Config) New() slog.Logger {
-	log := zap.New(nil, c.Config)
+	log := zap.New(c.Config)
 	return filter.New(log, c.Level)
 }
 
