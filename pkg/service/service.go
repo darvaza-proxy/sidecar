@@ -145,7 +145,7 @@ func (s *Service) newRestartCommand() *cobra.Command {
 		Use:   "restart",
 		Short: "restarts the service",
 		RunE: func(_ *cobra.Command, _ []string) error {
-			return s.ss.Install()
+			return s.ss.Restart()
 		},
 	}
 }
