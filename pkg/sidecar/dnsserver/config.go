@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"darvaza.org/core"
-	"darvaza.org/darvaza/shared/config"
 	"darvaza.org/slog"
 	"darvaza.org/slog/handlers/discard"
+	"darvaza.org/x/config"
 )
 
 // Config describes how the [Server] will be assembled
