@@ -5,7 +5,7 @@ import (
 	"net"
 	"syscall"
 
-	"darvaza.org/darvaza/shared/net/bind"
+	"darvaza.org/x/net/bind"
 )
 
 const (

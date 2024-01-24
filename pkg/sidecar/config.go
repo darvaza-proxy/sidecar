@@ -6,10 +6,10 @@ import (
 	"net/netip"
 	"time"
 
-	"darvaza.org/darvaza/shared/config"
 	"darvaza.org/darvaza/shared/storage"
 	"darvaza.org/slog"
 	"darvaza.org/slog/handlers/discard"
+	"darvaza.org/x/config"
 )
 
 // Config represents the generic server configuration for Darvaza sidecars

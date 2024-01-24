@@ -4,8 +4,8 @@ package config
 import (
 	"os"
 
-	"darvaza.org/darvaza/shared/config"
-	"darvaza.org/darvaza/shared/config/expand"
+	"darvaza.org/x/config"
+	"darvaza.org/x/config/expand"
 )
 
 // LoadFile loads a config file by name, expanding environment variables,

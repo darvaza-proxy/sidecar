@@ -5,17 +5,18 @@ go 1.20
 require (
 	darvaza.org/core v0.12.0
 	darvaza.org/darvaza/shared v0.5.12
-	darvaza.org/darvaza/shared/config v0.2.8
+	darvaza.org/middleware v0.2.7
 	darvaza.org/resolver v0.9.1
 	darvaza.org/slog v0.5.7
 	darvaza.org/slog/handlers/discard v0.4.11
 	darvaza.org/slog/handlers/filter v0.4.9
 	darvaza.org/slog/handlers/zap v0.4.1
 	darvaza.org/slog/handlers/zerolog v0.4.9
+	darvaza.org/x/config v0.2.9
+	darvaza.org/x/net v0.1.1
 )
 
 require (
-	darvaza.org/middleware v0.2.7
 	github.com/BurntSushi/toml v1.3.2
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/dlclark/regexp2 v1.10.0

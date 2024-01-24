@@ -4,6 +4,7 @@ package sidecar
 import (
 	"darvaza.org/core"
 	"darvaza.org/darvaza/shared/storage"
+
 	"darvaza.org/sidecar/pkg/sidecar/dnsserver"
 	"darvaza.org/sidecar/pkg/sidecar/httpserver"
 )

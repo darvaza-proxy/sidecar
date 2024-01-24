@@ -6,8 +6,9 @@ import (
 	"sync/atomic"
 	"syscall"
 
-	"darvaza.org/darvaza/shared/net/bind"
 	"github.com/quic-go/quic-go"
+
+	"darvaza.org/x/net/bind"
 )
 
 const (

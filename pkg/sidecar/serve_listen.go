@@ -2,7 +2,7 @@ package sidecar
 
 import (
 	"darvaza.org/core"
-	"darvaza.org/darvaza/shared/net/bind"
+	"darvaza.org/x/net/bind"
 )
 
 func (srv *Server) initAddresses() error {
