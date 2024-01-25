@@ -14,6 +14,10 @@ type Config struct {
 	// the run command to fail before claiming a
 	// successful start
 	SanityDelay time.Duration `default:"2s"`
+
+	// GracefulTimeout indicates how long we wait for
+	// the shutdown process to take before forcing an exit.
+	GracefulTimeout time.Duration `default:"10s"`
 }
 
 // SetDefaults fills gaps in the Config
@@ -21,4 +25,6 @@ func (cfg *Config) SetDefaults() {
 	if cfg.Name == "" {
 		cfg.Name = CmdName()
 	}
+
+	cfg.setOSDefaults()
 }
