@@ -3,8 +3,10 @@ module darvaza.org/sidecar
 go 1.20
 
 require (
+	darvaza.org/cache/x/simplelru v0.1.8 // indirect
 	darvaza.org/core v0.12.0
 	darvaza.org/darvaza/shared v0.5.12
+	darvaza.org/darvaza/shared/web v0.3.12 // indirect
 	darvaza.org/middleware v0.2.7
 	darvaza.org/resolver v0.9.1
 	darvaza.org/slog v0.5.7
@@ -31,8 +33,6 @@ require (
 )
 
 require (
-	darvaza.org/cache/x/simplelru v0.1.8 // indirect
-	darvaza.org/darvaza/shared/web v0.3.12 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
