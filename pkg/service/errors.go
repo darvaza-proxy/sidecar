@@ -2,6 +2,7 @@ package service
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 
 	"github.com/spf13/pflag"
@@ -55,20 +56,24 @@ func AsExitStatus(err error) (int, error) {
 		// not an error, just an exit condition
 		return ExitStatusMinor, nil
 	default:
-		// ExitStatus wrapper
-		if e, ok := err.(*ErrorExitCode); ok {
-			return e.Code, e.Err
+		var code int
+		var wrapped error
+
+		switch e := err.(type) {
+		case interface{ ExitStatus() int }:
+			code = e.ExitStatus()
+			wrapped = errors.Unwrap(err)
+		case interface{ ExitCode() int }:
+			code = e.ExitCode()
+			wrapped = errors.Unwrap(err)
+		default:
+			code = ExitStatusMajor
 		}
 
-		if e, ok := err.(interface {
-			ExitStatus() int
-		}); ok {
-			// Error knows the right ExitStatus, but it
-			// could include more information
-			return e.ExitStatus(), err
+		if wrapped != nil {
+			err = wrapped
 		}
 
-		// Some other error that doesn't include ExitStatus
-		return ExitStatusMajor, err
+		return code, err
 	}
 }
