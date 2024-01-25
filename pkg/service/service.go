@@ -123,7 +123,7 @@ func (s *Service) init(ss service.Service, cfg *Config) error {
 func (s *Service) newStartCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "start",
-		Short: "starts the service",
+		Short: "Starts the service",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Start()
@@ -135,7 +135,7 @@ func (s *Service) newStartCommand() *cobra.Command {
 func (s *Service) newStopCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "stop",
-		Short: "stops the service",
+		Short: "Stops the service",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Stop()
@@ -147,7 +147,7 @@ func (s *Service) newStopCommand() *cobra.Command {
 func (s *Service) newRestartCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "restart",
-		Short: "restarts the service",
+		Short: "Restarts the service",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Restart()
@@ -159,7 +159,7 @@ func (s *Service) newRestartCommand() *cobra.Command {
 func (s *Service) newInstallCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "install",
-		Short: "installs the service on the system",
+		Short: "Installs the service on the system",
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Install()
 		},
@@ -170,7 +170,7 @@ func (s *Service) newInstallCommand() *cobra.Command {
 func (s *Service) newUninstallCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "uninstall",
-		Short: "uninstalls the service from the system",
+		Short: "Uninstalls the service from the system",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Uninstall()
@@ -182,7 +182,7 @@ func (s *Service) newUninstallCommand() *cobra.Command {
 func (s *Service) newStatusCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "status",
-		Short: "shows the current service status",
+		Short: "Shows the current service status",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			var res string
