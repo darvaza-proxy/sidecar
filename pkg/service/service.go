@@ -276,6 +276,12 @@ func (s *Service) newStatusCommand() *cobra.Command {
 		Short: "Shows the current service status",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
+			plat, err := s.getServicePlatform()
+			s.printf("%s: %s\n", "Platform", core.Coalesce(plat, "unknown"))
+			if err != nil {
+				return err
+			}
+
 			st, err := s.getServiceStatus()
 			s.printf("%s: %s\n", "Status", core.Coalesce(st, "unknown"))
 			return err
@@ -332,10 +338,15 @@ func (s *Service) Interactive() bool {
 
 // Platform returns a description of the system service.
 func (s *Service) Platform() string {
+	plat, _ := s.getServicePlatform()
+	return plat
+}
+
+func (s *Service) getServicePlatform() (string, error) {
 	if s.sys != nil {
-		return s.sys.String()
+		return s.sys.String(), nil
 	}
-	return ""
+	return "", service.ErrNoServiceSystemDetected
 }
 
 func newService() *Service {
