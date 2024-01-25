@@ -124,9 +124,11 @@ func (s *Service) newStartCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "start",
 		Short: "starts the service",
+		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Start()
 		},
+		SilenceUsage: true,
 	}
 }
 
@@ -134,9 +136,11 @@ func (s *Service) newStopCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "stop",
 		Short: "stops the service",
+		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Stop()
 		},
+		SilenceUsage: true,
 	}
 }
 
@@ -144,9 +148,11 @@ func (s *Service) newRestartCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "restart",
 		Short: "restarts the service",
+		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Restart()
 		},
+		SilenceUsage: true,
 	}
 }
 
@@ -157,6 +163,7 @@ func (s *Service) newInstallCommand() *cobra.Command {
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Install()
 		},
+		SilenceUsage: true,
 	}
 }
 
@@ -164,9 +171,11 @@ func (s *Service) newUninstallCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "uninstall",
 		Short: "uninstalls the service from the system",
+		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Uninstall()
 		},
+		SilenceUsage: true,
 	}
 }
 
@@ -174,6 +183,7 @@ func (s *Service) newStatusCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "status",
 		Short: "shows the current service status",
+		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			var res string
 
@@ -192,6 +202,7 @@ func (s *Service) newStatusCommand() *cobra.Command {
 			_, err = fmt.Printf("%s: %s\n", "Status", res)
 			return err
 		},
+		SilenceUsage: true,
 	}
 }
 
