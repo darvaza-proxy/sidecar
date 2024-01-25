@@ -276,25 +276,49 @@ func (s *Service) newStatusCommand() *cobra.Command {
 		Short: "Shows the current service status",
 		Args:  cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
-			var res string
-
-			st, err := s.ss.Status()
-			if err != nil {
-				return err
-			}
-
-			labels := []string{"unknown", "running", "stopped"}
-			if int(st) < len(labels) {
-				res = labels[st]
-			} else {
-				res = fmt.Sprintf("%s(%v)", labels[0], int(st))
-			}
-
-			_, err = fmt.Printf("%s: %s\n", "Status", res)
+			st, err := s.getServiceStatus()
+			s.printf("%s: %s\n", "Status", core.Coalesce(st, "unknown"))
 			return err
 		},
 		SilenceUsage: true,
 	}
+}
+
+func (s *Service) getServiceStatus() (string, error) {
+	var res string
+
+	st, err := s.ss.Status()
+	if err == nil {
+		// success
+		labels := []string{"unknown", "running", "stopped"}
+		if int(st) < len(labels) {
+			res = labels[st]
+		} else {
+			res = fmt.Sprintf("%s(%v)", labels[0], int(st))
+		}
+
+		return res, nil
+	}
+
+	// failed, but how?
+	switch e := err.(type) {
+	case fmt.Stringer:
+		res = e.String()
+	default:
+		res = e.Error()
+	}
+
+	if res != "" {
+		res = fmt.Sprintf("%s: %s", "error", res)
+	} else {
+		res = "error"
+	}
+
+	return res, core.Wrap(err, "Service.Status")
+}
+
+func (*Service) printf(s string, args ...any) {
+	_, _ = fmt.Printf(s, args...)
 }
 
 // Interactive returns false if running under the OS service
