@@ -1,52 +1,66 @@
 package service
 
 import (
+	"context"
 	"time"
+
+	"darvaza.org/core"
 )
 
+// doStart starts the service worker when started
+// by the service manager
 func (s *Service) doStart() error {
-	var (
-		ctx  = s.ctx
-		cmd  = &s.cmd
-		args = s.cmd.Flags().Args()
-		done = make(chan struct{})
-	)
-
-	if err := s.cmd.ValidateArgs(args); err != nil {
-		// invalid arguments
+	if err := s.spawnLogHandler(); err != nil {
 		return err
 	}
 
-	s.preRun()
+	s.spawnService()
 
-	if err := s.prepare(ctx, cmd, args); err != nil {
-		// early failure
-		return err
-	}
-
-	s.wg.Add(1)
-	go func() {
-		defer s.wg.Done()
-		defer s.postRun()
-		defer close(done)
-
-		err := s.run(ctx, cmd, args)
-		s.err.Store(err)
-	}()
-
-	select {
-	case <-done:
-		// early run error
-	case <-time.After(s.d):
-		// enough wait, it is running
+	if d := s.Config.SanityDelay; d > 0 {
+		select {
+		case <-time.After(d):
+			// done waiting
+			return nil
+		case <-s.Cancelled():
+			// failed while waiting, wait until it finished
+			// shutting down.
+			return s.Wait()
+		}
 	}
 
 	return s.Err()
 }
 
+func (s *Service) spawnService() {
+	s.wg.Add(1)
+	go func() {
+		defer s.wg.Done()
+		defer func() {
+			if err := core.AsRecovered(recover()); err != nil {
+				s.doCancel(err)
+			}
+		}()
+
+		err := s.run(s.serve, s.args)
+		s.doCancel(err)
+	}()
+}
+
+// doStop stops the service worker when started
+// by the service manager
 func (s *Service) doStop() error {
-	s.cancelOnce.Do(s.cancel)
+	s.doCancel(nil)
 	return s.Wait()
+}
+
+func (s *Service) doCancel(cause error) {
+	if cause == nil {
+		cause = context.Canceled
+	}
+
+	if s.cancelled.CompareAndSwap(nil, cause) {
+		s.cancel()
+	}
 }
 
 // Wait waits until the worker has finished
@@ -56,9 +70,26 @@ func (s *Service) Wait() error {
 	return s.Err()
 }
 
-// Err returns the recorded run error
+// Cancelled returns a channel that is closed when
+// shutdown has been initiated.
+func (s *Service) Cancelled() <-chan struct{} {
+	return s.ctx.Done()
+}
+
+// Done returns a channel that is closed when the
+// worker has finished.
+func (s *Service) Done() <-chan struct{} {
+	ch := make(chan struct{})
+	go func() {
+		defer close(ch)
+		s.wg.Wait()
+	}()
+	return ch
+}
+
+// Err returns the recorded cancellation cause.
 func (s *Service) Err() error {
-	if err, ok := s.err.Load().(error); ok {
+	if err, ok := s.cancelled.Load().(error); ok {
 		return err
 	}
 
