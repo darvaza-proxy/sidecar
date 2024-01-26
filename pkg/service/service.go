@@ -251,11 +251,40 @@ func (s *Service) newInstallCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:   "install",
 		Short: "Installs the service on the system",
+		Args:  s.processInstallArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return s.ss.Install()
 		},
 		SilenceUsage: true,
 	}
+}
+
+func (s *Service) processInstallArgs(_ *cobra.Command, args []string) error {
+	switch {
+	case len(args) > 0:
+		// validate
+		if err := s.serve.ParseFlags(args); err != nil {
+			return core.Wrap(err, "validate")
+		}
+
+		// override
+		a := make([]string, len(args)+1)
+		a[0] = cmdUseName(s.serve, "serve")
+		copy(a[1:], args)
+		args = a
+	case len(s.Config.Arguments) == 0:
+		// default
+		a := make([]string, 1)
+		a[0] = cmdUseName(s.serve, "serve")
+		args = a
+	default:
+		// configured externally
+		// TODO: validate
+		return nil
+	}
+
+	s.Config.Arguments = args
+	return nil
 }
 
 func (s *Service) newUninstallCommand() *cobra.Command {
