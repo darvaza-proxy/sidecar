@@ -2,6 +2,8 @@ module darvaza.org/sidecar
 
 go 1.20
 
+replace darvaza.org/x/config => ../x/config
+
 require (
 	darvaza.org/cache/x/simplelru v0.1.8 // indirect
 	darvaza.org/core v0.12.0
