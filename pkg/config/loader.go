@@ -1,7 +1,7 @@
 package config
 
 import (
-	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
 
@@ -9,6 +9,7 @@ import (
 
 	"darvaza.org/x/config"
 	"darvaza.org/x/config/appdir"
+	"darvaza.org/x/config/expand"
 )
 
 var (
@@ -22,7 +23,7 @@ var (
 
 // Loader helps finding and location configuration files
 type Loader[T any] struct {
-	last string
+	l config.Loader[T]
 
 	Base        string
 	Directories []string
@@ -31,8 +32,8 @@ type Loader[T any] struct {
 }
 
 // Last returns the filename of the last config file to be used
-func (l *Loader[T]) Last() string {
-	return l.last
+func (l *Loader[T]) Last() (fs.FS, string) {
+	return l.l.Last()
 }
 
 // SetDefaults fills the gaps in the [Loader] config. This is not required
@@ -50,20 +51,15 @@ func (l *Loader[T]) SetDefaults() {
 	if len(l.Extensions) == 0 {
 		l.Extensions = DefaultExtensions
 	}
+
+	l.l.NewDecoder = NewDecoderFactory[T](nil)
 }
 
 // NewFromFile loads a config file by name, followed by initialization, filling gaps,
 // and validation.
 func (l *Loader[T]) NewFromFile(configFile string, options ...config.Option[T]) (*T, error) {
-	l.last = configFile
-
-	cfg := new(T)
-	err := LoadFile(configFile, cfg, options...)
-	if err != nil {
-		return nil, err
-	}
-
-	return cfg, nil
+	l.syncOptions(options)
+	return l.l.NewFromFileOS(configFile)
 }
 
 // NewFromFlag uses a cobra Flag for the config file name. if not specifies
@@ -82,31 +78,53 @@ func (l *Loader[T]) NewFromFlag(flag *pflag.Flag, options ...config.Option[T]) (
 // NewFromKnownLocations scans locations specified in the [Loader] for a config file,
 // if not possible it will create a default one.
 func (l *Loader[T]) NewFromKnownLocations(options ...config.Option[T]) (*T, error) {
-	var files []string
-
 	l.SetDefaults()
 
+	files, err := config.Join(l.Directories, l.Base, l.Extensions)
+	if err != nil {
+		return nil, err
+	}
 	files = append(files, l.Others...)
-	for _, dir := range l.Directories {
-		for _, ext := range l.Extensions {
-			fn := fmt.Sprintf("%s/%s.%s", dir, l.Base, ext)
-			files = append(files, fn)
-		}
-	}
 
-	for _, fn := range files {
-		cfg, err := l.NewFromFile(fn, options...)
-		switch {
-		case cfg != nil:
-			// good file found
-			return cfg, nil
-		case err != nil && !os.IsNotExist(err):
-			// bad file found
-			return nil, err
-		}
-	}
+	l.syncOptions(options)
+	return l.l.NewFromFileOS(files...)
+}
 
-	// make one fresh
-	l.last = ""
-	return New(options...)
+func (l *Loader[T]) syncOptions(options []config.Option[T]) {
+	l.l.Options = options
+}
+
+// NewDecoderFactory returns a [config.Decoder] factory to use with [config.Loader],
+// using our registered decoders.
+func NewDecoderFactory[T any](getenv func(string) string) func(string) (config.Decoder[T], error) {
+	return func(filename string) (config.Decoder[T], error) {
+		dec, _ := NewDecoderByFilename(filename)
+		if dec == nil {
+			// fallback to autodetect
+			dec, _ = NewDecoder("auto")
+		}
+
+		if dec == nil {
+			return nil, config.NewPathError(filename, "decode", ErrUnknownFormat)
+		}
+		fn := newLoaderDecoder[T](dec, getenv)
+		return fn, nil
+	}
+}
+
+func newLoaderDecoder[T any](dec Decoder, getenv func(string) string) config.DecoderFunc[T] {
+	return func(filename string, data []byte) (*T, error) {
+		text, err := expand.FromBytes(data, getenv)
+		if err != nil {
+			return nil, config.NewPathError(filename, "decode", err)
+		}
+
+		v := new(T)
+		err = dec.Decode(text, v)
+		if err != nil {
+			return nil, config.NewPathError(filename, "decode", err)
+		}
+
+		return v, nil
+	}
 }
