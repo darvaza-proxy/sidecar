@@ -8,15 +8,13 @@ import (
 	"github.com/spf13/pflag"
 
 	"darvaza.org/x/config"
+	"darvaza.org/x/config/appdir"
 )
 
 var (
 	// CmdName is the base name of default config files if none is
 	// specified on the [Loader]
 	CmdName = filepath.Base(os.Args[0])
-	// DefaultDirectories is the list of directories to test when trying
-	// to find a config file.
-	DefaultDirectories = []string{".", "/etc", "/etc/" + CmdName}
 	// DefaultExtensions is the list of extensions to test when trying
 	// to find a config file.
 	DefaultExtensions = []string{"conf", "json", "toml", "yaml", "yml"}
@@ -46,7 +44,7 @@ func (l *Loader[T]) SetDefaults() {
 	}
 
 	if len(l.Directories) == 0 {
-		l.Directories = DefaultDirectories
+		l.Directories = appdir.AllConfigDir(CmdName)
 	}
 
 	if len(l.Extensions) == 0 {
