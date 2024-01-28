@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/pflag"
+
+	"darvaza.org/x/config"
 )
 
 var (
@@ -54,7 +56,7 @@ func (l *Loader[T]) SetDefaults() {
 
 // NewFromFile loads a config file by name, followed by initialization, filling gaps,
 // and validation.
-func (l *Loader[T]) NewFromFile(configFile string, options ...func(*T) error) (*T, error) {
+func (l *Loader[T]) NewFromFile(configFile string, options ...config.Option[T]) (*T, error) {
 	l.last = configFile
 
 	cfg := new(T)
@@ -69,7 +71,7 @@ func (l *Loader[T]) NewFromFile(configFile string, options ...func(*T) error) (*
 // NewFromFlag uses a cobra Flag for the config file name. if not specifies
 // the known locations will be tried, and if all fails, it will create a
 // default one.
-func (l *Loader[T]) NewFromFlag(flag *pflag.Flag, options ...func(*T) error) (*T, error) {
+func (l *Loader[T]) NewFromFlag(flag *pflag.Flag, options ...config.Option[T]) (*T, error) {
 	if flag.Changed {
 		// given
 		configFile := flag.Value.String()
@@ -81,7 +83,7 @@ func (l *Loader[T]) NewFromFlag(flag *pflag.Flag, options ...func(*T) error) (*T
 
 // NewFromKnownLocations scans locations specified in the [Loader] for a config file,
 // if not possible it will create a default one.
-func (l *Loader[T]) NewFromKnownLocations(options ...func(*T) error) (*T, error) {
+func (l *Loader[T]) NewFromKnownLocations(options ...config.Option[T]) (*T, error) {
 	var files []string
 
 	l.SetDefaults()
