@@ -2,8 +2,6 @@
 package config
 
 import (
-	"os"
-
 	"darvaza.org/x/config"
 	"darvaza.org/x/config/expand"
 )
@@ -27,17 +25,12 @@ func LoadFile[T any](filename string, v *T,
 	}
 
 	if dec == nil {
-		return ErrUnknownFormat
+		return config.NewPathError(filename, "decode", ErrUnknownFormat)
 	}
 
 	if err := dec.Decode(data, v); err != nil {
 		// failed to decode
-		err = &os.PathError{
-			Path: filename,
-			Op:   "decode",
-			Err:  err,
-		}
-		return err
+		return config.NewPathError(filename, "decode", err)
 	}
 
 	return loadFileDecoded[T](filename, v, options)
@@ -46,23 +39,13 @@ func LoadFile[T any](filename string, v *T,
 func loadFileDecoded[T any](filename string, v *T, options []func(*T) error) error {
 	for _, opt := range options {
 		if err := opt(v); err != nil {
-			err = &os.PathError{
-				Path: filename,
-				Op:   "init",
-				Err:  err,
-			}
-			return err
+			return config.NewPathError(filename, "init", err)
 		}
 	}
 
 	if err := config.Prepare(v); err != nil {
 		// failed to validate
-		err = &os.PathError{
-			Path: filename,
-			Op:   "validate",
-			Err:  err,
-		}
-		return err
+		return config.NewPathError(filename, "validate", err)
 	}
 
 	// success
