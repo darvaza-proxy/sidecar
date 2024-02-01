@@ -20,8 +20,6 @@ darvaza.org/slog/handlers/zap v0.4.1 h1:UR7HrLTKjZR+JWzweLQKsrqsRxqOP8cXjkntoa8g
 darvaza.org/slog/handlers/zap v0.4.1/go.mod h1:KUlCq3GgR/0QGyqIGif3VerEQpDFGCFZlRw8iazVQ0Q=
 darvaza.org/slog/handlers/zerolog v0.4.9 h1:08FjRnwRGtJsLLBnbgxVorb/bkgm5QEM/LXD2cxeCbM=
 darvaza.org/slog/handlers/zerolog v0.4.9/go.mod h1:PZYfx6eOxQfD+cXJQp52iwKgcD30QVYHoXxOCojAOdw=
-darvaza.org/x/config v0.2.9 h1:9Fivua+hPgCy5MbBM1b4E38ACCYY4YSmbap4U8uDzrY=
-darvaza.org/x/config v0.2.9/go.mod h1:TB6lz0LotDwdp0s5NgfjEqmbxL2BQBV3VGHIrxEq4Y8=
 darvaza.org/x/config v0.3.1 h1:hnXV9FSTOWWiOOMyflPbS9vKpcBG8j2QaMCNp2R78JU=
 darvaza.org/x/config v0.3.1/go.mod h1:0i88K9P/m0lKRoHqz5szwLB0m2skj23daIgJwKxURvw=
 darvaza.org/x/net v0.1.1 h1:8VjQfk4K8IfKX1s03q3uG2FRL9lb3kghlX9qj3aX98M=
