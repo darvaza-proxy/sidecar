@@ -14,7 +14,7 @@ require (
 	darvaza.org/slog/handlers/filter v0.4.9
 	darvaza.org/slog/handlers/zap v0.4.1
 	darvaza.org/slog/handlers/zerolog v0.4.9
-	darvaza.org/x/config v0.2.9
+	darvaza.org/x/config v0.3.1
 	darvaza.org/x/net v0.1.1
 )
 
