@@ -2,8 +2,6 @@
 package config
 
 import (
-	"os"
-
 	"darvaza.org/x/config"
 	"darvaza.org/x/config/expand"
 )
@@ -12,7 +10,7 @@ import (
 // filling gaps and validating its content.
 // LoadFile uses the file extension to determine the format.
 func LoadFile[T any](filename string, v *T,
-	options ...func(*T) error) error {
+	options ...config.Option[T]) error {
 	//
 	data, err := expand.FromFile(filename, nil)
 	if err != nil {
@@ -27,42 +25,27 @@ func LoadFile[T any](filename string, v *T,
 	}
 
 	if dec == nil {
-		return ErrUnknownFormat
+		return config.NewPathError(filename, "decode", ErrUnknownFormat)
 	}
 
 	if err := dec.Decode(data, v); err != nil {
 		// failed to decode
-		err = &os.PathError{
-			Path: filename,
-			Op:   "decode",
-			Err:  err,
-		}
-		return err
+		return config.NewPathError(filename, "decode", err)
 	}
 
 	return loadFileDecoded[T](filename, v, options)
 }
 
-func loadFileDecoded[T any](filename string, v *T, options []func(*T) error) error {
+func loadFileDecoded[T any](filename string, v *T, options []config.Option[T]) error {
 	for _, opt := range options {
 		if err := opt(v); err != nil {
-			err = &os.PathError{
-				Path: filename,
-				Op:   "init",
-				Err:  err,
-			}
-			return err
+			return config.NewPathError(filename, "init", err)
 		}
 	}
 
 	if err := config.Prepare(v); err != nil {
 		// failed to validate
-		err = &os.PathError{
-			Path: filename,
-			Op:   "validate",
-			Err:  err,
-		}
-		return err
+		return config.NewPathError(filename, "validate", err)
 	}
 
 	// success
@@ -71,7 +54,7 @@ func loadFileDecoded[T any](filename string, v *T, options []func(*T) error) err
 
 // New creates a new config, applying the initialization functions,
 // filling gaps and validating its content.
-func New[T any](options ...func(*T) error) (*T, error) {
+func New[T any](options ...config.Option[T]) (*T, error) {
 	v := new(T)
 	if err := loadFileDecoded("", v, options); err != nil {
 		return nil, err
