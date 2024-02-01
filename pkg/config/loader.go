@@ -87,7 +87,15 @@ func (l *Loader[T]) NewFromKnownLocations(options ...config.Option[T]) (*T, erro
 	files = append(files, l.Others...)
 
 	l.syncOptions(options)
-	return l.l.NewFromFileOS(files...)
+	v, err := l.l.NewFromFileOS(files...)
+	switch {
+	case err == nil:
+		return v, nil
+	case os.IsNotExist(err):
+		return l.l.New()
+	default:
+		return nil, err
+	}
 }
 
 func (l *Loader[T]) syncOptions(options []config.Option[T]) {
