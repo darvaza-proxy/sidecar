@@ -98,7 +98,7 @@ func (srv *Server) spawnQuic(h3s *http3.Server, lsn *quic.EarlyListener, _ time.
 	})
 
 	srv.eg.Go(func(ctx context.Context) error {
-		return srv.grabQuicHeaders(ctx, h3s)
+		return srv.grabQUICHeaders(ctx, h3s)
 	}, nil)
 }
 
@@ -129,7 +129,7 @@ func (srv *Server) QuicHeadersMiddleware(next http.Handler) http.Handler {
 
 // grabQuicHeader tries periodically to grab the Alt-Svc headers corresponding
 // to a server until it succeeds or the given context is cancelled.
-func (srv *Server) grabQuicHeaders(ctx context.Context, h3s *http3.Server) error {
+func (srv *Server) grabQUICHeaders(ctx context.Context, h3s *http3.Server) error {
 	for {
 		select {
 		case <-ctx.Done():
@@ -137,7 +137,7 @@ func (srv *Server) grabQuicHeaders(ctx context.Context, h3s *http3.Server) error
 		case <-time.After(GrabQuicHeadersRetry):
 			hdr := make(http.Header)
 
-			if err := h3s.SetQuicHeaders(hdr); err == nil {
+			if err := h3s.SetQUICHeaders(hdr); err == nil {
 				// success
 				srv.appendQuicHeaders(hdr[AltSvcHeader])
 				return nil
