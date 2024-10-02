@@ -55,7 +55,7 @@ func NewDecoder(name string) (Decoder, error) {
 	}
 
 	if dec == nil {
-		err := core.Wrap(ErrUnknownFormat, name)
+		err := core.Wrap(ErrUnknownFormat, "%s", name)
 		return nil, err
 	}
 
@@ -80,7 +80,7 @@ func NewEncoder(name string) (Encoder, error) {
 	}
 
 	if enc == nil {
-		err := core.Wrap(ErrUnknownFormat, name)
+		err := core.Wrap(ErrUnknownFormat, "%s", name)
 		return nil, err
 	}
 

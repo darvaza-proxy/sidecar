@@ -3,19 +3,20 @@ module darvaza.org/sidecar
 go 1.21
 
 require (
-	darvaza.org/cache/x/simplelru v0.1.9 // indirect
-	darvaza.org/core v0.14.7
-	darvaza.org/darvaza/shared v0.5.12
-	darvaza.org/middleware v0.2.8
-	darvaza.org/resolver v0.9.3
-	darvaza.org/slog v0.5.10
-	darvaza.org/slog/handlers/discard v0.4.13
-	darvaza.org/slog/handlers/filter v0.4.10
-	darvaza.org/slog/handlers/zap v0.4.3
-	darvaza.org/slog/handlers/zerolog v0.4.11
-	darvaza.org/x/config v0.3.6
-	darvaza.org/x/net v0.3.3
-	darvaza.org/x/web v0.8.3 // indirect
+	darvaza.org/cache/x/simplelru v0.1.10 // indirect
+	darvaza.org/core v0.14.10
+	darvaza.org/darvaza/shared v0.6.1
+	darvaza.org/middleware v0.2.9
+	darvaza.org/resolver v0.9.4
+	darvaza.org/slog v0.5.11
+	darvaza.org/slog/handlers/discard v0.4.14
+	darvaza.org/slog/handlers/filter v0.4.11
+	darvaza.org/slog/handlers/zap v0.4.4
+	darvaza.org/slog/handlers/zerolog v0.4.12
+	darvaza.org/x/config v0.3.8
+	darvaza.org/x/fs v0.3.3 // indirect
+	darvaza.org/x/net v0.3.5
+	darvaza.org/x/web v0.8.7 // indirect
 )
 
 require (
@@ -33,7 +34,6 @@ require (
 )
 
 require (
-	darvaza.org/x/fs v0.2.8 // indirect
 	github.com/amery/defaults v0.1.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.5 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -53,11 +53,11 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.27.0 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/mod v0.20.0 // indirect
+	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
-	golang.org/x/tools v0.24.0 // indirect
+	golang.org/x/tools v0.25.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	mvdan.cc/sh/v3 v3.8.0 // indirect
 )
