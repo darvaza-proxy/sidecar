@@ -62,7 +62,7 @@ func (s *Horizons) Append(z *Horizon) error {
 	}
 
 	if _, ok := s.n[z.n]; ok {
-		return core.Wrap(core.ErrExists, "%s", z.String())
+		return core.Wrap(core.ErrExists, z.String())
 	}
 
 	s.s = append(s.s, z)
