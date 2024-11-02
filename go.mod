@@ -7,7 +7,6 @@ replace darvaza.org/x/tls => ../x/tls
 require (
 	darvaza.org/cache/x/simplelru v0.1.10 // indirect
 	darvaza.org/core v0.15.4
-	darvaza.org/darvaza/shared v0.6.2
 	darvaza.org/middleware v0.2.10
 	darvaza.org/resolver v0.9.5
 	darvaza.org/slog v0.5.14
@@ -15,8 +14,10 @@ require (
 	darvaza.org/slog/handlers/filter v0.4.13
 	darvaza.org/slog/handlers/zap v0.4.6
 	darvaza.org/x/config v0.3.11
+	darvaza.org/x/container v0.1.5 // indirect
 	darvaza.org/x/fs v0.3.6 // indirect
 	darvaza.org/x/net v0.4.0
+	darvaza.org/x/tls v0.2.1
 	darvaza.org/x/web v0.9.2 // indirect
 )
 

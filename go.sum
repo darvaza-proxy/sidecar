@@ -2,8 +2,6 @@ darvaza.org/cache/x/simplelru v0.1.10 h1:SRCVFeT9WH2pDiOHC4YLMtK7CLrtehCwUzBUqxZ
 darvaza.org/cache/x/simplelru v0.1.10/go.mod h1:s0md8qz4JK1M23zCP/qr9Zog2tM6QmseVQCCIpza0ZY=
 darvaza.org/core v0.15.4 h1:R0kHauyfjT4gEP0YxITxgCoONQ7JVsM/Fc9qblkzaaU=
 darvaza.org/core v0.15.4/go.mod h1:TZvRGmS6O6bIaN2/VFGf/GhCEBbOlTd51G7tQx6qdwM=
-darvaza.org/darvaza/shared v0.6.2 h1:F9Eqn2juJBW4VarHIvrhnsKFCsAc7AFfDg3QORTMZDM=
-darvaza.org/darvaza/shared v0.6.2/go.mod h1:2s2H284vA1byalTpPdjG0uC8WCsKSZBj6GbCZh5EU5A=
 darvaza.org/middleware v0.2.10 h1:DX6DTeRuCMH+nEKR9fsSut2c62aarjSxn9oKtXRg65E=
 darvaza.org/middleware v0.2.10/go.mod h1:QJjzlTXX3xSAq+owN0BNJ3kcAZ+3J8+2G9ayig+W+Iw=
 darvaza.org/resolver v0.9.5 h1:QZrwhQTDmoAO610r//+yqPpdCB4Wht8N75rbXW+Reuw=
@@ -18,6 +16,8 @@ darvaza.org/slog/handlers/zap v0.4.6 h1:554X7oWMH/rCYa57s5wwgT6iL4sadjg5gZnjZZ1s
 darvaza.org/slog/handlers/zap v0.4.6/go.mod h1:80CrCKRG7NIjtx8W9O0Bx5etzGFjR/oSvaUOdYISrfs=
 darvaza.org/x/config v0.3.11 h1:jY5ZPAUJKTpravLBbkgxBE6CYz5jBVr5Z4JkMEfRdXc=
 darvaza.org/x/config v0.3.11/go.mod h1:SLs0tD+m+biWkbk+Yxo1QQ5BRhNxP8bNhQkgHJHk58U=
+darvaza.org/x/container v0.1.5 h1:/zFnPiffYx9LPUtARZb+FVhWJBqdfcc+jjJlna5x034=
+darvaza.org/x/container v0.1.5/go.mod h1:Rjc2lGPpZJzgSSqUs47PTQArwGXY6+5wIxTM6EAarCI=
 darvaza.org/x/fs v0.3.6 h1:rq7jtJqn8k9neM382K8Q/5J2iRk/Pj2tlJ3MwyKbsiU=
 darvaza.org/x/fs v0.3.6/go.mod h1:+8XfpO5JA3CRcwytwtpEFpo4iwLnXdSZFHxskHHhyss=
 darvaza.org/x/net v0.4.0 h1:KBl4vb1mbXZMz+8gTpfJrFSAOAkoiNVLoYhyDXTBfcs=
