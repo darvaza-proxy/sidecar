@@ -6,17 +6,17 @@ import (
 	"net/netip"
 	"time"
 
-	"darvaza.org/darvaza/shared/storage"
 	"darvaza.org/slog"
 	"darvaza.org/slog/handlers/discard"
 	"darvaza.org/x/config"
+	"darvaza.org/x/tls"
 )
 
 // Config represents the generic server configuration for Darvaza sidecars
 type Config struct {
 	Logger  slog.Logger     `json:"-" yaml:"-" toml:"-"`
 	Context context.Context `json:"-" yaml:"-" toml:"-"`
-	Store   storage.Store   `json:"-" yaml:"-" toml:"-"`
+	Store   tls.Store       `json:"-" yaml:"-" toml:"-"`
 
 	Name string `toml:"name" valid:"host,require"`
 

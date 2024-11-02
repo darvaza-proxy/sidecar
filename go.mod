@@ -5,7 +5,6 @@ go 1.22
 require (
 	darvaza.org/cache/x/simplelru v0.2.0 // indirect
 	darvaza.org/core v0.16.0
-	darvaza.org/darvaza/shared v0.7.0
 	darvaza.org/middleware v0.3.1
 	darvaza.org/resolver v0.10.1
 	darvaza.org/slog v0.6.0
@@ -13,8 +12,10 @@ require (
 	darvaza.org/slog/handlers/filter v0.5.0
 	darvaza.org/slog/handlers/zap v0.5.0
 	darvaza.org/x/config v0.4.1
+	darvaza.org/x/container v0.2.0 // indirect
 	darvaza.org/x/fs v0.4.0 // indirect
 	darvaza.org/x/net v0.5.0
+	darvaza.org/x/tls v0.5.0
 	darvaza.org/x/web v0.9.6 // indirect
 )
 
