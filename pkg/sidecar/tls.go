@@ -1,14 +1,13 @@
 package sidecar
 
 import (
-	"crypto/tls"
 	"crypto/x509"
 
 	"darvaza.org/core"
-	"darvaza.org/darvaza/shared/storage"
+	"darvaza.org/x/tls"
 )
 
-func newFallbackTLSStore() (storage.Store, error) {
+func newFallbackTLSStore() (tls.Store, error) {
 	// TODO: self-signed
 	return nil, core.ErrNotImplemented
 }

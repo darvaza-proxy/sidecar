@@ -3,7 +3,7 @@ package sidecar
 
 import (
 	"darvaza.org/core"
-	"darvaza.org/darvaza/shared/storage"
+	"darvaza.org/x/tls"
 
 	"darvaza.org/sidecar/pkg/sidecar/dnsserver"
 	"darvaza.org/sidecar/pkg/sidecar/httpserver"
@@ -14,7 +14,7 @@ type Server struct {
 	cfg Config
 	eg  core.ErrGroup
 
-	tls storage.Store
+	tls tls.Store
 	hs  *httpserver.Server
 	ds  *dnsserver.Server
 }
@@ -56,12 +56,12 @@ func (cfg *Config) New() (*Server, error) {
 
 // NewWithStore creates a new server using the given config and
 // a prebuilt tls Store
-func (cfg *Config) NewWithStore(s storage.Store) (*Server, error) {
+func (cfg *Config) NewWithStore(s tls.Store) (*Server, error) {
 	cfg.Store = s
 	return New(cfg)
 }
 
-func (cfg *Config) newServer(s storage.Store) (*Server, error) {
+func (cfg *Config) newServer(s tls.Store) (*Server, error) {
 	srv := &Server{
 		cfg: *cfg,
 		eg: core.ErrGroup{
