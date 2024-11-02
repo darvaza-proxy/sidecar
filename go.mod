@@ -12,7 +12,6 @@ require (
 	darvaza.org/slog/handlers/discard v0.4.16
 	darvaza.org/slog/handlers/filter v0.4.13
 	darvaza.org/slog/handlers/zap v0.4.6
-	darvaza.org/slog/handlers/zerolog v0.4.14
 	darvaza.org/x/config v0.3.8
 	darvaza.org/x/fs v0.3.3 // indirect
 	darvaza.org/x/net v0.3.6
@@ -26,7 +25,6 @@ require (
 	github.com/miekg/dns v1.1.62
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.42.0
-	github.com/rs/zerolog v1.33.0
 	github.com/spf13/pflag v1.0.5
 	go.uber.org/zap v1.27.0
 	golang.org/x/net v0.30.0
@@ -45,8 +43,6 @@ require (
 	github.com/google/pprof v0.0.0-20231229205709-960ae82b1e42 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
-	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/onsi/ginkgo/v2 v2.15.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/zeebo/blake3 v0.2.4 // indirect
