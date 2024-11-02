@@ -2,6 +2,8 @@ module darvaza.org/sidecar
 
 go 1.21
 
+replace darvaza.org/x/tls => ../x/tls
+
 require (
 	darvaza.org/cache/x/simplelru v0.1.10 // indirect
 	darvaza.org/core v0.15.4
