@@ -24,8 +24,13 @@ func (srv *Server) initAddresses() error {
 
 // Listen listens to all needed ports
 func (srv *Server) Listen() error {
-	keepalive := srv.cfg.Addresses.KeepAlive
-	lc := bind.NewListenConfig(srv.eg.Context(), keepalive)
+	bc := bind.Config{
+		KeepAlive: srv.cfg.Addresses.KeepAlive,
+		Context:   srv.eg.Context(),
+		ReusePort: true,
+	}
+
+	lc := bc.ExportListenConfig()
 	return srv.ListenWithListener(lc)
 }
 
