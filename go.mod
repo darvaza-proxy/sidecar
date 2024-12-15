@@ -3,11 +3,11 @@ module darvaza.org/sidecar
 go 1.21
 
 require (
-	darvaza.org/cache/x/simplelru v0.1.10 // indirect
+	darvaza.org/cache/x/simplelru v0.1.11 // indirect
 	darvaza.org/core v0.15.4
 	darvaza.org/darvaza/shared v0.6.2
 	darvaza.org/middleware v0.2.11
-	darvaza.org/resolver v0.9.5
+	darvaza.org/resolver v0.9.6
 	darvaza.org/slog v0.5.14
 	darvaza.org/slog/handlers/discard v0.4.16
 	darvaza.org/slog/handlers/filter v0.4.13
