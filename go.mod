@@ -14,7 +14,7 @@ require (
 	darvaza.org/slog/handlers/zap v0.4.6
 	darvaza.org/x/config v0.3.11
 	darvaza.org/x/fs v0.3.7 // indirect
-	darvaza.org/x/net v0.4.0
+	darvaza.org/x/net v0.4.2
 	darvaza.org/x/web v0.9.4 // indirect
 )
 
