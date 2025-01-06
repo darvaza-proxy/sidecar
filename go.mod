@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	darvaza.org/cache/x/simplelru v0.1.11 // indirect
-	darvaza.org/core v0.15.4
+	darvaza.org/core v0.15.5
 	darvaza.org/darvaza/shared v0.6.2
 	darvaza.org/middleware v0.2.11
 	darvaza.org/resolver v0.9.6
