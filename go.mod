@@ -4,17 +4,17 @@ go 1.21
 
 require (
 	darvaza.org/cache/x/simplelru v0.1.11 // indirect
-	darvaza.org/core v0.15.5
+	darvaza.org/core v0.15.6
 	darvaza.org/darvaza/shared v0.6.2
 	darvaza.org/middleware v0.2.11
 	darvaza.org/resolver v0.9.6
-	darvaza.org/slog v0.5.14
-	darvaza.org/slog/handlers/discard v0.4.16
-	darvaza.org/slog/handlers/filter v0.4.13
-	darvaza.org/slog/handlers/zap v0.4.6
-	darvaza.org/x/config v0.3.11
-	darvaza.org/x/fs v0.3.7 // indirect
-	darvaza.org/x/net v0.4.2
+	darvaza.org/slog v0.5.15
+	darvaza.org/slog/handlers/discard v0.4.17
+	darvaza.org/slog/handlers/filter v0.4.14
+	darvaza.org/slog/handlers/zap v0.4.7
+	darvaza.org/x/config v0.3.12
+	darvaza.org/x/fs v0.3.8 // indirect
+	darvaza.org/x/net v0.4.4
 	darvaza.org/x/web v0.9.4 // indirect
 )
 
