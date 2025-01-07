@@ -6,8 +6,8 @@ darvaza.org/darvaza/shared v0.6.2 h1:F9Eqn2juJBW4VarHIvrhnsKFCsAc7AFfDg3QORTMZDM
 darvaza.org/darvaza/shared v0.6.2/go.mod h1:2s2H284vA1byalTpPdjG0uC8WCsKSZBj6GbCZh5EU5A=
 darvaza.org/middleware v0.2.11 h1:EaDbgTMisp8DBkN12MzA5xymupVuvEz1xnaUKVcim0I=
 darvaza.org/middleware v0.2.11/go.mod h1:qtTBb0LEgI2Nzxphb17+9g8s2RZSlnKMDw3FDf1HRq4=
-darvaza.org/resolver v0.9.6 h1:acDzIQLlbf0aGtP/+0JQdswfBfO+Q29bviGtVLidTW4=
-darvaza.org/resolver v0.9.6/go.mod h1:J6sXMupplerLmuYm9fyGVPktyGAxCR6yX4gB3rXCVsI=
+darvaza.org/resolver v0.9.7 h1:JbuX2c9RMpllwg5gfMH/L2UtvRkfdytqIUFbyeLUHZM=
+darvaza.org/resolver v0.9.7/go.mod h1:czPDissOGLdHLB/lo6ZnCioaR3Fg1Nk/PJw8ltG3pBw=
 darvaza.org/slog v0.5.15 h1:9bH8EwS7+0HTa2UaHv50+lGEtHx5r3p4WCxb9jhyx4k=
 darvaza.org/slog v0.5.15/go.mod h1:afFcsqa/+VulEjkhiBqVdLx6yE32aBWIxQ+ww7KtFPU=
 darvaza.org/slog/handlers/discard v0.4.17 h1:Iyc8uDfj8wVn2s/B2tMkd9sgk1m+Xf3hnm4zWE6mPWw=
