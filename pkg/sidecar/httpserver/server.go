@@ -37,7 +37,7 @@ func (srv *Server) Spawn(h http.Handler, wait time.Duration) error {
 		func() error { return srv.prepare() },
 		func() error { return srv.spawnH2C(h, srv.sl.Insecure, graceful) },
 		func() error { return srv.spawnH2(h, srv.sl.Secure, graceful) },
-		func() error { return srv.spawnH3(h, srv.sl.Quic, graceful) },
+		func() error { return srv.spawnH3(h, srv.sl.QUIC, graceful) },
 	} {
 		if err := fn(); err != nil {
 			srv.eg.Cancel(err)
