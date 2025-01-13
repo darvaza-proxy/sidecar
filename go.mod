@@ -3,19 +3,19 @@ module darvaza.org/sidecar
 go 1.22
 
 require (
-	darvaza.org/cache/x/simplelru v0.1.11 // indirect
-	darvaza.org/core v0.15.6
-	darvaza.org/darvaza/shared v0.6.2
-	darvaza.org/middleware v0.2.11
-	darvaza.org/resolver v0.9.7
-	darvaza.org/slog v0.5.15
-	darvaza.org/slog/handlers/discard v0.4.17
-	darvaza.org/slog/handlers/filter v0.4.14
-	darvaza.org/slog/handlers/zap v0.4.7
-	darvaza.org/x/config v0.3.12
-	darvaza.org/x/fs v0.3.8 // indirect
-	darvaza.org/x/net v0.4.4
-	darvaza.org/x/web v0.9.4 // indirect
+	darvaza.org/cache/x/simplelru v0.2.0 // indirect
+	darvaza.org/core v0.16.0
+	darvaza.org/darvaza/shared v0.7.0
+	darvaza.org/middleware v0.3.1
+	darvaza.org/resolver v0.10.1
+	darvaza.org/slog v0.6.0
+	darvaza.org/slog/handlers/discard v0.5.0
+	darvaza.org/slog/handlers/filter v0.5.0
+	darvaza.org/slog/handlers/zap v0.5.0
+	darvaza.org/x/config v0.4.1
+	darvaza.org/x/fs v0.4.0 // indirect
+	darvaza.org/x/net v0.5.0
+	darvaza.org/x/web v0.9.6 // indirect
 )
 
 require (
@@ -33,10 +33,10 @@ require (
 
 require (
 	github.com/amery/defaults v0.1.0 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.7 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/go-playground/validator/v10 v10.23.0 // indirect
+	github.com/go-playground/validator/v10 v10.24.0 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -57,5 +57,5 @@ require (
 	golang.org/x/tools v0.24.0 // indirect
 	google.golang.org/protobuf v1.35.2 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
-	mvdan.cc/sh/v3 v3.8.0 // indirect
+	mvdan.cc/sh/v3 v3.10.0 // indirect
 )
