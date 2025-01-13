@@ -21,6 +21,9 @@ var (
 	DefaultExtensions = []string{"conf", "json", "toml", "yaml", "yml"}
 )
 
+// GetenvFunc is a function that gets an environment variable.
+type GetenvFunc func(string) string
+
 // Loader helps finding and location configuration files
 type Loader[T any] struct {
 	l config.Loader[T]
@@ -96,7 +99,7 @@ func (l *Loader[T]) syncOptions(options []config.Option[T]) {
 
 // NewDecoderFactory returns a [config.Decoder] factory to use with [config.Loader],
 // using our registered decoders.
-func NewDecoderFactory[T any](getenv func(string) string) func(string) (config.Decoder[T], error) {
+func NewDecoderFactory[T any](getenv GetenvFunc) func(string) (config.Decoder[T], error) {
 	return func(filename string) (config.Decoder[T], error) {
 		dec, _ := NewDecoderByFilename(filename)
 		if dec == nil {
