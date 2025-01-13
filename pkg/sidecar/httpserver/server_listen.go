@@ -22,7 +22,7 @@ const (
 type Listeners struct {
 	Secure   []net.Listener
 	Insecure []*net.TCPListener
-	Quic     []*quic.EarlyListener
+	QUIC     []*quic.EarlyListener
 
 	up atomic.Bool
 }
@@ -31,7 +31,7 @@ type Listeners struct {
 func (sl *Listeners) Close() error {
 	closeAll(sl.Secure)
 	closeAll(sl.Insecure)
-	closeAll(sl.Quic)
+	closeAll(sl.QUIC)
 	return nil
 }
 
@@ -84,7 +84,7 @@ func (srv *Server) newListeners(cfg *BindingConfig, bc *bind.Config) (*Listeners
 			return nil, err
 		}
 		sl.Secure = tlsLsn
-		sl.Quic = quicLsn
+		sl.QUIC = quicLsn
 	}
 
 	// HTTP
@@ -113,7 +113,7 @@ func (srv *Server) bindTLS(bc *bind.Config) ([]net.Listener, []*quic.EarlyListen
 
 	tlsLsn := srv.asSecureListeners(tcp)
 
-	quicLsn, err := srv.asQuicEarlyListeners(udp)
+	quicLsn, err := srv.asQUICEarlyListeners(udp)
 	if err != nil {
 		closeAll(tlsLsn)
 		closeAll(udp)

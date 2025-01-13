@@ -42,8 +42,8 @@ func (srv *Server) NewH2CHandler(h http.Handler) http.Handler {
 	// ACME-HTTP-01 handler or 404 for /.well-known/acme-challenge
 	h = AcmeHTTP01Middleware(h, srv.cfg.AcmeHTTP01)
 
-	// Advertise Quic
-	h = srv.QuicHeadersMiddleware(h)
+	// Advertise QUIC
+	h = srv.QUICHeadersMiddleware(h)
 
 	return h
 }
