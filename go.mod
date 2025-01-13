@@ -24,7 +24,7 @@ require (
 	github.com/dlclark/regexp2 v1.11.4
 	github.com/miekg/dns v1.1.62
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
-	github.com/quic-go/quic-go v0.42.0
+	github.com/quic-go/quic-go v0.48.2
 	github.com/spf13/pflag v1.0.5
 	go.uber.org/zap v1.27.0
 	golang.org/x/net v0.34.0
@@ -44,7 +44,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/onsi/ginkgo/v2 v2.15.0 // indirect
-	github.com/quic-go/qpack v0.4.0 // indirect
+	github.com/quic-go/qpack v0.5.1 // indirect
 	github.com/zeebo/blake3 v0.2.4 // indirect
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
