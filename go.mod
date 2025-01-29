@@ -25,7 +25,7 @@ require (
 	github.com/miekg/dns v1.1.63
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.49.0
-	github.com/spf13/pflag v1.0.5
+	github.com/spf13/pflag v1.0.6
 	go.uber.org/zap v1.27.0
 	golang.org/x/net v0.34.0
 	gopkg.in/yaml.v3 v3.0.1
