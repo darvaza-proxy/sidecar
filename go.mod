@@ -21,7 +21,7 @@ require (
 require (
 	github.com/BurntSushi/toml v1.4.0
 	github.com/cloudflare/tableflip v1.2.3
-	github.com/dlclark/regexp2 v1.11.4
+	github.com/dlclark/regexp2 v1.11.5
 	github.com/miekg/dns v1.1.63
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.49.0
