@@ -19,7 +19,7 @@ require (
 )
 
 require (
-	github.com/BurntSushi/toml v1.4.0
+	github.com/BurntSushi/toml v1.5.0
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/dlclark/regexp2 v1.11.4
 	github.com/miekg/dns v1.1.63
