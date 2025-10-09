@@ -1,6 +1,6 @@
 module darvaza.org/sidecar/pkg/service
 
-go 1.22
+go 1.23.0
 
 require (
 	darvaza.org/core v0.16.0
@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	github.com/kardianos/service v1.2.2
+	github.com/kardianos/service v1.2.4
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/pflag v1.0.5
 )
@@ -25,6 +25,6 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 )
