@@ -1,6 +1,6 @@
 module darvaza.org/sidecar
 
-go 1.22
+go 1.24.0
 
 require (
 	darvaza.org/cache/x/simplelru v0.2.0 // indirect

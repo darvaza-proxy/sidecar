@@ -1,5 +1,7 @@
 package glob
 
+// cspell:words orld
+
 import (
 	"testing"
 )

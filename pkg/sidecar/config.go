@@ -21,7 +21,7 @@ type Config struct {
 	Name string `toml:"name" valid:"host,require"`
 
 	Supervision SupervisionConfig
-	Addresses   BindConfig `json:",omitempty" yaml:",omitempty" toml:",omitempty"`
+	Addresses   BindConfig `json:",omitzero" yaml:",omitempty" toml:",omitempty"`
 	HTTP        HTTPConfig
 	DNS         DNSConfig
 }

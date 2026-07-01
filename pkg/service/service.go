@@ -89,6 +89,9 @@ func (s *Service) init(root, serve *cobra.Command) error {
 		// prepare interactive use integrated with
 		// the service system.
 		s.initInteractive()
+	default:
+		// running under the service manager (non-interactive):
+		// no interactive commands to add.
 	}
 
 	return nil
@@ -129,6 +132,9 @@ func (s *Service) prepareServeCmd(serve *cobra.Command) cobraCmdE {
 			run(cmd, arg)
 			return nil
 		}
+	default:
+		// no application run handler provided; appRun stays nil
+		// and runServe reports ErrNotImplemented.
 	}
 
 	serve.Run = nil

@@ -166,7 +166,7 @@ func (srv *Server) appendQUICHeaders(alts []string) {
 	for i, hdr := range alts {
 		srv.debug().Printf("%s[%v]: %s", AltSvcHeader, i, hdr)
 
-		for _, part := range strings.Split(hdr, ",") {
+		for part := range strings.SplitSeq(hdr, ",") {
 			part = strings.TrimSpace(part)
 
 			if !core.SliceContains(s, part) {

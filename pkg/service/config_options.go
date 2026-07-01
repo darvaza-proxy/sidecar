@@ -11,7 +11,7 @@ func (cfg *Config) GetOption(name string) (any, bool) {
 		return nil, false
 	}
 
-	v, found := cfg.Config.Option[name]
+	v, found := cfg.Option[name]
 	return v, found
 }
 
@@ -19,7 +19,7 @@ func (cfg *Config) GetOption(name string) (any, bool) {
 // KeyValue store.
 func (cfg *Config) SetOption(name string, value any) {
 	if cfg.Option == nil {
-		cfg.Config.Option = make(service.KeyValue)
+		cfg.Option = make(service.KeyValue)
 	}
 
 	cfg.Option[name] = value

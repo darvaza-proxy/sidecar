@@ -37,6 +37,8 @@ func (srv *Server) NewH2CHandler(h http.Handler) http.Handler {
 	case h == nil:
 		// no handler implies 404.
 		h = http.NotFoundHandler()
+	default:
+		// insecure traffic allowed and a handler supplied; use it as-is.
 	}
 
 	// ACME-HTTP-01 handler or 404 for /.well-known/acme-challenge
