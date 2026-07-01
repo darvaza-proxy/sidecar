@@ -2,6 +2,8 @@
 // based on github.com/pachyderm/ohmyglob
 package glob
 
+// cspell:words dlclark ohmyglob
+
 import (
 	"time"
 	"unicode/utf8"

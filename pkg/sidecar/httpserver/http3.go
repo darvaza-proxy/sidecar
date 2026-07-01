@@ -1,5 +1,7 @@
 package httpserver
 
+// cspell:words alts
+
 import (
 	"context"
 	"net"

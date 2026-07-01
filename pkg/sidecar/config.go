@@ -1,5 +1,7 @@
 package sidecar
 
+// cspell:words omitzero
+
 import (
 	"context"
 	"fmt"

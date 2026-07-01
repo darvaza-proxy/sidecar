@@ -1,5 +1,7 @@
 package config
 
+// cspell:words appdir
+
 import (
 	"io/fs"
 	"os"

@@ -1,6 +1,8 @@
 // Package store provides a TLS certificate manager for sidecars
 package store
 
+// cspell:words caroot
+
 import (
 	"darvaza.org/darvaza/shared/storage"
 	"darvaza.org/darvaza/shared/storage/simple"
