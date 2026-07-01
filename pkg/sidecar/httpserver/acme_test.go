@@ -1,47 +1,79 @@
-package httpserver
+package httpserver_test
 
-import "testing"
+import (
+	"testing"
 
-type testAcmeHTTP01PatternCase struct {
-	s  string // URL.Path
-	ok bool   // path match
-	m  string // token match
+	"darvaza.org/core"
+
+	"darvaza.org/sidecar/pkg/sidecar/httpserver"
+)
+
+var _ core.TestCase = acmeHTTP01PatternTestCase{}
+
+// acmeHTTP01PatternTestCase verifies the ACME HTTP-01 challenge path matcher
+// against a request path and its expected captured token.
+type acmeHTTP01PatternTestCase struct {
+	name  string
+	path  string // URL.Path under test
+	token string // expected captured token ("" when none)
+	match bool   // whether the path is a valid challenge path
+}
+
+func newAcmeHTTP01PatternTestCase(name, path string, match bool,
+	token string) acmeHTTP01PatternTestCase {
+	return acmeHTTP01PatternTestCase{
+		name:  name,
+		path:  path,
+		token: token,
+		match: match,
+	}
+}
+
+func (tc acmeHTTP01PatternTestCase) Name() string {
+	return tc.name
+}
+
+func (tc acmeHTTP01PatternTestCase) Test(t *testing.T) {
+	t.Helper()
+
+	m, ok := httpserver.AcmeHTTP01Pattern.Capture(tc.path)
+
+	if !tc.match {
+		core.AssertFalse(t, ok, "match %q", tc.path)
+		return
+	}
+
+	if core.AssertTrue(t, ok, "match %q", tc.path) {
+		core.AssertSliceEqual(t, core.S(tc.token), m, "token %q", tc.path)
+	}
+}
+
+func acmeHTTP01PatternTestCases() []acmeHTTP01PatternTestCase {
+	return []acmeHTTP01PatternTestCase{
+		newAcmeHTTP01PatternTestCase("empty", "", false, ""),
+		newAcmeHTTP01PatternTestCase("root", "/", false, ""),
+		newAcmeHTTP01PatternTestCase("unrelated path", "/foo", false, ""),
+		newAcmeHTTP01PatternTestCase("well-known only", "/.well-known",
+			false, ""),
+		newAcmeHTTP01PatternTestCase("well-known slash", "/.well-known/",
+			false, ""),
+		newAcmeHTTP01PatternTestCase("partial challenge",
+			"/.well-known/acme-cha", false, ""),
+		newAcmeHTTP01PatternTestCase("partial challenge slash",
+			"/.well-known/acme-cha/", false, ""),
+		newAcmeHTTP01PatternTestCase("challenge without token",
+			"/.well-known/acme-challenge", true, ""),
+		newAcmeHTTP01PatternTestCase("challenge trailing slash",
+			"/.well-known/acme-challenge/", true, ""),
+		newAcmeHTTP01PatternTestCase("challenge with token",
+			"/.well-known/acme-challenge/foo", true, "foo"),
+		newAcmeHTTP01PatternTestCase("challenge extra segment",
+			"/.well-known/acme-challenge/foo/bar", true, ""),
+		newAcmeHTTP01PatternTestCase("path traversal prefix",
+			"../.well-known/acme-challenge/foo", false, ""),
+	}
 }
 
 func TestAcmeHTTP01Pattern(t *testing.T) {
-	var cases = []testAcmeHTTP01PatternCase{
-		{"", false, ""},
-		{"/", false, ""},
-		{"/foo", false, ""},
-		{"/.well-known", false, ""},
-		{"/.well-known/", false, ""},
-		{"/.well-known/acme-cha", false, ""},
-		{"/.well-known/acme-cha/", false, ""},
-		{"/.well-known/acme-challenge", true, ""},
-		{"/.well-known/acme-challenge/", true, ""},
-		{"/.well-known/acme-challenge/foo", true, "foo"},
-		{"/.well-known/acme-challenge/foo/bar", true, ""},
-		{"../.well-known/acme-challenge/foo", false, ""},
-	}
-
-	for _, tc := range cases {
-		testOneAcmeHTTP01Pattern(t, tc)
-	}
-}
-
-func testOneAcmeHTTP01Pattern(t *testing.T, tc testAcmeHTTP01PatternCase) {
-	m, ok := AcmeHTTP01Pattern.Capture(tc.s)
-	switch {
-	case ok && !tc.ok:
-		t.Errorf("ERROR: %q: failed to fail", tc.s)
-	case !ok && tc.ok:
-		t.Errorf("ERROR: %q: failed unexpectedly", tc.s)
-	case !ok && !tc.ok:
-		t.Logf("%q: failed successfully", tc.s)
-	case len(m) != 1 || m[0] != tc.m:
-		t.Errorf("ERROR: %q: invalid match: %q (expected %q)",
-			tc.s, m, tc.m)
-	default:
-		t.Logf("%q: success (%q)", tc.s, m)
-	}
+	core.RunTestCases(t, acmeHTTP01PatternTestCases())
 }
