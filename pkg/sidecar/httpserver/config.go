@@ -19,9 +19,6 @@ type Config struct {
 	Context context.Context
 	Logger  slog.Logger
 
-	Bind      BindingConfig
-	TLSConfig *tls.Config
-
 	// AcmeHTTP01 is an optional [http.Handler] that will
 	// receive requests for /.well-known/acme-challenge
 	// with a valid token.
@@ -30,6 +27,9 @@ type Config struct {
 	// automatically emit a 404 error for requests
 	// against this well-known path.
 	AcmeHTTP01 http.Handler
+
+	TLSConfig *tls.Config
+	Bind      BindingConfig
 
 	ReadTimeout       time.Duration
 	ReadHeaderTimeout time.Duration
@@ -80,12 +80,12 @@ func (sc *Config) New(eg *core.ErrGroup) (*Server, error) {
 // BindingConfig describes what the [Server] will listen.
 type BindingConfig struct {
 	Addrs        []netip.Addr
+	PortAttempts int
+
 	Port         uint16
 	PortInsecure uint16
 
-	PortStrict   bool
-	PortAttempts int
-
+	PortStrict bool
 	// EnableInsecure makes us listen the plain HTTP port
 	EnableInsecure bool
 	// AllowInsecure makes us handle plain HTTP requests

@@ -33,15 +33,14 @@ func (m Match) IsValid() bool {
 // Horizons is a list of all known horizons sorted by
 // priority.
 type Horizons struct {
-	s []*Horizon
-	n map[string]*Horizon
-
+	n                   map[string]*Horizon
 	ExchangeContextFunc func(netip.Addr, *dns.Msg) context.Context
 	ExchangeContext     context.Context
 	ExchangeTimeoutFunc func(netip.Addr, *dns.Msg) time.Duration
-	ExchangeTimeout     time.Duration
+	ContextKey          *core.ContextKey[Match]
 
-	ContextKey *core.ContextKey[Match]
+	s               []*Horizon
+	ExchangeTimeout time.Duration
 }
 
 // AppendNew creates a [Horizon] based on a [Config] and endpoints.
@@ -101,11 +100,11 @@ func (s Horizons) Get(name string) *Horizon {
 
 // Horizon is one horizon
 type Horizon struct {
-	n string
-	r []netip.Prefix
-
 	h http.Handler
 	e resolver.Exchanger
+
+	n string
+	r []netip.Prefix
 }
 
 // Name returns the name of the [Horizon]

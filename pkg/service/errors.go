@@ -17,8 +17,8 @@ const (
 // ErrorExitCode is an error wrapper that knows how the application
 // should exit
 type ErrorExitCode struct {
-	Code int
 	Err  error
+	Code int
 }
 
 func (e ErrorExitCode) Unwrap() error {

@@ -16,11 +16,11 @@ import (
 // Server is a DNS/DoT Server built
 // around a shared [core.ErrGroup].
 type Server struct {
-	cfg Config
-
 	eg  *core.ErrGroup
 	sl  *Listeners
 	dns []*dns.Server
+
+	cfg Config
 }
 
 func (ds *Server) setupServer(s *dns.Server) *dns.Server {

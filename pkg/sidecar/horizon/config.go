@@ -10,11 +10,11 @@ import (
 
 // Config describe a Horizon
 type Config struct {
-	Name   string
-	Ranges []netip.Prefix
-
 	Middleware         func(http.Handler) http.Handler
 	ExchangeMiddleware func(resolver.Exchanger) resolver.Exchanger
+
+	Name   string
+	Ranges []netip.Prefix
 }
 
 // New assembles a new [Horizon] using the Config and the given entrypoints
