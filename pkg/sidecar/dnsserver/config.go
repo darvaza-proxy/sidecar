@@ -18,8 +18,8 @@ type Config struct {
 	Logger  slog.Logger
 	Context context.Context
 
-	Bind      BindingConfig
 	TLSConfig *tls.Config
+	Bind      BindingConfig
 
 	// DNS
 	MaxTCPQueries int

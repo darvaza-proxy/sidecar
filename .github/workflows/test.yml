@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 permissions:
   contents: read
@@ -10,7 +10,7 @@ on:
   pull_request:
 
 jobs:
-  make:
+  test:
     runs-on: ubuntu-latest
     # Pull requests from the same repository won't trigger this checks as they were already triggered by the push
     if: (github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository)
@@ -19,10 +19,13 @@ jobs:
         go-version: ['1.24', '1.25', '1.26']
     steps:
     - uses: actions/checkout@v7
-    - uses: actions/setup-go@v6
+
+    - name: Set up Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v6
       with:
         go-version: ${{ matrix.go-version }}
         cache: true
         cache-dependency-path: '**/go.sum'
-    - name: Build
-      run: make
+
+    - name: Run tests
+      run: make test GOTEST_FLAGS="-v"

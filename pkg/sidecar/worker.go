@@ -104,7 +104,7 @@ func (srv *Server) doSpawn(h http.Handler) error {
 		// DNS
 		dh, ok := h.(dns.Handler)
 		if !ok {
-			// pointless but required by the static analyzer
+			// pointless but required by the static analyser
 			dh = nil
 		}
 

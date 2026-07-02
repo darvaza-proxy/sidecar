@@ -11,7 +11,7 @@ import (
 // go.uber.org/zap.Config.
 // If cfg is nil, a default console logger will be created with
 // development-friendly settings.
-func New(cfg *Config) slog.Logger {
+func New(cfg *Config) (slog.Logger, error) {
 	if cfg == nil {
 		cfg = zap.NewDefaultConfig()
 	}
@@ -26,8 +26,12 @@ func New(cfg *Config) slog.Logger {
 //	slog.LevelDebug   // Show all messages
 //	slog.LevelInfo    // Show info and above
 //	slog.LevelWarning // Show only warnings and errors
-func NewWithThreshold(cfg *Config, threshold slog.LogLevel) slog.Logger {
-	return filter.New(New(cfg), threshold)
+func NewWithThreshold(cfg *Config, threshold slog.LogLevel) (slog.Logger, error) {
+	l, err := New(cfg)
+	if err != nil {
+		return nil, err
+	}
+	return filter.New(l, threshold), nil
 }
 
 // NewDefaultConfig returns the console config for developers

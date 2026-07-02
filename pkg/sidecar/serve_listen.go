@@ -15,6 +15,8 @@ func (srv *Server) initAddresses() error {
 			da.Addresses = append(da.Addresses, s...)
 		case err != nil:
 			return err
+		default:
+			// no addresses resolved and no error; nothing to append.
 		}
 
 		da.Interfaces = []string{}

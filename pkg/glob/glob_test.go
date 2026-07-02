@@ -1,104 +1,105 @@
-package glob
+package glob_test
 
 import (
 	"testing"
+
+	"darvaza.org/core"
+
+	"darvaza.org/sidecar/pkg/glob"
 )
 
-type captureCase struct {
-	g   string
-	sep []rune
-	ok  bool
-	mc  []captureMatchCase
-}
+var _ core.TestCase = captureTestCase{}
 
+// captureMatchCase is a single fixture run through a compiled glob's
+// Capture, with the groups it is expected to produce.
 type captureMatchCase struct {
-	s  string
-	ok bool
-	c  []string
+	fixture  string
+	captures []string
+	match    bool
 }
 
-func tCC(s string, ok bool, c ...string) captureMatchCase {
+func newCaptureMatchCase(fixture string, match bool,
+	captures ...string) captureMatchCase {
+	// Capture returns a non-nil empty slice for a match with no groups,
+	// so keep the expected value non-nil to match under reflect.DeepEqual.
 	return captureMatchCase{
-		s:  s,
-		ok: ok,
-		c:  c,
+		fixture:  fixture,
+		captures: core.S(captures...),
+		match:    match,
 	}
 }
 
-func tC(g string, sep []rune, ok bool, mc ...captureMatchCase) captureCase {
-	return captureCase{
-		g:   g,
-		sep: sep,
-		ok:  ok,
-		mc:  mc,
+// captureTestCase compiles a glob pattern and runs a set of fixtures
+// through Capture, checking the captured groups of each.
+type captureTestCase struct {
+	pattern    string
+	separators []rune
+	matches    []captureMatchCase
+}
+
+func newCaptureTestCase(pattern string, separators []rune,
+	matches ...captureMatchCase) captureTestCase {
+	return captureTestCase{
+		pattern:    pattern,
+		separators: separators,
+		matches:    matches,
 	}
 }
 
-func tD(g string, ok bool, m ...captureMatchCase) captureCase {
-	return tC(g, []rune{'.'}, ok, m...)
+// newDotCaptureTestCase builds a captureTestCase using '.' as the only
+// separator.
+func newDotCaptureTestCase(pattern string,
+	matches ...captureMatchCase) captureTestCase {
+	return newCaptureTestCase(pattern, []rune{'.'}, matches...)
+}
+
+func (tc captureTestCase) Name() string {
+	return tc.pattern
+}
+
+func (tc captureTestCase) Test(t *testing.T) {
+	t.Helper()
+
+	g, err := glob.Compile(tc.pattern, tc.separators...)
+	if !core.AssertNoError(t, err, "compile %q", tc.pattern) {
+		return
+	}
+
+	for _, mc := range tc.matches {
+		tc.testMatch(t, g, mc)
+	}
+}
+
+func (tc captureTestCase) testMatch(t *testing.T, g *glob.Glob,
+	mc captureMatchCase) {
+	t.Helper()
+
+	captured, ok := g.Capture(mc.fixture)
+	if !mc.match {
+		core.AssertFalse(t, ok, "%q: match %q", tc.pattern, mc.fixture)
+		return
+	}
+
+	if core.AssertTrue(t, ok, "%q: match %q", tc.pattern, mc.fixture) {
+		core.AssertSliceEqual(t, mc.captures, captured,
+			"%q: captures of %q", tc.pattern, mc.fixture)
+	}
+}
+
+func captureTestCases() []captureTestCase {
+	return []captureTestCase{
+		newDotCaptureTestCase("*.local",
+			newCaptureMatchCase("me.local", true),
+			newCaptureMatchCase("local.you", false),
+			newCaptureMatchCase("me.local.you", false),
+			newCaptureMatchCase("me.you.local", false),
+		),
+		newDotCaptureTestCase("(*).jpi.io",
+			newCaptureMatchCase("www.jpi.io", true, "www"),
+		),
+	}
 }
 
 func TestCapture(t *testing.T) {
-	var cases = []captureCase{
-		tD("*.local", true,
-			tCC("me.local", true),
-			tCC("local.you", false),
-			tCC("me.local.you", false),
-			tCC("me.you.local", false),
-		),
-		tD("(*).jpi.io", true,
-			tCC("www.jpi.io", true, "www"),
-		),
-	}
-	for _, tc := range cases {
-		testCaptureCase(t, tc)
-	}
-}
-
-func testCaptureCase(t *testing.T, tc captureCase) {
-	g, err := Compile(tc.g, tc.sep...)
-	switch {
-	case tc.ok && err != nil:
-		t.Errorf("%q: failed unexpectedly: %v", tc.g, err)
-	case !tc.ok && err != nil:
-		t.Logf("%q: failed as expected: %v", tc.g, err)
-	case !tc.ok && err == nil:
-		t.Errorf("%q: failed to fail", tc.g)
-	default:
-		testCaptureMatchCase(t, tc.g, g, tc.mc)
-	}
-}
-
-func testCaptureMatchCase(t *testing.T, glob string, g *Glob, mc []captureMatchCase) {
-	for _, mcc := range mc {
-		fixture := mcc.s
-		expected := mcc.c
-		captured, ok := g.Capture(fixture)
-		switch {
-		case ok && !mcc.ok:
-			t.Errorf("%q: %q: shouldn't have matched: %v",
-				glob, fixture, captured)
-		case !ok && mcc.ok:
-			t.Errorf("%q: %q: should have matched: %v",
-				glob, fixture, expected)
-		case !ok && !mcc.ok:
-			t.Logf("%q: %q: failed as expected", glob, fixture)
-		case len(captured) != len(expected):
-			t.Errorf("%q: %q: produced the wrong number of matches: %q instead of %q",
-				glob, fixture, captured, expected)
-		default:
-			testCaptureMatchCaptures(t, glob, fixture, captured, expected)
-		}
-	}
-}
-
-func testCaptureMatchCaptures(t *testing.T, glob, fixture string, captured, expected []string) {
-	for i := range captured {
-		if captured[i] != expected[i] {
-			t.Errorf("%q: %q: incorrect capture %v: %q != %q",
-				glob, fixture, i+1, captured[i], expected[i])
-		} else {
-			t.Logf("%q: %q: capture %v: %q", glob, fixture, i+1, captured[i])
-		}
-	}
+	core.RunTestCases(t, captureTestCases())
 }

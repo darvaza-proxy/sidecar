@@ -18,23 +18,22 @@ type cobraCmdE func(*cobra.Command, []string) error
 
 // Service is an application that runs supervised by the OS
 type Service struct {
-	wg        sync.WaitGroup
+	ss        service.Service
 	cancelled atomic.Value
+	ctx       context.Context
+	log       slog.Logger
+	sys       service.System
 
 	cancel context.CancelFunc
-	ctx    context.Context
-
-	log slog.Logger
-	sys service.System
-	ss  service.Service
-	p   program
-
-	args  []string
-	run   cobraCmdE
-	root  *cobra.Command
-	serve *cobra.Command
+	p      program
+	run    cobraCmdE
+	root   *cobra.Command
+	serve  *cobra.Command
 
 	Config Config
+
+	args []string
+	wg   sync.WaitGroup
 }
 
 // MustBuild creates a new service from a given root and serve
@@ -90,6 +89,9 @@ func (s *Service) init(root, serve *cobra.Command) error {
 		// prepare interactive use integrated with
 		// the service system.
 		s.initInteractive()
+	default:
+		// running under the service manager (non-interactive):
+		// no interactive commands to add.
 	}
 
 	return nil
@@ -130,6 +132,9 @@ func (s *Service) prepareServeCmd(serve *cobra.Command) cobraCmdE {
 			run(cmd, arg)
 			return nil
 		}
+	default:
+		// no application run handler provided; appRun stays nil
+		// and runServe reports ErrNotImplemented.
 	}
 
 	serve.Run = nil

@@ -2,6 +2,8 @@
 // based on github.com/pachyderm/ohmyglob
 package glob
 
+// cspell:words dlclark ohmyglob
+
 import (
 	"time"
 	"unicode/utf8"
@@ -46,6 +48,8 @@ func (g *Glob) Capture(fixture string) ([]string, bool) {
 	case m == nil:
 		// no match
 		return nil, false
+	default:
+		// match found; extract the captures below.
 	}
 
 	groups := m.Groups()
@@ -53,7 +57,7 @@ func (g *Glob) Capture(fixture string) ([]string, bool) {
 
 	for _, gp := range groups {
 		if gp.Name != "0" {
-			captures = append(captures, gp.Capture.String())
+			captures = append(captures, gp.String())
 		}
 	}
 

@@ -8,17 +8,18 @@ import (
 	"github.com/spf13/pflag"
 )
 
+// Exit status codes returned to os.Exit(), ordered by severity.
 const (
-	ExitStatusOK    int = iota // ExitStatusOK indicates everything is fine
-	ExitStatusMinor            // ExitStatusMinor indicates there was a minor problem
-	ExitStatusMajor            // ExitStatusMajor indicates there was a major problem
+	ExitStatusOK    int = iota // everything is fine
+	ExitStatusMinor            // a minor problem occurred
+	ExitStatusMajor            // a major problem occurred
 )
 
 // ErrorExitCode is an error wrapper that knows how the application
 // should exit
 type ErrorExitCode struct {
-	Code int
 	Err  error
+	Code int
 }
 
 func (e ErrorExitCode) Unwrap() error {

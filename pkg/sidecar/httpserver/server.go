@@ -15,13 +15,13 @@ import (
 // Server is an HTTP/1, HTTP/2, HTTP/3 server built
 // around a shared [core.ErrGroup].
 type Server struct {
-	mu  sync.Mutex
-	cfg Config
-
 	eg *core.ErrGroup
 	sl *Listeners
 
 	quicAltSvc string
+
+	cfg Config
+	mu  sync.Mutex
 }
 
 // Spawn starts all workers and optionally waits a given amount

@@ -1,135 +1,221 @@
-package glob
+package glob_test
+
+// cspell:words orld
 
 import (
 	"testing"
+
+	"darvaza.org/core"
+
+	"darvaza.org/sidecar/pkg/glob"
 )
 
-func tP(parts ...templatePart) *Template {
-	return &Template{
-		parts: parts,
+var (
+	_ core.TestCase = templateCompileTestCase{}
+	_ core.TestCase = templateReplaceTestCase{}
+	_ core.TestCase = templateEqualTestCase{}
+)
+
+func mustCompileTemplate(t *testing.T, s string) *glob.Template {
+	t.Helper()
+
+	p, err := glob.CompileTemplate(s)
+	core.AssertMustNoError(t, err, "compile %q", s)
+	return p
+}
+
+// templateCompileTestCase compiles a template string and checks the parsed
+// structure through its String representation.
+type templateCompileTestCase struct {
+	input string
+	want  string
+	ok    bool
+}
+
+func newTemplateCompileTestCase(input, want string) templateCompileTestCase {
+	return templateCompileTestCase{
+		input: input,
+		want:  want,
+		ok:    true,
 	}
 }
 
-func tL(s string) templatePart {
-	return templatePart{
-		literal: s,
+func newTemplateCompileErrorTestCase(input string) templateCompileTestCase {
+	return templateCompileTestCase{
+		input: input,
+		ok:    false,
 	}
 }
 
-func tI(i int) templatePart {
-	return templatePart{
-		index: i,
+func (tc templateCompileTestCase) Name() string {
+	return tc.input
+}
+
+func (tc templateCompileTestCase) Test(t *testing.T) {
+	t.Helper()
+
+	p, err := glob.CompileTemplate(tc.input)
+	if !tc.ok {
+		core.AssertError(t, err, "compile %q", tc.input)
+		return
+	}
+
+	if core.AssertNoError(t, err, "compile %q", tc.input) {
+		core.AssertEqual(t, tc.want, p.String(), "compile %q", tc.input)
+	}
+}
+
+func templateCompileTestCases() []templateCompileTestCase {
+	return []templateCompileTestCase{
+		newTemplateCompileTestCase("hello", `{"hello"}`),
+		newTemplateCompileTestCase("hello$", `{"hello$"}`),
+		newTemplateCompileTestCase("hello$1", `{"hello", 1}`),
+		newTemplateCompileErrorTestCase("hello${1"),
+		newTemplateCompileTestCase("hello${1}", `{"hello", 1}`),
+		newTemplateCompileTestCase("hello${1}world", `{"hello", 1, "world"}`),
+		newTemplateCompileErrorTestCase("hello${1w}orld"),
+		newTemplateCompileErrorTestCase("hello${1world"),
+		newTemplateCompileErrorTestCase("hello${world"),
+		newTemplateCompileErrorTestCase("hello${0}world"),
+		newTemplateCompileErrorTestCase("hello${-3}world"),
+		newTemplateCompileErrorTestCase("hello${-3wo}rld"),
+		newTemplateCompileErrorTestCase("hello${-3world"),
+		newTemplateCompileTestCase("hello${1}world${2}from${3}",
+			`{"hello", 1, "world", 2, "from", 3}`),
+		newTemplateCompileTestCase("a$b$c$5gh", `{"a$b$c", 5, "gh"}`),
 	}
 }
 
 func TestTemplate(t *testing.T) {
-	cases := []struct {
-		t string
-		p *Template
-	}{
-		{"hello",
-			tP(tL("hello"))},
-		{"hello$",
-			tP(tL("hello$"))},
-		{"hello$1",
-			tP(tL("hello"), tI(1))},
-		{"hello${1", nil},
-		{"hello${1}",
-			tP(tL("hello"), tI(1))},
-		{"hello${1}world",
-			tP(tL("hello"), tI(1), tL("world"))},
-		{"hello${1w}orld", nil},
-		{"hello${1world", nil},
-		{"hello${world", nil},
-		{"hello${0}world", nil},
-		{"hello${-3}world", nil},
-		{"hello${-3wo}rld", nil},
-		{"hello${-3world", nil},
-		{"hello${1}world${2}from${3}",
-			tP(tL("hello"), tI(1), tL("world"), tI(2), tL("from"), tI(3))},
-		{"a$b$c$5gh",
-			tP(tL("a$b$c"), tI(5), tL("gh"))},
-	}
+	core.RunTestCases(t, templateCompileTestCases())
+}
 
-	for _, tc := range cases {
-		p, err := CompileTemplate(tc.t)
-		switch {
-		case err != nil && tc.p != nil:
-			t.Errorf("ERROR: %q: failed unexpectedly: %v", tc.t, err)
-		case err != nil && tc.p == nil:
-			t.Logf("%q: failed successfully: %v", tc.t, err)
-		case tc.p == nil:
-			t.Errorf("ERROR: %q: failed to fail: %v", tc.t, p)
-		case !tc.p.Equal(p):
-			t.Errorf("ERROR: %q: produced the wrong result: %v != %v",
-				tc.t, p, tc.p)
-		default:
-			t.Logf("%q: %v", tc.t, p)
-		}
+// templateReplaceTestCase compiles a template, applies Replace with the
+// given data and checks the produced string.
+type templateReplaceTestCase struct {
+	input  string
+	result string
+	data   []string
+	ok     bool
+}
+
+func newTemplateReplaceTestCase(input, result string,
+	data ...string) templateReplaceTestCase {
+	return templateReplaceTestCase{
+		input:  input,
+		result: result,
+		data:   data,
+		ok:     true,
 	}
 }
 
-type testReplaceCase struct {
-	t  string
-	r  string
-	d  []string
-	ok bool
-}
-
-func tR(template string, result string, data ...string) testReplaceCase {
-	return testReplaceCase{
-		t:  template,
-		r:  result,
-		d:  data,
-		ok: true,
+func newTemplateReplaceErrorTestCase(input string,
+	data ...string) templateReplaceTestCase {
+	return templateReplaceTestCase{
+		input: input,
+		data:  data,
+		ok:    false,
 	}
 }
 
-func tRE(template string, data ...string) testReplaceCase {
-	return testReplaceCase{
-		t:  template,
-		d:  data,
-		ok: false,
+func (tc templateReplaceTestCase) Name() string {
+	return tc.input
+}
+
+func (tc templateReplaceTestCase) Test(t *testing.T) {
+	t.Helper()
+
+	p, err := glob.CompileTemplate(tc.input)
+	if !core.AssertNoError(t, err, "compile %q", tc.input) {
+		return
+	}
+
+	r, err := p.Replace(tc.data)
+	if !tc.ok {
+		core.AssertError(t, err, "replace %q with %q", tc.input, tc.data)
+		return
+	}
+
+	if core.AssertNoError(t, err, "replace %q with %q", tc.input, tc.data) {
+		core.AssertEqual(t, tc.result, r,
+			"replace %q with %q", tc.input, tc.data)
+	}
+}
+
+func templateReplaceTestCases() []templateReplaceTestCase {
+	return []templateReplaceTestCase{
+		newTemplateReplaceTestCase("foobar", "foobar"),
+		newTemplateReplaceTestCase("$1Foe", "oneFoe", "one"),
+		newTemplateReplaceTestCase("${1}Foe", "oneFoe", "one"),
+		newTemplateReplaceTestCase("${1}Foe", "Foe", "", "two"),
+		newTemplateReplaceErrorTestCase("${2}Foe", "one"),
+		newTemplateReplaceTestCase("Hello, ${2}", "Hello, world", "one", "world"),
 	}
 }
 
 func TestReplace(t *testing.T) {
-	var cases = []testReplaceCase{
-		tR("foobar", "foobar"),
-		tR("$1Foe", "oneFoe", "one"),
-		tR("${1}Foe", "oneFoe", "one"),
-		tR("${1}Foe", "Foe", "", "two"),
-		tRE("${2}Foe", "one"),
-		tR("Hello, ${2}", "Hello, world", "one", "world"),
-	}
+	core.RunTestCases(t, templateReplaceTestCases())
+}
 
-	for _, tc := range cases {
-		p, err := CompileTemplate(tc.t)
-		switch {
-		case err != nil:
-			t.Errorf("ERROR: %q: failed to compile: %v", tc.t, err)
-		default:
-			testReplaceResult(t, p, tc)
-		}
+// templateEqualTestCase compiles two templates and checks Template.Equal.
+type templateEqualTestCase struct {
+	name     string
+	left     string
+	right    string
+	rightNil bool
+	want     bool
+}
+
+func newTemplateEqualTestCase(name, left, right string,
+	want bool) templateEqualTestCase {
+	return templateEqualTestCase{
+		name:  name,
+		left:  left,
+		right: right,
+		want:  want,
 	}
 }
 
-func testReplaceResult(t *testing.T, p *Template, tc testReplaceCase) {
-	r, err := p.Replace(tc.d)
-	switch {
-	case !tc.ok && err == nil:
-		t.Errorf("ERROR: %q+%q: failed to fail: %q",
-			tc.t, tc.d, r)
-	case !tc.ok && err != nil:
-		t.Logf("%q+%q: failed successfully: %v",
-			tc.t, tc.d, err)
-	case tc.ok && err != nil:
-		t.Errorf("ERROR: %q+%q: failed to replace: %v",
-			tc.t, tc.d, err)
-	case r != tc.r:
-		t.Errorf("ERROR: %q+%q: produced the wrong result: %q != %q",
-			tc.t, tc.d, r, tc.r)
-	default:
-		t.Logf("%q+%q => %q", tc.t, tc.d, r)
+func newTemplateEqualNilTestCase(name, left string) templateEqualTestCase {
+	return templateEqualTestCase{
+		name:     name,
+		left:     left,
+		rightNil: true,
+		want:     false,
 	}
+}
+
+func (tc templateEqualTestCase) Name() string {
+	return tc.name
+}
+
+func (tc templateEqualTestCase) Test(t *testing.T) {
+	t.Helper()
+
+	left := mustCompileTemplate(t, tc.left)
+
+	var right *glob.Template
+	if !tc.rightNil {
+		right = mustCompileTemplate(t, tc.right)
+	}
+
+	core.AssertEqual(t, tc.want, left.Equal(right), "%s", tc.name)
+}
+
+func templateEqualTestCases() []templateEqualTestCase {
+	return []templateEqualTestCase{
+		newTemplateEqualTestCase("identical",
+			"hello${1}world", "hello${1}world", true),
+		newTemplateEqualTestCase("different length",
+			"hello", "hello${1}", false),
+		newTemplateEqualTestCase("different literal",
+			"hello", "world", false),
+		newTemplateEqualTestCase("different index",
+			"$1", "$2", false),
+		newTemplateEqualNilTestCase("nil right", "hello"),
+	}
+}
+
+func TestEqual(t *testing.T) {
+	core.RunTestCases(t, templateEqualTestCases())
 }

@@ -67,6 +67,8 @@ func (srv *Server) watchSignals(upg *tableflip.Upgrader, app http.Handler) {
 			srv.onSIGUSR2(upg, app)
 		case syscall.SIGINT, syscall.SIGTERM:
 			srv.onSIGTERM(upg, app)
+		default:
+			// only the signals registered above are delivered; ignore.
 		}
 	}
 }

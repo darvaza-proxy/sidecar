@@ -1,5 +1,7 @@
 package service
 
+// cspell:words cblog
+
 import (
 	"encoding/json"
 	"syscall"

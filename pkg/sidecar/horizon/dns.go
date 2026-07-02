@@ -1,5 +1,7 @@
 package horizon
 
+// cspell:words Lookuper Rcode resp
+
 import (
 	"context"
 	"net/netip"

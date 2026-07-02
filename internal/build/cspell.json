@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "name": "sidecar",
+  "language": "en-GB",
+  "words": [
+    "darvaza",
+    "dnsserver",
+    "kardianos",
+    "miekg",
+    "pflag",
+    "tableflip",
+    "TCPUDP",
+    "Upgrader"
+  ],
+  "ignorePaths": [
+    "**/*.lock",
+    "**/.coverage/**",
+    "**/.git/**",
+    "**/.srclight/**",
+    "**/.tmp/**",
+    "**/go.sum",
+    "**/node_modules/**",
+    "**/vendor/**"
+  ]
+}

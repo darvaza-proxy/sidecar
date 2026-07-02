@@ -11,12 +11,12 @@ import (
 
 // Server is the HTTP Server of the sidecar
 type Server struct {
-	cfg Config
-	eg  core.ErrGroup
-
 	tls storage.Store
 	hs  *httpserver.Server
 	ds  *dnsserver.Server
+
+	eg  core.ErrGroup
+	cfg Config
 }
 
 // New creates a new HTTP [Server] using the given [Config]
