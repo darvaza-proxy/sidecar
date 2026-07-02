@@ -25,7 +25,7 @@ require (
 	github.com/dlclark/regexp2 v1.12.0
 	github.com/miekg/dns v1.1.72
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
-	github.com/quic-go/quic-go v0.59.0
+	github.com/quic-go/quic-go v0.59.1
 	github.com/spf13/pflag v1.0.10
 	go.uber.org/zap v1.28.0
 	golang.org/x/net v0.50.0
