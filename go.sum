@@ -16,8 +16,8 @@ darvaza.org/slog/handlers/filter v0.8.1 h1:rHGZW01wE09bHi3cGOd1UmFDSW9+lxPv9YzQ1
 darvaza.org/slog/handlers/filter v0.8.1/go.mod h1:IrsCrh3lGwdwIL1YbDwguBjmAEqxQ8hURvBAKpR2dSw=
 darvaza.org/slog/handlers/zap v0.9.0 h1:61URryeEgA0ucHG5nqNS414hPiUgdrMfPV6fshURv5A=
 darvaza.org/slog/handlers/zap v0.9.0/go.mod h1:973nfnGCF8xtp+hH5xHBWNV0Xgx6wJxUpQjEJcLMmUc=
-darvaza.org/x/config v0.6.0 h1:iAG+YUZDICY7w8WRTbiw3jbJzZDSz+qnoqzWmAc3mbY=
-darvaza.org/x/config v0.6.0/go.mod h1:qG9vNI/G0LzU8y18uEzxk1UWPgouMPOge6Gz82lF/uA=
+darvaza.org/x/config v0.6.1 h1:3rQchXQtNJeg55Ar/ZzHBeHt2hEYCK3aadvo13y/TvA=
+darvaza.org/x/config v0.6.1/go.mod h1:oM6WYMzmwUvHe0Zd4MevBHCCJEcZV5S19CBkb+OCrM8=
 darvaza.org/x/fs v0.6.0 h1:aCpfoFxji3l5S8RlfJJ+EPUnLAPPghkSwzumOG0TFMQ=
 darvaza.org/x/fs v0.6.0/go.mod h1:j/Foi0YnxEpMU0ynhJHecD2F22w3Q8G7yMKXv8OtJZc=
 darvaza.org/x/net v0.7.0 h1:zpZ42MeswB+PQHMPst0rrJmXDrgcDRBTA1fIfWYh8rM=

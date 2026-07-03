@@ -6,7 +6,7 @@ require (
 	darvaza.org/core v0.19.1
 	darvaza.org/slog v0.9.1
 	darvaza.org/slog/handlers/cblog v0.9.1
-	darvaza.org/x/config v0.6.0
+	darvaza.org/x/config v0.6.1
 )
 
 require (
