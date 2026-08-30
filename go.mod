@@ -1,6 +1,6 @@
 module darvaza.org/sidecar
 
-go 1.24.0
+go 1.26.0
 
 require (
 	darvaza.org/cache/x/simplelru v0.3.0 // indirect
@@ -25,10 +25,10 @@ require (
 	github.com/dlclark/regexp2 v1.12.0
 	github.com/miekg/dns v1.1.72
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
-	github.com/quic-go/quic-go v0.59.1
+	github.com/quic-go/quic-go v0.62.0
 	github.com/spf13/pflag v1.0.10
 	go.uber.org/zap v1.28.0
-	golang.org/x/net v0.50.0
+	golang.org/x/net v0.56.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -43,11 +43,11 @@ require (
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/zeebo/blake3 v0.2.4 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/crypto v0.48.0 // indirect
-	golang.org/x/mod v0.32.0 // indirect
-	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.41.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
-	golang.org/x/tools v0.41.0 // indirect
+	golang.org/x/crypto v0.54.0 // indirect
+	golang.org/x/mod v0.37.0 // indirect
+	golang.org/x/sync v0.22.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/text v0.40.0 // indirect
+	golang.org/x/tools v0.47.0 // indirect
 	mvdan.cc/sh/v3 v3.12.0 // indirect
 )
