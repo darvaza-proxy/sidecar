@@ -1,6 +1,6 @@
 module darvaza.org/sidecar
 
-go 1.24.0
+go 1.25
 
 require (
 	darvaza.org/cache/x/simplelru v0.3.0 // indirect
@@ -23,6 +23,7 @@ require (
 	github.com/BurntSushi/toml v1.6.0
 	github.com/cloudflare/tableflip v1.2.3
 	github.com/dlclark/regexp2 v1.12.0
+	github.com/dlclark/regexp2/v2 v2.7.2
 	github.com/miekg/dns v1.1.72
 	github.com/pachyderm/ohmyglob v0.0.0-20210308211843-d5b47775fc36
 	github.com/quic-go/quic-go v0.59.1
